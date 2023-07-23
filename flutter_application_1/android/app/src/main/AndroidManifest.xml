@@ -17,7 +17,7 @@
                  to determine the Window background behind the Flutter UI. -->
             <!-- android:name="io.flutter.embedding.android.NormalTheme" -->
             <meta-data
-              android:name="com.google.android.geo.API_KEY""com.google.android.geo.API_KEY"
+              android:name="com.google.android.geo.API_KEY"
               android:value="AIzaSyDb07Vf1svXpIzmxKzzqskSkDARb5NzecoAIzaSyDb07Vf1svXpIzmxKzzqskSkDARb5Nzeco"
               android:resource="@style/NormalTheme"
               />
