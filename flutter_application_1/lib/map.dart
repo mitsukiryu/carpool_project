@@ -2,6 +2,18 @@
 // import 'dart:async';
 // import 'package:google_maps_flutter/google_maps_flutter.dart';
 
+// void main() => runApp(MyApp());
+
+// class MyApp extends StatelessWidget {
+//   @override
+//   Widget build(BuildContext context) {
+//     return MaterialApp(
+//       title: 'Google map Demo',
+//       home: MapSample(),
+//     );
+//   }
+// }
+
 // class MapSample extends StatefulWidget {
 //   const MapSample({super.key});
 
