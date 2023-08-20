@@ -4,7 +4,6 @@ import 'package:get/get.dart';
 import 'HomeScreen.dart';
 import 'PartyList.dart';
 import 'MyInfo.dart';
-import 'ScreenThree.dart';
 import 'EditProfile.dart';
 // import 'package:flutter/src/widgets/framework.dart';
 
@@ -32,10 +31,6 @@ class MyApp extends StatelessWidget {
         GetPage(
           name: '/info',
           page: () => MyInfo(),
-        ),
-        GetPage(
-          name: '/three',
-          page: () => ScreenThree(),
         ),
         GetPage(
           name: '/PartyList',
