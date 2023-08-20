@@ -26,13 +26,13 @@ class _HomescreenState extends State<Homescreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: GoogleMap(
-        mapType: MapType.hybrid,
-        initialCameraPosition: _kGooglePlex,
-        onMapCreated: (GoogleMapController controller) {
-          _controller.complete(controller);
-        },
-      ),
+      // body: GoogleMap(
+      //   mapType: MapType.hybrid,
+      //   initialCameraPosition: _kGooglePlex,
+      //   onMapCreated: (GoogleMapController controller) {
+      //     _controller.complete(controller);
+      //   },
+      // ),
       // body: Center(
       //   child: SingleChildScrollView(
       //     child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
@@ -78,7 +78,7 @@ class _HomescreenState extends State<Homescreen> {
                     child: Text('파티 리스트',
                         style: TextStyle(color: Colors.black, fontSize: 20)),
                     onPressed: () {
-                      Get.to(PartyList());
+                      Get.to(() => PartyList());
                     })),
             VerticalDivider(
               color: Colors.white,
@@ -89,7 +89,7 @@ class _HomescreenState extends State<Homescreen> {
                     child: Text('내 정보',
                         style: TextStyle(color: Colors.black, fontSize: 20)),
                     onPressed: () {
-                      Get.to(MyInfo());
+                      Get.to(() => MyInfo());
                     }))
           ],
         ),
