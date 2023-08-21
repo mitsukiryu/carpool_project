@@ -4,9 +4,9 @@ import 'main.dart';
 import 'package:get/get.dart';
 import 'PartyList.dart';
 import 'dart:async';
-import 'ScreenThree.dart';
 import 'MyInfo.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'login & signin/login_page.dart';
 
 class Homescreen extends StatefulWidget {
   const Homescreen({super.key});
@@ -106,7 +106,7 @@ class _HomescreenState extends State<Homescreen> {
                     child: Text('파티 리스트',
                         style: TextStyle(color: Colors.black, fontSize: 20)),
                     onPressed: () {
-                      Get.to(PartyList());
+                      Get.to(() => PartyList());
                     })),
             VerticalDivider(
               color: Colors.white,
@@ -117,7 +117,7 @@ class _HomescreenState extends State<Homescreen> {
                     child: Text('내 정보',
                         style: TextStyle(color: Colors.black, fontSize: 20)),
                     onPressed: () {
-                      Get.to(MyInfo());
+                      Get.to(() => MyInfo());
                     }))
           ],
         ),

@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/SplashScreen.dart';
 import 'package:get/get.dart';
 import 'HomeScreen.dart';
 import 'PartyList.dart';
 import 'MyInfo.dart';
-import 'ScreenThree.dart';
+import 'EditProfile.dart';
 // import 'package:flutter/src/widgets/framework.dart';
 
 void main() {
@@ -17,20 +18,28 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-      home: Homescreen(),
+      home: SplashScreen(),
       getPages: [
         GetPage(
           name: '/',
-          page: () => MyInfo(),
+          page: () => SplashScreen(),
         ),
         GetPage(
-          name: '/three',
-          page: () => ScreenThree(),
+          name: '/home',
+          page: () => Homescreen(),
+        ),
+        GetPage(
+          name: '/info',
+          page: () => MyInfo(),
         ),
         GetPage(
           name: '/PartyList',
           page: () => PartyList(),
         ),
+        GetPage(
+          name: '/EditProflie',
+          page: () => EditProflie(),
+        )
       ],
     );
   }

@@ -1,3 +1,4 @@
+import 'package:flutter_application_1/EditProfile.dart';
 import 'package:flutter_application_1/PartyList.dart';
 
 import 'main.dart';
@@ -59,7 +60,7 @@ class _MyInfoState extends State<MyInfo> {
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(primary: Colors.grey),
                 onPressed: () {
-                  // Action for "내 정보 수정" button
+                  Get.to(() => EditProflie());
                 },
                 child: Text('내 정보 수정'),
               ),
