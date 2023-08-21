@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/places_api.dart';
 import 'main.dart';
 import 'package:get/get.dart';
 import 'PartyList.dart';
@@ -17,6 +18,7 @@ class Homescreen extends StatefulWidget {
 class _HomescreenState extends State<Homescreen> {
   final Completer<GoogleMapController> _controller =
       Completer<GoogleMapController>();
+  TextEditingController _searchCon = TextEditingController();
 
   static const CameraPosition _kGooglePlex = CameraPosition(
     target: LatLng(36.09826133580664, 129.387749655962),
@@ -26,12 +28,38 @@ class _HomescreenState extends State<Homescreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: GoogleMap(
-        mapType: MapType.hybrid,
-        initialCameraPosition: _kGooglePlex,
-        onMapCreated: (GoogleMapController controller) {
-          _controller.complete(controller);
-        },
+      body: Column(
+        children: [
+          Row(
+            children: [
+              Expanded(
+                child: TextFormField(
+                  controller: _searchCon,
+                  textCapitalization: TextCapitalization.words,
+                  decoration: InputDecoration(hintText: 'Search by KeyWords'),
+                  onChanged: (value) {
+                    print(value);
+                  },
+                ),
+              ),
+              IconButton(
+                onPressed: () {
+                  places_api().get_place_id(_searchCon.text);
+                },
+                icon: Icon(Icons.search),
+              ),
+            ],
+          ),
+          Expanded(
+            child: GoogleMap(
+              mapType: MapType.normal,
+              initialCameraPosition: _kGooglePlex,
+              onMapCreated: (GoogleMapController controller) {
+                _controller.complete(controller);
+              },
+            ),
+          ),
+        ],
       ),
       // body: Center(
       //   child: SingleChildScrollView(
