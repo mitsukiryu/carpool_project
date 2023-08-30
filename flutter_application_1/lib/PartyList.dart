@@ -14,17 +14,19 @@ class _PartyListState extends State<PartyList> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(''), // You can add title here
-        leading: new IconButton(
-          icon: new Icon(
-            Icons.arrow_back_ios,
-            color: Colors.grey,
-            size: 30,
-          ),
-          onPressed: () => Navigator.of(context).pop(),
-        ),
-        backgroundColor: Colors.white, //You can make this transparent
-        elevation: 0.0, //No shadow
+        leading: IconButton(
+            icon: Icon(
+              Icons.arrow_back_ios,
+              color: Colors.grey,
+              size: 30,
+            ),
+            onPressed: () => Get.back()),
+        backgroundColor: Colors.white,
+        elevation: 0.0,
+        title: Text('파티 리스트',
+            style: TextStyle(
+                color: Color.fromARGB(255, 110, 110, 110),
+                fontWeight: FontWeight.bold)),
       ),
     );
   }

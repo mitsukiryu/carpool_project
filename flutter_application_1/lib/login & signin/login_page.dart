@@ -3,6 +3,7 @@ import '../HomeScreen.dart';
 import 'package:get/get.dart';
 import 'Signin_choose.dart';
 import 'Singin_page.dart';
+import 'choosing_finding_id_pw.dart';
 
 class Login_Page extends StatelessWidget {
   const Login_Page({super.key});
@@ -83,7 +84,7 @@ class Login_Page extends StatelessWidget {
                 flex: 4,
                 child: TextButton(
                   onPressed: () {
-                    Get.to(() => Signin_choose());
+                    Get.to(() => Choosing_finding_id_pw());
                   },
                   child: Text(
                     '아이디 / 비밀번호 찾기',

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/creating_party.dart';
 import 'main.dart';
 import 'package:get/get.dart';
 import 'PartyList.dart';
@@ -26,6 +27,18 @@ class _HomescreenState extends State<Homescreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: FloatingActionButton(
+        tooltip: 'Add', // used by assistive technologies
+        onPressed: () {
+          Get.to(() => creating_party());
+        },
+        backgroundColor: Colors.grey,
+        child: Icon(
+          Icons.add,
+          color: Colors.black,
+        ),
+      ),
+
       // body: GoogleMap(
       //   mapType: MapType.hybrid,
       //   initialCameraPosition: _kGooglePlex,

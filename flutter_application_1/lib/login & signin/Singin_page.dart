@@ -54,7 +54,6 @@ class Signin_page extends StatelessWidget {
               Padding(
                 padding: EdgeInsets.all(10),
                 child: TextField(
-                  obscureText: true,
                   decoration: InputDecoration(
                       border: OutlineInputBorder(),
                       labelText: '아이디',
@@ -84,7 +83,6 @@ class Signin_page extends StatelessWidget {
               Padding(
                 padding: EdgeInsets.all(10),
                 child: TextField(
-                  obscureText: true,
                   decoration: InputDecoration(
                       border: OutlineInputBorder(),
                       labelText: '전화번호',
@@ -94,7 +92,6 @@ class Signin_page extends StatelessWidget {
               Padding(
                 padding: EdgeInsets.all(10),
                 child: TextField(
-                  obscureText: true,
                   decoration: InputDecoration(
                       border: OutlineInputBorder(),
                       labelText: '학교 이메일 주소',
@@ -104,7 +101,6 @@ class Signin_page extends StatelessWidget {
               Padding(
                 padding: EdgeInsets.all(10),
                 child: TextField(
-                  obscureText: true,
                   decoration: InputDecoration(
                       border: OutlineInputBorder(),
                       labelText: '홈룸',

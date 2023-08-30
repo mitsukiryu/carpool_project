@@ -76,16 +76,16 @@ class _MyInfoState extends State<MyInfo> {
                 child: Text('푸시알림 설정'),
               ),
             ),
-            SizedBox(
-              width: 200,
-              child: ElevatedButton(
-                style: ElevatedButton.styleFrom(primary: Colors.grey),
-                onPressed: () {
-                  // Action for "푸시알림 설정" button
-                },
-                child: Text('현제 참여중인 파티'),
-              ),
-            ),
+            // SizedBox(
+            //   width: 200,
+            //   child: ElevatedButton(
+            //     style: ElevatedButton.styleFrom(primary: Colors.grey),
+            //     onPressed: () {
+            //       // Action for "푸시알림 설정" button
+            //     },
+            //     child: Text('현제 참여중인 파티'),
+            //   ),
+            // ),
           ],
         ),
       ),
