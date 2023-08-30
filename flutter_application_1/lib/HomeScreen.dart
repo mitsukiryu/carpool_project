@@ -18,6 +18,7 @@ class Homescreen extends StatefulWidget {
 class _HomescreenState extends State<Homescreen> {
   final Completer<GoogleMapController> _controller =
       Completer<GoogleMapController>();
+  TextEditingController _searchCon = TextEditingController();
 
   static const CameraPosition _kGooglePlex = CameraPosition(
     target: LatLng(36.09826133580664, 129.387749655962),
