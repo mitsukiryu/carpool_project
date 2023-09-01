@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/creating_party.dart';
+import 'package:flutter_application_1/party_list.dart';
 import 'main.dart';
 import 'package:get/get.dart';
-import 'PartyList.dart';
+
 import 'dart:async';
 import 'MyInfo.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -92,7 +93,7 @@ class _HomescreenState extends State<Homescreen> {
                     child: Text('파티 리스트',
                         style: TextStyle(color: Colors.black, fontSize: 20)),
                     onPressed: () {
-                      Get.to(() => PartyList());
+                      Get.to(() => party_list());
                     })),
             VerticalDivider(
               color: Colors.white,

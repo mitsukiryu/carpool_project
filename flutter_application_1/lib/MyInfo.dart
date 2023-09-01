@@ -1,5 +1,4 @@
 import 'package:flutter_application_1/EditProfile.dart';
-import 'package:flutter_application_1/PartyList.dart';
 
 import 'main.dart';
 import 'package:flutter/material.dart';
