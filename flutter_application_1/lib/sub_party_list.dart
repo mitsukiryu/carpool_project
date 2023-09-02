@@ -18,6 +18,7 @@ class sub_party_list extends StatelessWidget {
   String subMemberName3 = "안현빈";
   String subMemberPhone3 = "010-8888-8888";
 
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
@@ -39,112 +40,112 @@ class sub_party_list extends StatelessWidget {
               child: Row(
                 children: [
                   Expanded(
-                    child: SizedBox(),
                     flex: contextSpace,
+                    child: SizedBox(),
                   ),
-                  Expanded(child: Text('날짜'), flex: contextFont),
+                  Expanded(flex: contextFont, child: Text('날짜')),
                   Expanded(
-                    child: SizedBox(),
                     flex: contextSpace,
-                  ),
-                  Expanded(
                     child: SizedBox(),
-                    flex: contextSpace,
-                  ),
-                  Expanded(child: Text('종류'), flex: contextFont),
-                  Expanded(
-                    child: SizedBox(),
-                    flex: contextSpace,
                   ),
                   Expanded(
-                    child: SizedBox(),
                     flex: contextSpace,
+                    child: SizedBox(),
                   ),
-                  Expanded(child: Text('출발'), flex: contextFont),
+                  Expanded(flex: contextFont, child: Text('종류')),
                   Expanded(
-                    child: SizedBox(),
                     flex: contextSpace,
-                  ),
-                  Expanded(
                     child: SizedBox(),
-                    flex: contextSpace,
-                  ),
-                  Expanded(child: Text('도착'), flex: contextFont),
-                  Expanded(
-                    child: SizedBox(),
-                    flex: contextSpace,
                   ),
                   Expanded(
-                    child: SizedBox(),
                     flex: contextSpace,
+                    child: SizedBox(),
                   ),
-                  Expanded(child: Text('현황'), flex: contextFont),
+                  Expanded(flex: contextFont, child: Text('출발')),
+                  Expanded(
+                    flex: contextSpace,
+                    child: SizedBox(),
+                  ),
+                  Expanded(
+                    flex: contextSpace,
+                    child: SizedBox(),
+                  ),
+                  Expanded(flex: contextFont, child: Text('도착')),
+                  Expanded(
+                    flex: contextSpace,
+                    child: SizedBox(),
+                  ),
+                  Expanded(
+                    flex: contextSpace,
+                    child: SizedBox(),
+                  ),
+                  Expanded(flex: contextFont, child: Text('현황')),
                 ],
               ),
             ),
-            Container(
+            SizedBox(
               height: 90,
               child: Row(
                 children: [
                   Expanded(
-                    child: SizedBox(),
                     flex: contextSpace,
+                    child: SizedBox(),
                   ),
-                  Expanded(child: Text('날짜'), flex: contextFont),
+                  Expanded(flex: contextFont, child: Text('날짜')),
                   Expanded(
-                    child: SizedBox(),
                     flex: contextSpace,
-                  ),
-                  Expanded(
                     child: SizedBox(),
-                    flex: contextSpace,
-                  ),
-                  Expanded(child: Text('종류'), flex: contextFont),
-                  Expanded(
-                    child: SizedBox(),
-                    flex: contextSpace,
                   ),
                   Expanded(
-                    child: SizedBox(),
                     flex: contextSpace,
+                    child: SizedBox(),
+                  ),
+                  Expanded(flex: contextFont, child: Text('종류')),
+                  Expanded(
+                    flex: contextSpace,
+                    child: SizedBox(),
                   ),
                   Expanded(
+                    flex: contextSpace,
+                    child: SizedBox(),
+                  ),
+                  Expanded(
+                      flex: contextFont,
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
+                        children: const [
                           Expanded(
-                            child: SizedBox(),
                             flex: 1,
+                            child: SizedBox(),
                           ),
                           Expanded(
+                            flex: 2,
                             child: Text('시간'),
-                            flex: 2,
                           ),
                           Expanded(
-                            child: Text('출발'),
                             flex: 2,
+                            child: Text('출발'),
                           )
                         ],
-                      ),
-                      flex: contextFont),
+                      )),
                   Expanded(
-                    child: SizedBox(),
                     flex: contextSpace,
+                    child: SizedBox(),
                   ),
                   Expanded(
-                    child: SizedBox(),
                     flex: contextSpace,
+                    child: SizedBox(),
                   ),
-                  Expanded(child: Text('도착'), flex: contextFont),
+                  Expanded(flex: contextFont, child: Text('도착')),
                   Expanded(
-                    child: SizedBox(),
                     flex: contextSpace,
+                    child: SizedBox(),
                   ),
                   Expanded(
-                    child: SizedBox(),
                     flex: contextSpace,
+                    child: SizedBox(),
                   ),
-                  Expanded(child: Text('현황'), flex: contextFont),
+                  Expanded(flex: contextFont, child: Text('현황')),
                 ],
               ),
             ),
@@ -154,41 +155,41 @@ class sub_party_list extends StatelessWidget {
             Row(
               children: [
                 Expanded(
-                  child: SizedBox(),
                   flex: 2,
+                  child: SizedBox(),
                 ),
                 Expanded(
+                  flex: 7,
                   child: Text(
                     '파티장',
                     style: TextStyle(fontSize: subInfo),
                   ),
-                  flex: 7,
                 ),
                 Expanded(
-                  child: SizedBox(),
                   flex: 2,
+                  child: SizedBox(),
                 ),
                 Expanded(
+                  flex: 7,
                   child: Text(
                     subLeaderName,
                     style: TextStyle(fontSize: subInfo),
                   ),
-                  flex: 7,
                 ),
                 Expanded(
-                  child: SizedBox(),
                   flex: 2,
+                  child: SizedBox(),
                 ),
                 Expanded(
+                  flex: 14,
                   child: Text(
                     subLeaderPhone,
                     style: TextStyle(fontSize: subInfo),
                   ),
-                  flex: 14,
                 ),
                 Expanded(
-                  child: SizedBox(),
                   flex: 2,
+                  child: SizedBox(),
                 ),
               ],
             ),
@@ -198,41 +199,41 @@ class sub_party_list extends StatelessWidget {
             Row(
               children: [
                 Expanded(
-                  child: SizedBox(),
                   flex: 2,
+                  child: SizedBox(),
                 ),
                 Expanded(
+                  flex: 7,
                   child: Text(
                     '파티원1',
                     style: TextStyle(fontSize: subInfo),
                   ),
-                  flex: 7,
                 ),
                 Expanded(
-                  child: SizedBox(),
                   flex: 2,
+                  child: SizedBox(),
                 ),
                 Expanded(
+                  flex: 7,
                   child: Text(
                     subMemberName1,
                     style: TextStyle(fontSize: subInfo),
                   ),
-                  flex: 7,
                 ),
                 Expanded(
-                  child: SizedBox(),
                   flex: 2,
+                  child: SizedBox(),
                 ),
                 Expanded(
+                  flex: 14,
                   child: Text(
                     subMemberPhone1,
                     style: TextStyle(fontSize: subInfo),
                   ),
-                  flex: 14,
                 ),
                 Expanded(
-                  child: SizedBox(),
                   flex: 2,
+                  child: SizedBox(),
                 ),
               ],
             ),
@@ -242,41 +243,41 @@ class sub_party_list extends StatelessWidget {
             Row(
               children: [
                 Expanded(
-                  child: SizedBox(),
                   flex: 2,
+                  child: SizedBox(),
                 ),
                 Expanded(
+                  flex: 7,
                   child: Text(
                     '파티원2',
                     style: TextStyle(fontSize: subInfo),
                   ),
-                  flex: 7,
                 ),
                 Expanded(
-                  child: SizedBox(),
                   flex: 2,
+                  child: SizedBox(),
                 ),
                 Expanded(
+                  flex: 7,
                   child: Text(
                     subMemberName2,
                     style: TextStyle(fontSize: subInfo),
                   ),
-                  flex: 7,
                 ),
                 Expanded(
-                  child: SizedBox(),
                   flex: 2,
+                  child: SizedBox(),
                 ),
                 Expanded(
+                  flex: 14,
                   child: Text(
                     subMemberPhone2,
                     style: TextStyle(fontSize: subInfo),
                   ),
-                  flex: 14,
                 ),
                 Expanded(
-                  child: SizedBox(),
                   flex: 2,
+                  child: SizedBox(),
                 ),
               ],
             ),
@@ -286,41 +287,41 @@ class sub_party_list extends StatelessWidget {
             Row(
               children: [
                 Expanded(
-                  child: SizedBox(),
                   flex: 2,
+                  child: SizedBox(),
                 ),
                 Expanded(
+                  flex: 7,
                   child: Text(
                     '파티원3',
                     style: TextStyle(fontSize: subInfo),
                   ),
-                  flex: 7,
                 ),
                 Expanded(
-                  child: SizedBox(),
                   flex: 2,
+                  child: SizedBox(),
                 ),
                 Expanded(
+                  flex: 7,
                   child: Text(
                     subMemberName3,
                     style: TextStyle(fontSize: subInfo),
                   ),
-                  flex: 7,
                 ),
                 Expanded(
-                  child: SizedBox(),
                   flex: 2,
+                  child: SizedBox(),
                 ),
                 Expanded(
+                  flex: 14,
                   child: Text(
                     subMemberPhone3,
                     style: TextStyle(fontSize: subInfo),
                   ),
-                  flex: 14,
                 ),
                 Expanded(
-                  child: SizedBox(),
                   flex: 2,
+                  child: SizedBox(),
                 ),
               ],
             ),
@@ -328,7 +329,7 @@ class sub_party_list extends StatelessWidget {
               height: 30,
             ),
             Row(children: [
-              Expanded(child: SizedBox(), flex: 2),
+              Expanded(flex: 2, child: SizedBox()),
               Expanded(
                 flex: 4,
                 child: Container(
@@ -351,7 +352,7 @@ class sub_party_list extends StatelessWidget {
                   ),
                 ),
               ),
-              Expanded(child: SizedBox(), flex: 2),
+              Expanded(flex: 2, child: SizedBox()),
             ]),
           ],
         ));

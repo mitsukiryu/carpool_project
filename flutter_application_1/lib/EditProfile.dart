@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/HomeScreen.dart';
 import 'package:get/get.dart';
 
 class EditProflie extends StatelessWidget {
@@ -85,7 +84,7 @@ class EditProflie extends StatelessWidget {
                 height: 15,
               ),
               Row(children: [
-                Expanded(child: SizedBox(), flex: 1),
+                Expanded(flex: 1, child: SizedBox()),
                 Expanded(
                   flex: 4,
                   child: Container(
@@ -108,7 +107,7 @@ class EditProflie extends StatelessWidget {
                     ),
                   ),
                 ),
-                Expanded(child: SizedBox(), flex: 1),
+                Expanded(flex: 1, child: SizedBox()),
                 Expanded(
                   flex: 4,
                   child: Container(
@@ -132,7 +131,7 @@ class EditProflie extends StatelessWidget {
                     ),
                   ),
                 ),
-                Expanded(child: SizedBox(), flex: 1),
+                Expanded(flex: 1, child: SizedBox()),
               ]),
             ],
           ),

@@ -53,7 +53,7 @@ class finding_id extends StatelessWidget {
           height: 20,
         ),
         Row(children: [
-          Expanded(child: SizedBox(), flex: 2),
+          Expanded(flex: 2, child: SizedBox()),
           Expanded(
             flex: 4,
             child: Container(
@@ -76,7 +76,7 @@ class finding_id extends StatelessWidget {
               ),
             ),
           ),
-          Expanded(child: SizedBox(), flex: 2),
+          Expanded(flex: 2, child: SizedBox()),
         ]),
       ]),
     );

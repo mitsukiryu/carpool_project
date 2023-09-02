@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/creating_party.dart';
 import 'package:flutter_application_1/party_list.dart';
-import 'main.dart';
 import 'package:get/get.dart';
 
 import 'dart:async';
 import 'MyInfo.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'login & signin/login_page.dart';
 
 class Homescreen extends StatefulWidget {
   const Homescreen({super.key});
@@ -19,7 +17,7 @@ class Homescreen extends StatefulWidget {
 class _HomescreenState extends State<Homescreen> {
   final Completer<GoogleMapController> _controller =
       Completer<GoogleMapController>();
-  TextEditingController _searchCon = TextEditingController();
+  final TextEditingController _searchCon = TextEditingController();
 
   static const CameraPosition _kGooglePlex = CameraPosition(
     target: LatLng(36.09826133580664, 129.387749655962),

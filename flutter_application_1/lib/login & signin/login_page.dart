@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import '../HomeScreen.dart';
 import 'package:get/get.dart';
 import 'Signin_choose.dart';
-import 'Singin_page.dart';
 import 'choosing_finding_id_pw.dart';
 
 class Login_Page extends StatelessWidget {
@@ -77,8 +76,8 @@ class Login_Page extends StatelessWidget {
           Row(
             children: [
               Expanded(
-                child: SizedBox(),
                 flex: 1,
+                child: SizedBox(),
               ),
               Expanded(
                 flex: 4,
@@ -96,8 +95,8 @@ class Login_Page extends StatelessWidget {
                 ),
               ),
               Expanded(
-                child: SizedBox(),
                 flex: 1,
+                child: SizedBox(),
               ),
               Expanded(
                 flex: 2,
@@ -115,8 +114,8 @@ class Login_Page extends StatelessWidget {
                 ),
               ),
               Expanded(
-                child: SizedBox(),
                 flex: 1,
+                child: SizedBox(),
               ),
             ],
           )
