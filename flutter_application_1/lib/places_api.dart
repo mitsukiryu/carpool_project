@@ -4,27 +4,32 @@ import 'dart:convert' as convert;
 class places_api {
   final String key = 'AIzaSyDb07Vf1svXpIzmxKzzqskSkDARb5Nzeco';
 
-  Future<String> get_place_id(String input) async {
+  Future<Map<String, dynamic>> get_place_id(String input) async {
     final String url = 'https://places.googleapis.com/v1/places:searchText';
 
     var response = await http.post(Uri.parse(url),
         headers: {
           "Content-Type": 'application/json',
           'X-Goog-Api-Key': 'AIzaSyDb07Vf1svXpIzmxKzzqskSkDARb5Nzeco',
-          'X-Goog-FieldMask': 'places.displayName,places.formattedAddress',
+          // 'rankPreference': 'DISTANCE',
+          'X-Goog-FieldMask':
+              'places.displayName,places.formattedAddress,places.location,places.photos',
         },
         body: convert.jsonEncode({'textQuery': '$input'}));
 
+    Map<String, dynamic> placejson = convert.jsonDecode(response.body);
+
+    var placeloc = placejson['places'][0]['location'];
+
     if (response.statusCode == 200) {
-      final responseBody = convert.jsonDecode(response.body);
-      print(responseBody);
+      print(placejson);
     } else {
       print('Request failed with status: ${response.statusCode}');
     }
 
     // print(placeId);
 
-    return response.body;
+    return placejson;
   }
 
   // Future<String> get_place_id(String input) async {}

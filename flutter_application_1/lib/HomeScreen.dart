@@ -7,6 +7,9 @@ import 'dart:async';
 import 'MyInfo.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'login & signin/login_page.dart';
+import 'package:get/get.dart';
+import 'PartyList.dart';
+import 'bottom_popup.dart';
 
 class Homescreen extends StatefulWidget {
   const Homescreen({super.key});
@@ -16,14 +19,40 @@ class Homescreen extends StatefulWidget {
 }
 
 class _HomescreenState extends State<Homescreen> {
-  final Completer<GoogleMapController> _controller =
-      Completer<GoogleMapController>();
+  final Completer<GoogleMapController> _controller = Completer();
   TextEditingController _searchCon = TextEditingController();
+
+  Set<Marker> _markers = Set<Marker>();
 
   static const CameraPosition _kGooglePlex = CameraPosition(
     target: LatLng(36.09826133580664, 129.387749655962),
     zoom: 14.4746,
   );
+
+  Future<void> goToPlace(Map<String, dynamic> place) async {
+    final double lat = place['places'][0]['location']['latitude'];
+    final double lng = place['places'][0]['location']['longitude'];
+
+    final GoogleMapController controller = await _controller.future;
+    controller.animateCamera(CameraUpdate.newCameraPosition(
+        CameraPosition(target: LatLng(lat, lng), zoom: 13, tilt: 30)));
+  }
+
+  void _setMarker(Map<String, dynamic> place, i) {
+    final double lat = place['latitude'];
+    final double lng = place['longitude'];
+    setState(() {
+      _markers.add(
+        Marker(
+          markerId: MarkerId('marker$i'),
+          position: LatLng(lat, lng),
+          onTap: () {
+            bottom_popup(context);
+          },
+        ),
+      );
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -37,14 +66,19 @@ class _HomescreenState extends State<Homescreen> {
                   controller: _searchCon,
                   textCapitalization: TextCapitalization.words,
                   decoration: InputDecoration(hintText: 'Search by KeyWords'),
-                  onChanged: (value) {
-                    print(value);
-                  },
                 ),
               ),
               IconButton(
-                onPressed: () {
-                  places_api().get_place_id(_searchCon.text);
+                onPressed: () async {
+                  var place = await places_api().get_place_id(_searchCon.text);
+                  for (int i = 0; i <= 10; i++) {
+                    if (place['places'][i] != null) {
+                      _setMarker(place['places'][i]['location'], i);
+                    } else {
+                      break;
+                    }
+                  }
+                  goToPlace(place);
                 },
                 icon: Icon(Icons.search),
               ),
@@ -57,6 +91,7 @@ class _HomescreenState extends State<Homescreen> {
               onMapCreated: (GoogleMapController controller) {
                 _controller.complete(controller);
               },
+              markers: _markers,
             ),
           ),
         ],
