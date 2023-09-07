@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/places_api.dart';
-import 'main.dart';
+import 'package:flutter_application_1/creating_party.dart';
+import 'package:flutter_application_1/party_list.dart';
 import 'package:get/get.dart';
-import 'PartyList.dart';
+
 import 'dart:async';
 import 'MyInfo.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'login & signin/login_page.dart';
 import 'package:get/get.dart';
-import 'PartyList.dart';
+import 'party_list.dart';
 import 'bottom_popup.dart';
+import 'places_api.dart';
 
 class Homescreen extends StatefulWidget {
   const Homescreen({super.key});
@@ -96,6 +96,14 @@ class _HomescreenState extends State<Homescreen> {
           ),
         ],
       ),
+
+      // body: GoogleMap(
+      //   mapType: MapType.hybrid,
+      //   initialCameraPosition: _kGooglePlex,
+      //   onMapCreated: (GoogleMapController controller) {
+      //     _controller.complete(controller);
+      //   },
+      // ),
       // body: Center(
       //   child: SingleChildScrollView(
       //     child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
@@ -141,7 +149,7 @@ class _HomescreenState extends State<Homescreen> {
                     child: Text('파티 리스트',
                         style: TextStyle(color: Colors.black, fontSize: 20)),
                     onPressed: () {
-                      Get.to(() => PartyList());
+                      Get.to(() => party_list());
                     })),
             VerticalDivider(
               color: Colors.white,

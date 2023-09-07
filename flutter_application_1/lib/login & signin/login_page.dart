@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import '../HomeScreen.dart';
 import 'package:get/get.dart';
 import 'Signin_choose.dart';
-import 'Singin_page.dart';
+import 'choosing_finding_id_pw.dart';
 
 class Login_Page extends StatelessWidget {
   const Login_Page({super.key});
@@ -76,14 +76,14 @@ class Login_Page extends StatelessWidget {
           Row(
             children: [
               Expanded(
-                child: SizedBox(),
                 flex: 1,
+                child: SizedBox(),
               ),
               Expanded(
                 flex: 4,
                 child: TextButton(
                   onPressed: () {
-                    Get.to(() => Signin_choose());
+                    Get.to(() => Choosing_finding_id_pw());
                   },
                   child: Text(
                     '아이디 / 비밀번호 찾기',
@@ -95,8 +95,8 @@ class Login_Page extends StatelessWidget {
                 ),
               ),
               Expanded(
-                child: SizedBox(),
                 flex: 1,
+                child: SizedBox(),
               ),
               Expanded(
                 flex: 2,
@@ -114,8 +114,8 @@ class Login_Page extends StatelessWidget {
                 ),
               ),
               Expanded(
-                child: SizedBox(),
                 flex: 1,
+                child: SizedBox(),
               ),
             ],
           )

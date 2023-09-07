@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_1/SplashScreen.dart';
 import 'package:get/get.dart';
 import 'HomeScreen.dart';
-import 'PartyList.dart';
+import 'party_list.dart';
 import 'MyInfo.dart';
 import 'EditProfile.dart';
 // import 'package:flutter/src/widgets/framework.dart';
@@ -34,7 +34,7 @@ class MyApp extends StatelessWidget {
         ),
         GetPage(
           name: '/PartyList',
-          page: () => PartyList(),
+          page: () => party_list(),
         ),
         GetPage(
           name: '/EditProflie',

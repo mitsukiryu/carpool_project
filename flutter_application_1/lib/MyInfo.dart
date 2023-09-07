@@ -1,7 +1,5 @@
 import 'package:flutter_application_1/EditProfile.dart';
-import 'package:flutter_application_1/PartyList.dart';
 
-import 'main.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -18,8 +16,8 @@ class _MyInfoState extends State<MyInfo> {
     return Scaffold(
       appBar: AppBar(
         title: Text(''), // You can add title here
-        leading: new IconButton(
-          icon: new Icon(
+        leading: IconButton(
+          icon: Icon(
             Icons.arrow_back_ios,
             color: Colors.grey,
             size: 30,
@@ -58,7 +56,7 @@ class _MyInfoState extends State<MyInfo> {
             SizedBox(
               width: 200,
               child: ElevatedButton(
-                style: ElevatedButton.styleFrom(primary: Colors.grey),
+                style: ElevatedButton.styleFrom(backgroundColor: Colors.grey),
                 onPressed: () {
                   Get.to(() => EditProflie());
                 },
@@ -66,26 +64,26 @@ class _MyInfoState extends State<MyInfo> {
               ),
             ),
             SizedBox(height: 8),
-            SizedBox(
-              width: 200,
-              child: ElevatedButton(
-                style: ElevatedButton.styleFrom(primary: Colors.grey),
-                onPressed: () {
-                  // Action for "푸시알림 설정" button
-                },
-                child: Text('푸시알림 설정'),
-              ),
-            ),
-            SizedBox(
-              width: 200,
-              child: ElevatedButton(
-                style: ElevatedButton.styleFrom(primary: Colors.grey),
-                onPressed: () {
-                  // Action for "푸시알림 설정" button
-                },
-                child: Text('현제 참여중인 파티'),
-              ),
-            ),
+            // SizedBox(
+            //   width: 200,
+            //   child: ElevatedButton(
+            //     style: ElevatedButton.styleFrom(backgroundColor: Colors.grey),
+            //     onPressed: () {
+            //       // Action for "푸시알림 설정" button
+            //     },
+            //     child: Text('푸시알림 설정'),
+            //   ),
+            // ),
+            // SizedBox(
+            //   width: 200,
+            //   child: ElevatedButton(
+            //     style: ElevatedButton.styleFrom(primary: Colors.grey),
+            //     onPressed: () {
+            //       // Action for "푸시알림 설정" button
+            //     },
+            //     child: Text('현제 참여중인 파티'),
+            //   ),
+            // ),
           ],
         ),
       ),

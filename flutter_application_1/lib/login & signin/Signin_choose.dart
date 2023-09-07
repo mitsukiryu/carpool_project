@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/HomeScreen.dart';
 import 'package:get/get.dart';
-import 'package:flutter_application_1/login%20&%20signin/Signin_choose.dart';
 import 'Singin_page.dart';
 
 class Signin_choose extends StatelessWidget {
