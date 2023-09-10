@@ -1,4 +1,4 @@
-import "dart:ffi";
+import "package:flutter/rendering.dart";
 import 'package:intl/intl.dart';
 import "package:get/get.dart";
 import "package:flutter/material.dart";
@@ -27,57 +27,159 @@ class _creating_partyState extends State<creating_party> {
     String notthingStatement = "";
     String taxiStatement = "택시를 선택하셨습니다";
     String carpoolStatement = "카풀을 선택하셨습니다";
+    var taxiColor = Colors.white;
+    var carPoolColor = Colors.white;
+    String selected = "none";
 
     return Scaffold(
-        resizeToAvoidBottomInset: true,
-        appBar: AppBar(
-          leading: IconButton(
-              icon: Icon(
-                Icons.arrow_back_ios,
-                color: Colors.grey,
-                size: 30,
-              ),
-              onPressed: () => Get.back()),
-          backgroundColor: Colors.white,
-          elevation: 0.0,
-          title: Text('파티 생성',
-              style: TextStyle(
-                  color: Color.fromARGB(255, 110, 110, 110),
-                  fontWeight: FontWeight.bold)),
-        ),
-        body: SingleChildScrollView(
-          child: Column(children: [
+      resizeToAvoidBottomInset: true,
+      appBar: AppBar(
+        leading: IconButton(
+            icon: Icon(
+              Icons.arrow_back_ios,
+              color: Colors.grey,
+              size: 30,
+            ),
+            onPressed: () => Get.back()),
+        backgroundColor: Colors.white,
+        elevation: 0.0,
+        title: Text('파티 생성',
+            style: TextStyle(
+                color: Color.fromARGB(255, 110, 110, 110),
+                fontWeight: FontWeight.bold)),
+      ),
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
             SizedBox(
               height: 20,
             ),
-            Container(
-              // color: const Color.fromARGB(255, 212, 212, 212),
-              decoration: BoxDecoration(
-                  color: Colors.grey,
-                  border: Border.all(width: 2, color: Colors.black)),
-              height: 60,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Expanded(
-                      child: TextButton(
-                          child: Text('택시',
-                              style:
-                                  TextStyle(color: Colors.black, fontSize: 20)),
-                          onPressed: () {})),
-                  VerticalDivider(
-                    color: const Color.fromARGB(255, 0, 0, 0),
-                    thickness: 3,
+            Row(
+              children: [
+                Expanded(
+                  flex: 1,
+                  child: GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        selected = "first"; // Update the selected variable
+                      });
+                    },
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: selected == "first"
+                            ? Colors.grey
+                            : Colors.transparent,
+                        border: Border.all(width: 2, color: Colors.black),
+                      ),
+                      height: 60,
+                      child: Center(
+                        child: Text(
+                          '택시',
+                          style: TextStyle(color: Colors.black, fontSize: 20),
+                        ),
+                      ),
+                    ),
                   ),
-                  Expanded(
-                      child: TextButton(
+                ),
+                Expanded(
+                  flex: 1,
+                  child: GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        selected = "second";
+                      });
+                    },
+                    child: Container(
+                      decoration: BoxDecoration(
+                          color: selected == "second"
+                              ? Colors.grey
+                              : Colors.transparent,
+                          border: Border.all(width: 2, color: Colors.black)),
+                      height: 60,
+                      child: Center(
                           child: Text('카풀',
-                              style:
-                                  TextStyle(color: Colors.black, fontSize: 20)),
-                          onPressed: () {}))
-                ],
-              ),
+                              style: TextStyle(
+                                  color: Colors.black, fontSize: 20))),
+                    ),
+                  ),
+                ),
+              ],
             ),
+            // GestureDetector(
+            //   onTap: () {
+            //     setState(() {
+            //       selected = 'first';
+            //     });
+            //   },
+            //   child: Container(
+            //     height: 200,
+            //     width: 200,
+            //     color: selected == 'first' ? Colors.blue : Colors.transparent,
+            //     child: Text("First"),
+            //   ),
+            // ),
+
+            // Expanded(
+            //   flex: 1,
+            //   child: GestureDetector(
+            //     child: Container(
+            //       decoration: BoxDecoration(
+            //           color: selected == "thrid"
+            //               ? Colors.black
+            //               : Colors.amberAccent),
+            //     ),
+            //     onTap: () {
+            //       setState(() {
+            //         selected = "thrid";
+            //       });
+            //     },
+            //   ),
+            // ),
+
+            // GestureDetector(
+            //   child: Expanded(
+            //     flex: 1,
+            //     child: Container(
+            //       decoration: BoxDecoration(
+            //           color: selected == "thrid"
+            //               ? Colors.black
+            //               : Colors.amberAccent),
+            //     ),
+            //   ),
+            //   onTap: () {
+            //     setState(() {
+            //       selected = "thrid";
+            //     });
+            //   },
+            // ),
+            // Container(
+            //   // color: const Color.fromARGB(255, 212, 212, 212),
+            //   decoration: BoxDecoration(
+            //       color: Colors.grey,
+            //       border: Border.all(width: 2, color: Colors.black)),
+            //   height: 60,
+            //   child: Row(
+            //     mainAxisAlignment: MainAxisAlignment.center,
+            //     children: <Widget>[
+            //       Expanded(
+            //           child: TextButton(
+            //               child: Text('택시',
+            //                   style:
+            //                       TextStyle(color: Colors.black, fontSize: 20)),
+            //               onPressed: () {})),
+            //       VerticalDivider(
+            //         color: const Color.fromARGB(255, 0, 0, 0),
+            //         thickness: 3,
+            //       ),
+            //       Expanded(
+            //           child: TextButton(
+            //               child: Text('카풀',
+            //                   style:
+            //                       TextStyle(color: Colors.black, fontSize: 20)),
+            //               onPressed: () {}))
+            //     ],
+            //   ),
+            // ),
             SizedBox(
               height: 20,
             ),
@@ -351,7 +453,9 @@ class _creating_partyState extends State<creating_party> {
                 ]),
               ],
             ),
-          ]),
-        ));
+          ],
+        ),
+      ),
+    );
   }
 }

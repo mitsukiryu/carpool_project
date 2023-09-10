@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'changepw.dart';
 
 class EditProflie extends StatelessWidget {
   const EditProflie({super.key});
@@ -31,7 +32,7 @@ class EditProflie extends StatelessWidget {
                 child: TextField(
                   decoration: InputDecoration(
                       border: OutlineInputBorder(),
-                      labelText: '류황희',
+                      labelText: '이름',
                       hintText: '변경할 이름을 입력해주세요'),
                 ),
               ),
@@ -40,34 +41,66 @@ class EditProflie extends StatelessWidget {
                 child: TextField(
                   decoration: InputDecoration(
                       border: OutlineInputBorder(),
-                      labelText: '아이디 들어가야함',
+                      labelText: '아이디',
                       hintText: '변경할 아이디를 입력해주세요'),
                 ),
               ),
-              Padding(
-                padding: EdgeInsets.all(10),
-                child: TextField(
-                  decoration: InputDecoration(
-                      border: OutlineInputBorder(),
-                      labelText: '현재 비밀번호 입력',
-                      hintText: '현재 비밀번호를 입력해주세요'),
-                ),
+              Row(
+                children: [
+                  Expanded(
+                    flex: 1,
+                    child: SizedBox(),
+                  ),
+                  Expanded(
+                    flex: 35,
+                    child: GestureDetector(
+                      onTap: () {
+                        Get.to(() => ChangePasswordPage());
+                      },
+                      child: Container(
+                        height: 65, // Adjust the height as needed
+                        decoration: BoxDecoration(
+                          color: const Color.fromARGB(255, 206, 206,
+                              206), // Set the desired background color
+                          borderRadius:
+                              BorderRadius.circular(8), // Add rounded corners
+                          border: Border.all(
+                              color: Colors.black, width: 2), // Add border
+                        ),
+                        padding: EdgeInsets.all(
+                            10), // Add padding to center the content
+                        child: Text(
+                          '비밀번호 변경하시려면 클릭해주세요', // Replace with your button text
+                          style: TextStyle(
+                            fontSize: 16, // Adjust the font size as needed
+                            color: Colors.black, // Set the text color
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  Expanded(
+                    flex: 1,
+                    child: SizedBox(),
+                  )
+                ],
               ),
+
+              // Padding(
+              //   padding: EdgeInsets.all(10),
+              //   child: TextField(
+              //     decoration: InputDecoration(
+              //         border: OutlineInputBorder(),
+              //         labelText: '변경할 비밀번호 입력',
+              //         hintText: '변경할 비밀번호를 입력해주세요'),
+              //   ),
+              // ),
               Padding(
                 padding: EdgeInsets.all(10),
                 child: TextField(
                   decoration: InputDecoration(
                       border: OutlineInputBorder(),
-                      labelText: '변경할 비밀번호 입력',
-                      hintText: '변경할 비밀번호를 입력해주세요'),
-                ),
-              ),
-              Padding(
-                padding: EdgeInsets.all(10),
-                child: TextField(
-                  decoration: InputDecoration(
-                      border: OutlineInputBorder(),
-                      labelText: '010-6003-2345',
+                      labelText: '전화번호',
                       hintText: '변경할 전화번호를 입력해주세요'),
                 ),
               ),
@@ -76,10 +109,11 @@ class EditProflie extends StatelessWidget {
                 child: TextField(
                   decoration: InputDecoration(
                       border: OutlineInputBorder(),
-                      labelText: 'hi1234@his.sc.kr',
+                      labelText: '이메일',
                       hintText: '변경할 이메일을 입력해주세요'),
                 ),
               ),
+
               SizedBox(
                 height: 15,
               ),

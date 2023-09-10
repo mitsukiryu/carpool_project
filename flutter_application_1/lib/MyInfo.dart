@@ -1,7 +1,8 @@
 import 'package:flutter_application_1/EditProfile.dart';
-
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/provider/user_information.dart';
 import 'package:get/get.dart';
+import 'package:provider/provider.dart';
 
 class MyInfo extends StatefulWidget {
   const MyInfo({super.key});
@@ -39,17 +40,19 @@ class _MyInfoState extends State<MyInfo> {
             ),
             SizedBox(height: 16),
             Text(
-              '류황희',
+              Provider.of<UserInformationProvider>(context).name.toString(),
               style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
             ),
             SizedBox(height: 8),
             Text(
-              '010-1234-1234',
+              Provider.of<UserInformationProvider>(context)
+                  .phoneNumber
+                  .toString(),
               style: TextStyle(fontSize: 18),
             ),
             SizedBox(height: 8),
             Text(
-              'hi2024@his.sc.kr',
+              Provider.of<UserInformationProvider>(context).email.toString(),
               style: TextStyle(fontSize: 18),
             ),
             SizedBox(height: 16),

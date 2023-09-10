@@ -1,14 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/SplashScreen.dart';
+import 'package:flutter_application_1/provider/user_information.dart';
 import 'package:get/get.dart';
 import 'HomeScreen.dart';
 import 'party_list.dart';
 import 'MyInfo.dart';
 import 'EditProfile.dart';
+import 'package:provider/provider.dart';
 // import 'package:flutter/src/widgets/framework.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(ChangeNotifierProvider(
+      create: (BuildContext context) => UserInformationProvider(),
+      child: MyApp()));
 }
 
 class MyApp extends StatelessWidget {
