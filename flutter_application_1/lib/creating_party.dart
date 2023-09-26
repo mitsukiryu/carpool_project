@@ -27,9 +27,26 @@ class _creating_partyState extends State<creating_party> {
     String notthingStatement = "";
     String taxiStatement = "택시를 선택하셨습니다";
     String carpoolStatement = "카풀을 선택하셨습니다";
-    var taxiColor = Colors.white;
-    var carPoolColor = Colors.white;
+    Color carpoolButtonColor = Colors.grey;
+    Color taxiButtonColor = Colors.grey;
+    const List<Widget> statusChoice = <Widget>[
+      Text('카풀'),
+      Text('택시'),
+    ];
+    final List<bool> _selectedStatus = <bool>[true, false];
     String selected = "none";
+    bool vertical = false;
+    void _changeColor(String selected) {
+      setState(() {
+        if (selected == "carpool") {
+          carpoolButtonColor = Colors.blue;
+          taxiButtonColor = Colors.grey;
+        } else if (selected == "taxi") {
+          carpoolButtonColor = Colors.grey;
+          taxiButtonColor = Colors.blue;
+        }
+      });
+    }
 
     return Scaffold(
       resizeToAvoidBottomInset: true,
@@ -182,6 +199,36 @@ class _creating_partyState extends State<creating_party> {
             // ),
             SizedBox(
               height: 20,
+            ),
+
+            ToggleButtons(
+              // direction: vertical ? Axis.vertical : Axis.horizontal,
+              onPressed: (int newIndex) {
+                print(newIndex);
+                setState(() {
+                  // The button that is tapped is set to true, and the others to false.
+                  for (int index = 0; index < _selectedStatus.length; index++) {
+                    if (index == newIndex) {
+                      // toggling between the button to set it to true
+                      _selectedStatus[index] = !_selectedStatus[index];
+                    } else {
+                      // other two buttons will not be selected and are set to false
+                      _selectedStatus[index] = false;
+                    }
+                  }
+                });
+              },
+              borderRadius: const BorderRadius.all(Radius.circular(8)),
+              selectedBorderColor: Colors.red[700],
+              selectedColor: Colors.white,
+              fillColor: Colors.red[200],
+              color: Colors.red[400],
+              constraints: const BoxConstraints(
+                minHeight: 40.0,
+                minWidth: 80.0,
+              ),
+              isSelected: _selectedStatus,
+              children: statusChoice,
             ),
             Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'Singin_page.dart';
+import 'Passenger_Singin_page.dart';
+import 'Driver_Signin_page.dart';
 
 class Signin_choose extends StatelessWidget {
   const Signin_choose({super.key});
@@ -58,7 +59,7 @@ class Signin_choose extends StatelessWidget {
               ),
               GestureDetector(
                 onTap: () {
-                  Get.to(() => Signin_page());
+                  Get.to(() => Driver_Signin_page());
                 },
                 child: Container(
                   width: 150,
