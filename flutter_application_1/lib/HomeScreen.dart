@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/creating_party.dart';
+import 'package:flutter_application_1/autocomplete_prediction.dart';
 import 'package:flutter_application_1/party_list.dart';
 import 'package:get/get.dart';
-
 import 'dart:async';
 import 'MyInfo.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:get/get.dart';
-import 'party_list.dart';
 import 'bottom_popup.dart';
 import 'places_api.dart';
+import 'autocomplete.dart';
+import 'complete_response.dart';
+import 'location_list_tile.dart';
 
 class Homescreen extends StatefulWidget {
   const Homescreen({super.key});
@@ -19,6 +19,27 @@ class Homescreen extends StatefulWidget {
 }
 
 class _HomescreenState extends State<Homescreen> {
+  List<AutocompletePrediction> placePrediction = [];
+
+  void placeAutocomplete(String query) async {
+    Uri uri =
+        Uri.https('maps.googleapis.com', '/maps/api/place/autocomplete/json', {
+      "input": query,
+      'key': 'AIzaSyDuA0YY1zQE7nyC-sj8i8s2VKt9WRDnGh4',
+    });
+    String? response = await get_method.fetchUrl(uri);
+
+    if (response != null) {
+      CompleteResponse result =
+          CompleteResponse.parseAutocompleteResult(response);
+      if (result.predictions != null) {
+        setState(() {
+          placePrediction = result.predictions!;
+        });
+      }
+    }
+  }
+
   final Completer<GoogleMapController> _controller = Completer();
   TextEditingController _searchCon = TextEditingController();
 
@@ -63,6 +84,9 @@ class _HomescreenState extends State<Homescreen> {
             children: [
               Expanded(
                 child: TextFormField(
+                  onChanged: (value) {
+                    placeAutocomplete(value);
+                  },
                   controller: _searchCon,
                   textCapitalization: TextCapitalization.words,
                   decoration: InputDecoration(hintText: 'Search by KeyWords'),
@@ -83,6 +107,14 @@ class _HomescreenState extends State<Homescreen> {
                 icon: Icon(Icons.search),
               ),
             ],
+          ),
+          Expanded(
+            child: ListView.builder(
+                itemCount: placePrediction.length,
+                itemBuilder: (context, index) => LocationListTile(
+                      press: () {},
+                      location: placePrediction[index].description!,
+                    )),
           ),
           Expanded(
             child: GoogleMap(
