@@ -77,124 +77,96 @@ class _HomescreenState extends State<Homescreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Column(
-        children: [
-          Row(
-            children: [
-              Expanded(
-                child: TextFormField(
-                  onChanged: (value) {
-                    placeAutocomplete(value);
-                  },
-                  controller: _searchCon,
-                  textCapitalization: TextCapitalization.words,
-                  decoration: InputDecoration(hintText: 'Search by KeyWords'),
+    return SafeArea(
+      child: Scaffold(
+        floatingActionButton: FloatingActionButton(
+          tooltip: 'Add', // used by assistive technologies
+          onPressed: () {
+            Get.to(() => creating_party());
+          },
+          backgroundColor: Colors.grey,
+          child: Icon(
+            Icons.add,
+            color: Colors.black,
+          ),
+        ),
+        body: Column(
+          children: [
+            Row(
+              children: [
+                Expanded(
+                  child: TextFormField(
+                    onChanged: (value) {
+                      placeAutocomplete(value);
+                    },
+                    controller: _searchCon,
+                    textCapitalization: TextCapitalization.words,
+                    decoration: InputDecoration(hintText: 'Search by KeyWords'),
+                  ),
                 ),
-              ),
-              IconButton(
-                onPressed: () async {
-                  var place = await places_api().get_place_id(_searchCon.text);
-                  for (int i = 0; i <= 10; i++) {
-                    if (place['places'][i] != null) {
-                      _setMarker(place['places'][i]['location'], i);
-                    } else {
-                      break;
+                IconButton(
+                  onPressed: () async {
+                    var place =
+                        await places_api().get_place_id(_searchCon.text);
+                    for (int i = 0; i <= 10; i++) {
+                      if (place['places'][i] != null) {
+                        _setMarker(place['places'][i]['location'], i);
+                      } else {
+                        break;
+                      }
                     }
-                  }
-                  goToPlace(place);
+                    goToPlace(place);
+                  },
+                  icon: Icon(Icons.search),
+                ),
+              ],
+            ),
+            Expanded(
+              child: ListView.builder(
+                  itemCount: placePrediction.length,
+                  itemBuilder: (context, index) => LocationListTile(
+                        press: () {},
+                        location: placePrediction[index].description!,
+                      )),
+            ),
+            Expanded(
+              child: GoogleMap(
+                mapType: MapType.normal,
+                initialCameraPosition: _kGooglePlex,
+                onMapCreated: (GoogleMapController controller) {
+                  _controller.complete(controller);
                 },
-                icon: Icon(Icons.search),
+                markers: _markers,
               ),
+            ),
+          ],
+        ),
+        bottomNavigationBar: Container(
+          color: const Color.fromARGB(255, 212, 212, 212),
+          height: 60,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Expanded(
+                  child: TextButton(
+                      child: Text('파티 리스트',
+                          style: TextStyle(color: Colors.black, fontSize: 20)),
+                      onPressed: () {
+                        Get.to(() => party_list());
+                      })),
+              VerticalDivider(
+                color: Colors.white,
+                thickness: 3,
+              ),
+              Expanded(
+                  child: TextButton(
+                      child: Text('내 정보',
+                          style: TextStyle(color: Colors.black, fontSize: 20)),
+                      onPressed: () {
+                        Get.to(() => MyInfo());
+                      }))
             ],
           ),
-          Expanded(
-            child: ListView.builder(
-                itemCount: placePrediction.length,
-                itemBuilder: (context, index) => LocationListTile(
-                      press: () {},
-                      location: placePrediction[index].description!,
-                    )),
-          ),
-          Expanded(
-            child: GoogleMap(
-              mapType: MapType.normal,
-              initialCameraPosition: _kGooglePlex,
-              onMapCreated: (GoogleMapController controller) {
-                _controller.complete(controller);
-              },
-              markers: _markers,
-            ),
-          ),
-        ],
-      ),
-
-      // body: GoogleMap(
-      //   mapType: MapType.hybrid,
-      //   initialCameraPosition: _kGooglePlex,
-      //   onMapCreated: (GoogleMapController controller) {
-      //     _controller.complete(controller);
-      //   },
-      // ),
-      // body: Center(
-      //   child: SingleChildScrollView(
-      //     child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-      //       TextButton(
-      //         onPressed: () {
-      //           // Navigator.of(context).push(
-      //           //   MaterialPageRoute(
-      //           //     builder: (_) => ScreenTwo(),
-      //           //   )
-      //           // );
-
-      //           Get.to(MyInfo());
-      //         },
-      //         child: Text(
-      //           'Screen Two 이동',
-      //         ),
-      //       ),
-      //       TextButton(
-      //         onPressed: () {
-      //           // Navigator.of(context).pushReplacement(
-      //           //   MaterialPageRoute(
-      //           //     builder: (_) => ScreenTwo(),
-      //           //   ),
-      //           // );
-
-      //           Get.off(MyInfo());
-      //         },
-      //         child: Text(
-      //           '전 페이지로 돌아가지 못하게하기',
-      //         ),
-      //       ),
-      //     ]),
-      //   ),
-      // ),
-      bottomNavigationBar: Container(
-        color: const Color.fromARGB(255, 212, 212, 212),
-        height: 60,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Expanded(
-                child: TextButton(
-                    child: Text('파티 리스트',
-                        style: TextStyle(color: Colors.black, fontSize: 20)),
-                    onPressed: () {
-                      Get.to(() => party_list());
-                    })),
-            VerticalDivider(
-              color: Colors.white,
-              thickness: 3,
-            ),
-            Expanded(
-                child: TextButton(
-                    child: Text('내 정보',
-                        style: TextStyle(color: Colors.black, fontSize: 20)),
-                    onPressed: () {
-                      Get.to(() => MyInfo());
-                    }))
-          ],
         ),
       ),
     );
