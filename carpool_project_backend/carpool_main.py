@@ -8,6 +8,7 @@ import certifi
 import datetime as dt
 from routers import user, party
 
+
 app = FastAPI()
 
 app.include_router(party.router)
