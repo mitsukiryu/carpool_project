@@ -1,17 +1,55 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/MongoDBModel.dart';
-import 'package:flutter_application_1/login%20&%20signin/login_page.dart';
+import 'package:flutter_application_1/HomeScreen.dart';
+import 'package:flutter_application_1/models/user.dart';
 import 'package:get/get.dart';
-import 'package:mongo_dart/mongo_dart.dart' as M;
-import 'package:flutter_application_1/MongoDBModel.dart';
+// import 'package:mongo_dart/mongo_dart.dart' as M;
 
-class Signin_page extends StatelessWidget {
+import 'package:http/http.dart' as http;
+
+class Signin_page extends StatefulWidget {
+  const Signin_page({super.key});
+
+  @override
+  State<Signin_page> createState() => _Signin_pageState();
+}
+
+Future fetch_users() async {
+  var response = await http.get(Uri.parse('http://127.0.0.1:8000'));
+  var users = [];
+  for (var u in jsonDecode(response.body)) {
+    users.add(User(
+        u['userName'],
+        u['realName'],
+        u['password'],
+        u['phoneNumber'],
+        u['email'],
+        u['carNumber'],
+        u['carColor'],
+        u['carType'],
+        u['homeroom'],
+        u['userType'],
+        u['warning'],
+        u['penalty']));
+  }
+  print(users);
+  return users;
+}
+
+class _Signin_pageState extends State<Signin_page> {
   TextEditingController nameController = TextEditingController();
   TextEditingController idController = TextEditingController();
   TextEditingController pwController = TextEditingController();
   TextEditingController phoneController = TextEditingController();
   TextEditingController emailController = TextEditingController();
   TextEditingController homeroomController = TextEditingController();
+  static String baseUrl = "http://127.0.0.1:8000";
+
+  @override
+  void initState() {
+    super.initState();
+    fetch_users();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -125,34 +163,69 @@ class Signin_page extends StatelessWidget {
                 height: 10,
               ),
               Container(
-                height: 50,
-                width: 250,
-                decoration: BoxDecoration(
-                    color: Colors.blue,
-                    borderRadius: BorderRadius.circular(20)),
-                child: TextButton(
-                  onPressed: () {
-                    _insertToSigninPage(
-                      nameController.text,
-                      idController.text,
-                      pwController.text,
-                      phoneController.text,
-                      emailController.text,
-                      homeroomController.text,
-                    );
-                    print();
+                  height: 50,
+                  width: 250,
+                  decoration: BoxDecoration(
+                      color: Colors.blue,
+                      borderRadius: BorderRadius.circular(20)),
+                  child: TextButton(
+                    child: Text("회원가입"),
+                    onPressed: () {
+                      Get.to(Homescreen());
+                    },
+                  )
+                  // FutureBuilder(
+                  //     future: postSigninInfo(),
+                  //     builder: (context, snapshot) {
+                  //       return TextButton(
+                  //           child: Text("회원가입"),
+                  //           onPressed: () {
+                  //             Get.to(Homescreen());
 
-                    Get.to(() => Login_Page());
-                  },
-                  child: Text(
-                    '회원가입',
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold),
+                  //             // switch (snapshot.data) {
+                  //             //   case "FAILURE: 비밀번호가 일치하지 않습니다":
+                  //             //     showDialog(
+                  //             //         context: context,
+                  //             //         builder: (context) {
+                  //             //           return AlertDialog(
+                  //             //             title: Text("로그인 실패"),
+                  //             //             content: Text("비밀번호가 일치하지 않습니다"),
+                  //             //             actions: [
+                  //             //               TextButton(
+                  //             //                   onPressed: () {
+                  //             //                     Get.back();
+                  //             //                   },
+                  //             //                   child: Text("확인"))
+                  //             //             ],
+                  //             //           );
+                  //             //         });
+                  //             //     break;
+
+                  //             //   case "FAILURE: 이메일 주소가 존재하지 않습니다":
+                  //             //     showDialog(
+                  //             //         context: context,
+                  //             //         builder: (context) {
+                  //             //           return AlertDialog(
+                  //             //             title: Text("로그인 실패"),
+                  //             //             content: Text("이메일 주소가 존재하지 않습니다"),
+                  //             //             actions: [
+                  //             //               TextButton(
+                  //             //                   onPressed: () {
+                  //             //                     Get.back();
+                  //             //                   },
+                  //             //                   child: Text("확인"))
+                  //             //             ],
+                  //             //           );
+                  //             //         });
+                  //             //     break;
+
+                  //             //   default:
+                  //             //     Get.to(Homescreen());
+                  //             //     break;
+                  //             // }
+                  //           });
+                  //     })
                   ),
-                ),
-              ),
               SizedBox(
                 height: 15,
               ),
@@ -163,29 +236,25 @@ class Signin_page extends StatelessWidget {
     );
   }
 
-  Future<void> _insertToSigninPage(
-    // Id idho,
-    String name,
-    String username,
-    String pw,
-    String phone,
-    String email,
-    String homeroom,
-  ) async {
-    // var id = M.ObjectId();
-    final data = Welcome(
-        // id: idho,
-        userName: username,
-        realName: name,
-        password: pw,
-        phoneNumber: phone,
-        email: email,
-        carNumber: "",
-        carColor: "",
-        carType: "",
-        homeroom: homeroom,
-        userType: "Passenger",
-        warning: [],
-        penalty: "");
-  }
+  // Future<Map> postSigninInfo() async {
+  //   Map SigninInfo = {
+  //     'user_name': idController.text,
+  //     'real_name': nameController.text,
+  //     'password': pwController.text,
+  //     'phone_number': phoneController.text,
+  //     'email': emailController.text,
+  //     'car_number': 0,
+  //     'car_color': "none",
+  //     'homeroom': homeroomController.text,
+  //     'user_type': "Passenger",
+  //     'warning': ["none"],
+  //     'penalty': 0
+  //   };
+  //   print('##### loginInfoMap is ${SigninInfo} #####');
+  //   final response = await Dio().post(
+  //     'http://http://127.0.0.1:8000//user/create',
+  //     data: jsonEncode(SigninInfo),
+  //   );
+  //   return response.data;
+  // }
 }

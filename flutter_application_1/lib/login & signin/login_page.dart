@@ -1,17 +1,30 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
 import '../HomeScreen.dart';
 import 'package:get/get.dart';
 import 'Signin_choose.dart';
 import 'choosing_finding_id_pw.dart';
+import 'package:http/http.dart' as http;
+import 'package:dio/dio.dart';
 
-class Login_Page extends StatelessWidget {
-  const Login_Page({super.key});
+const String baseUrl = "http://127.0.0.1:8000";
 
-//   @override
-//   State<Login_Page> createState() => _Login_PageState();
-// }
+class LoginPage extends StatefulWidget {
+  @override
+  _Login_PageState createState() => _Login_PageState();
+}
 
-// class _Login_PageState extends State<Login_Page> {
+class _Login_PageState extends State<LoginPage> {
+  TextEditingController usernameEditingController = TextEditingController();
+  TextEditingController passwordEditingController = TextEditingController();
+  // Future<Map> loginInfo = Future.value({"user_name": usernameEditingController.text, "password": });
+
+  // @override
+  // Widget build(BuildContext context) {
+  //   Future<Map> getData() async {
+  //     Map SigninInfo = {"user_name" : usernameEditingController.text, "password" : }
+  //   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -33,6 +46,7 @@ class Login_Page extends StatelessWidget {
           Padding(
             padding: EdgeInsets.all(10),
             child: TextField(
+              controller: usernameEditingController,
               decoration: InputDecoration(
                   border: OutlineInputBorder(),
                   labelText: '아이디',
@@ -42,6 +56,7 @@ class Login_Page extends StatelessWidget {
           Padding(
             padding: EdgeInsets.all(10),
             child: TextField(
+              controller: passwordEditingController,
               obscureText: true,
               decoration: InputDecoration(
                   border: OutlineInputBorder(),
@@ -58,7 +73,26 @@ class Login_Page extends StatelessWidget {
             decoration: BoxDecoration(
                 color: Colors.blue, borderRadius: BorderRadius.circular(20)),
             child: TextButton(
-              onPressed: () {
+              onPressed: () async {
+                Map<String, String> loginInfo = {
+                  "user_name": usernameEditingController.text,
+                  "password": passwordEditingController.text,
+                };
+
+                try {
+                  final response = await Dio().post(
+                    'http://127.0.0.1:8000/user/login',
+                    data: jsonEncode(loginInfo),
+                  );
+
+                  // 응답 처리를 수행합니다.
+                } catch (e) {
+                  // 에러 처리를 수행합니다.
+                }
+
+                // Login_class note = note.inputValues(usernameEditingController.text, passwordEditingController.text);
+
+                // await LoginController().loginTry(note);
                 Get.offAll(() => Homescreen());
               },
               child: Text(
@@ -102,6 +136,8 @@ class Login_Page extends StatelessWidget {
                 flex: 2,
                 child: TextButton(
                   onPressed: () {
+                    // final response = await Dio().post('http://10.0.2.2:8000/user/login', data: jsonEncode(Map loginInfo))
+
                     Get.to(() => Signin_choose());
                   },
                   child: Text(
@@ -124,3 +160,27 @@ class Login_Page extends StatelessWidget {
     );
   }
 }
+
+// class LoginController {
+//   Future<bool> loginTry(Login_class note) async {
+// bool is_success = true;
+// try {
+// var fastApiUrl = Uri.parse(baseUrl + '/user/login');
+// http.Response response = await http.post(
+// fastApiUrl,
+// body: jsonEncode({
+// "user_email": note.username,
+// "title": note.password,
+// },),
+// headers: {
+// 'accept': 'application/json',
+// 'Content-Type': 'application/json'
+// },);
+// final responseData = json.decode(utf8.decode(response.bodyBytes));
+// is_success = responseData ?? false;
+// if (response.statusCode != 200) {
+// final errorMessage = responseData['detail'];
+// print("error : $errorMessage");
+// // throw Exception(errorMessage);
+// }
+// }}}

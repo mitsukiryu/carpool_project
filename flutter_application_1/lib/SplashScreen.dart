@@ -47,7 +47,7 @@ class SplashScreen extends StatelessWidget {
               SizedBox(width: 20),
               ElevatedButton(
                 onPressed: () {
-                  Get.offAll(() => Login_Page());
+                  Get.offAll(() => LoginPage());
                 },
                 child: Text('로그인 창으로 이동'),
               ),

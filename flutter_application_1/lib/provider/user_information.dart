@@ -1,8 +1,4 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/MongoDBModel.dart';
-import 'package:provider/provider.dart';
 
 class UserInformationProvider extends ChangeNotifier {
   String _name = "류황희";

@@ -1,9 +1,8 @@
+import 'dart:convert';
+import 'package:flutter_application_1/HomeScreen.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/MongoDBModel.dart';
-import 'package:flutter_application_1/login%20&%20signin/login_page.dart';
 import 'package:get/get.dart';
-import 'package:mongo_dart/mongo_dart.dart' as M;
-import 'package:flutter_application_1/MongoDBModel.dart';
+import 'package:dio/dio.dart';
 
 class Driver_Signin_page extends StatelessWidget {
   TextEditingController nameController = TextEditingController();
@@ -147,35 +146,85 @@ class Driver_Signin_page extends StatelessWidget {
                 height: 10,
               ),
               Container(
-                height: 50,
-                width: 250,
-                decoration: BoxDecoration(
-                    color: Colors.blue,
-                    borderRadius: BorderRadius.circular(20)),
-                child: TextButton(
-                  onPressed: () {
-                    _insertToDriverSigninPage(
-                      nameController.text,
-                      idController.text,
-                      pwController.text,
-                      phoneController.text,
-                      emailController.text,
-                      carNumberController.text,
-                      carColorController.text,
-                      carTypeController.text,
-                    );
+                  height: 50,
+                  width: 250,
+                  decoration: BoxDecoration(
+                      color: Colors.blue,
+                      borderRadius: BorderRadius.circular(20)),
+                  child: FutureBuilder(
+                      future: postSigninInfo(),
+                      builder: (context, snapshot) {
+                        return TextButton(
+                            child: Text("회원가입"),
+                            onPressed: () {
+                              Get.to(Homescreen());
+                              // switch (snapshot.data) {
+                              //   case "FAILURE: 비밀번호가 일치하지 않습니다":
+                              //     showDialog(
+                              //         context: context,
+                              //         builder: (context) {
+                              //           return AlertDialog(
+                              //             title: Text("로그인 실패"),
+                              //             content: Text("비밀번호가 일치하지 않습니다"),
+                              //             actions: [
+                              //               TextButton(
+                              //                   onPressed: () {
+                              //                     Get.back();
+                              //                   },
+                              //                   child: Text("확인"))
+                              //             ],
+                              //           );
+                              //         });
+                              //     break;
 
-                    Get.to(() => Login_Page());
-                  },
-                  child: Text(
-                    '회원가입',
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold),
+                              //   case "FAILURE: 이메일 주소가 존재하지 않습니다":
+                              //     showDialog(
+                              //         context: context,
+                              //         builder: (context) {
+                              //           return AlertDialog(
+                              //             title: Text("로그인 실패"),
+                              //             content: Text("이메일 주소가 존재하지 않습니다"),
+                              //             actions: [
+                              //               TextButton(
+                              //                   onPressed: () {
+                              //                     Get.back();
+                              //                   },
+                              //                   child: Text("확인"))
+                              //             ],
+                              //           );
+                              //         });
+                              //     break;
+
+                              //   default:
+                              //     Get.to(Homescreen());
+                              //     break;
+                              // }
+                            });
+                      })
+                  // child: TextButton(
+                  //   onPressed: () {
+                  //     // _insertToDriverSigninPage(
+                  //     //   nameController.text,
+                  //     //   idController.text,
+                  //     //   pwController.text,
+                  //     //   phoneController.text,
+                  //     //   emailController.text,
+                  //     //   carNumberController.text,
+                  //     //   carColorController.text,
+                  //     //   carTypeController.text,
+                  //     // );
+
+                  //     // Get.to(() => LoginPage());
+                  //   },
+                  //   child: Text(
+                  //     '회원가입',
+                  //     style: TextStyle(
+                  //         color: Colors.white,
+                  //         fontSize: 20,
+                  //         fontWeight: FontWeight.bold),
+                  //   ),
+                  // ),
                   ),
-                ),
-              ),
               SizedBox(
                 height: 15,
               ),
@@ -186,31 +235,25 @@ class Driver_Signin_page extends StatelessWidget {
     );
   }
 
-  Future<void> _insertToDriverSigninPage(
-    // Id idho,
-    String name,
-    String username,
-    String pw,
-    String phone,
-    String email,
-    String carnumber,
-    String carColor,
-    String carType,
-  ) async {
-    // var id = M.ObjectId();
-    final data = Welcome(
-        // id: idho,
-        userName: username,
-        realName: name,
-        password: pw,
-        phoneNumber: phone,
-        email: email,
-        carNumber: carnumber,
-        carColor: carColor,
-        carType: carType,
-        homeroom: "",
-        userType: "Driver",
-        warning: [],
-        penalty: "");
+  Future<Map> postSigninInfo() async {
+    Map SigninInfo = {
+      'user_name': idController.text,
+      'real_name': nameController.text,
+      'password': pwController.text,
+      'phone_number': phoneController.text,
+      'email': emailController.text,
+      'car_number': carNumberController.text,
+      'car_color': carColorController.text,
+      'homeroom': "none",
+      'user_type': "Driver",
+      'warning': [],
+      'penalty': 0
+    };
+    print('##### SigninInfoMap is ${SigninInfo} #####');
+    final response = await Dio().post(
+      'http://http://127.0.0.1:8000//user/create',
+      data: jsonEncode(SigninInfo),
+    );
+    return response.data;
   }
 }

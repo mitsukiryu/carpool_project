@@ -2,7 +2,6 @@ import "package:flutter/rendering.dart";
 import 'package:intl/intl.dart';
 import "package:get/get.dart";
 import "package:flutter/material.dart";
-import 'package:intl/intl.dart';
 
 class creating_party extends StatefulWidget {
   @override
