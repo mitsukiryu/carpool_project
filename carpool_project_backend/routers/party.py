@@ -202,20 +202,27 @@ async def sort_party(party_type: str = Query(None), destination: str = Query(Non
 @router.get("/party/search/{Lat}/{Lng}")
 async def search_party(Lat: float , Lng: float):
   # 1km 구간
-    # lat_change = 1 / 111.2
-    # lng_change = abs(math.cos(Lat * (math.pi / 180)))
+    lat_change = 1 / 111.19
+    lng_change = abs(math.cos(Lat * (math.pi / 180)))
     # lat_change = 1
     # lng_change = 1
     party = router.database.party.find(
-        # {
-        #     "$and": [
-        #         {"party_Lat": {"$gt": Lat - lat_change , "$lt": Lat + lat_change}}, # 값 수정하기
-        #         {"party_Lng": {"$gt": Lng - lng_change , "$lt": Lng + lng_change}}
-        #     ]
-        # }
+        {
+            "$and": [
+                {"party_Lat": {"$gt": Lat - lat_change , "$lt": Lat + lat_change}}, # 값 수정하기
+                {"party_Lng": {"$gt": Lng - lng_change , "$lt": Lng + lng_change}}
+            ]
+        }
     )
     for i in party:
         print(i)
 
 # 36.1004
 # 129.3882
+#999m apart
+#36.09382, 129.4051
+#36.09701, 129.4155
+
+#over 1km apart
+#36.09891, 129.3833
+#36.10137, 129.3952

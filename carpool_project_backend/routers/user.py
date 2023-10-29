@@ -14,8 +14,7 @@ from datetime import datetime, timedelta
 from typing import Union
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from jose import JWTError, jwt
-from typing_extensions import Annotated
-
+from typing import Annotated
 
 
 SECRET_KEY = "2d7459bf7a03b0f5479a677f31b599cd0107088886c4aa95114ede8dc7e978c2"
@@ -34,7 +33,7 @@ router = APIRouter(
 router.mongodb_client = MongoClient("mongodb+srv://kevinkim9443:0509@carpool.3bukgzs.mongodb.net/?retryWrites=true&w=majority",tlsCAFile=certifi.where())
 router.database = router.mongodb_client["Carpool"]
 
-oauth2_scheme = OAuth2PasswordBearer(tokenUrl="login")
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/user/login")
 
 #Hashing
 pwd_cxt = CryptContext(schemes=["bcrypt"],deprecated="auto")
@@ -57,7 +56,7 @@ def create_access_token(data: dict, expires_delta: Union[timedelta, None] = None
     return encoded_jwt
 
 #get_current_user
-async def get_current_user(token: Annotated[str, Depends(oauth2_scheme)]):
+async def get_current_user(token: str = Depends(oauth2_scheme)):
     credentials_exception = HTTPException(
         status_code=status.HTTP_401_UNAUTHORIZED,
         detail="Could not validate credentials",
@@ -77,7 +76,7 @@ async def get_current_user(token: Annotated[str, Depends(oauth2_scheme)]):
 
 #get_user_active
 async def get_current_active_user(
-    current_user: Annotated[User, Depends(get_current_user)]
+    current_user: User = Depends(get_current_user)
 ):
     if current_user.disabled:
         raise HTTPException(status_code=400, detail="Inactive user")
@@ -95,7 +94,7 @@ async def create_user(new_user: User):
 
 # login user
 @router.post("/login", response_model=Token)
-async def user_login(login_user: User_login):
+async def user_login(login_user: OAuth2PasswordRequestForm = Depends()):
     user = router.database.user.find_one({"user_name": login_user.username})
 
     if not user:
@@ -115,7 +114,7 @@ async def user_login(login_user: User_login):
     else:
         access_token_expires = timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
         access_token = create_access_token(
-            data={"sub": user[email]}, expires_delta=access_token_expires
+            data={"sub": user["email"]}, expires_delta=access_token_expires
         )
         return {"access_token": access_token, "token_type": "bearer"}
     
