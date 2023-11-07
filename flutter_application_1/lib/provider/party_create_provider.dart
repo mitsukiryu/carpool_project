@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 class PartyCreateProvider extends ChangeNotifier {
   String _status = "";
@@ -31,12 +30,28 @@ class PartyCreateProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  void changePhoneNumber(String inputStart) {
+  void changeStart(String inputStart) {
     _start = inputStart;
     notifyListeners();
   }
 
-  void changeEmail(int inputPeopleNum) {
+  void changeEnd(String inputEnd) {
+    _end = inputEnd;
+    notifyListeners();
+  }
+
+  void changeNum(int inputPeopleNum) {
+    _peoplenum = inputPeopleNum;
+    notifyListeners();
+  }
+
+  void changeAll(String inputStatus, String inputDate, String inputTime,
+      String inputStart, String inputEnd, int inputPeopleNum) {
+    _status = inputStart;
+    _date = inputDate;
+    _time = inputTime;
+    _start = inputStart;
+    _end = inputEnd;
     _peoplenum = inputPeopleNum;
     notifyListeners();
   }

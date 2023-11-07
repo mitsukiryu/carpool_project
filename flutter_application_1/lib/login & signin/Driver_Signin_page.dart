@@ -1,9 +1,11 @@
+import 'dart:convert';
+import 'package:flutter_application_1/HomeScreen.dart';
+import 'package:flutter_application_1/provider/user_information.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/MongoDBModel.dart';
-import 'package:flutter_application_1/login%20&%20signin/login_page.dart';
 import 'package:get/get.dart';
-import 'package:mongo_dart/mongo_dart.dart' as M;
-import 'package:flutter_application_1/MongoDBModel.dart';
+import 'package:dio/dio.dart';
+import 'package:http/http.dart' as http;
+import 'package:provider/provider.dart';
 
 class Driver_Signin_page extends StatelessWidget {
   TextEditingController nameController = TextEditingController();
@@ -14,6 +16,64 @@ class Driver_Signin_page extends StatelessWidget {
   TextEditingController carNumberController = TextEditingController();
   TextEditingController carColorController = TextEditingController();
   TextEditingController carTypeController = TextEditingController();
+  var dio = Dio(BaseOptions());
+
+  @override
+  bool checking() {
+    if (nameController.text.isNotEmpty &&
+        idController.text.isNotEmpty &&
+        pwController.text.isNotEmpty &&
+        phoneController.text.isNotEmpty &&
+        emailController.text.isNotEmpty &&
+        carNumberController.text.isNotEmpty &&
+        carColorController.text.isNotEmpty &&
+        carTypeController.text.isNotEmpty) {
+      return true;
+    }
+    return false;
+  }
+
+  @override
+  Future save(
+      String inputusername,
+      String inputName,
+      String inputpassword,
+      String inputphoneNumber,
+      String inputemail,
+      int inputcarNumber,
+      String inputcarColor,
+      String inputcarType) async {
+    final Map<String, dynamic> userData = {
+      'user_name': inputusername,
+      'real_name': inputName,
+      'password': inputpassword,
+      'phone_number': inputphoneNumber,
+      'email': inputemail,
+      'car_number': inputcarNumber, // An integer, not a string
+      'car_color': inputcarColor,
+      'car_type': inputcarType,
+      'homeroom': "",
+      'user_type': "Driver",
+      'warning': [""],
+      'penalty': 0,
+    };
+
+    final response = await http.post(
+      Uri.parse('http://10.0.2.2:8000/user/create'),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode(userData),
+    );
+
+    if (response.statusCode == 422) {
+      print('Response body for 422 error: ${response.body}');
+    } else if (response.statusCode == 200) {
+      print('success');
+    } else {
+      // Handle other status codes
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -150,30 +210,52 @@ class Driver_Signin_page extends StatelessWidget {
                 height: 50,
                 width: 250,
                 decoration: BoxDecoration(
-                    color: Colors.blue,
-                    borderRadius: BorderRadius.circular(20)),
+                  color: Colors.blue,
+                  borderRadius: BorderRadius.circular(20),
+                ),
                 child: TextButton(
+                  child: Text("회원가입", style: TextStyle(color: Colors.white)),
                   onPressed: () {
-                    _insertToDriverSigninPage(
-                      nameController.text,
-                      idController.text,
-                      pwController.text,
-                      phoneController.text,
-                      emailController.text,
-                      carNumberController.text,
-                      carColorController.text,
-                      carTypeController.text,
-                    );
-
-                    Get.to(() => Login_Page());
+                    if (checking()) {
+                      save(
+                        idController.text,
+                        nameController.text,
+                        pwController.text,
+                        phoneController.text,
+                        emailController.text,
+                        int.parse(carNumberController.text),
+                        carColorController.text,
+                        carTypeController.text,
+                      );
+                      Provider.of<UserInformationProvider>(context,
+                              listen: false)
+                          .changeAllDriver(
+                        idController.text,
+                        nameController.text,
+                        pwController.text,
+                        phoneController.text,
+                        emailController.text,
+                        int.parse(carNumberController.text),
+                        carColorController.text,
+                        carTypeController.text,
+                      );
+                      Get.to(() => Homescreen());
+                    } else {
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext context) => AlertDialog(
+                          title: const Text('입력 오류'),
+                          content: const Text('모든 필드를 입력해주세요.'),
+                          actions: <Widget>[
+                            TextButton(
+                              onPressed: () => Navigator.pop(context, 'OK'),
+                              child: const Text('OK'),
+                            ),
+                          ],
+                        ),
+                      );
+                    }
                   },
-                  child: Text(
-                    '회원가입',
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold),
-                  ),
                 ),
               ),
               SizedBox(
@@ -184,33 +266,5 @@ class Driver_Signin_page extends StatelessWidget {
         ),
       ),
     );
-  }
-
-  Future<void> _insertToDriverSigninPage(
-    // Id idho,
-    String name,
-    String username,
-    String pw,
-    String phone,
-    String email,
-    String carnumber,
-    String carColor,
-    String carType,
-  ) async {
-    // var id = M.ObjectId();
-    final data = Welcome(
-        // id: idho,
-        userName: username,
-        realName: name,
-        password: pw,
-        phoneNumber: phone,
-        email: email,
-        carNumber: carnumber,
-        carColor: carColor,
-        carType: carType,
-        homeroom: "",
-        userType: "Driver",
-        warning: [],
-        penalty: "");
   }
 }

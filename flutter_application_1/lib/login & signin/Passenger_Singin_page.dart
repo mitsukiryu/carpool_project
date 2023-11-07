@@ -1,17 +1,84 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/MongoDBModel.dart';
-import 'package:flutter_application_1/login%20&%20signin/login_page.dart';
+import 'package:flutter_application_1/HomeScreen.dart';
+import 'package:flutter_application_1/provider/user_information.dart';
 import 'package:get/get.dart';
-import 'package:mongo_dart/mongo_dart.dart' as M;
-import 'package:flutter_application_1/MongoDBModel.dart';
+import 'package:dio/dio.dart';
+import 'package:http/http.dart' as http;
+import 'package:provider/provider.dart';
 
-class Signin_page extends StatelessWidget {
+class Signin_page extends StatefulWidget {
+  const Signin_page({super.key});
+
+  @override
+  State<Signin_page> createState() => _Signin_pageState();
+}
+
+class _Signin_pageState extends State<Signin_page> {
   TextEditingController nameController = TextEditingController();
   TextEditingController idController = TextEditingController();
   TextEditingController pwController = TextEditingController();
   TextEditingController phoneController = TextEditingController();
   TextEditingController emailController = TextEditingController();
   TextEditingController homeroomController = TextEditingController();
+  var dio = Dio(BaseOptions());
+
+  @override
+  Future save(String inputusername, String inputName, String inputpassword,
+      String inputphoneNumber, String inputemail, String inputhomeroom) async {
+    final Map<String, dynamic> userData = {
+      'user_name': inputusername,
+      'real_name': inputName,
+      'password': inputpassword,
+      'phone_number': inputphoneNumber,
+      'email': inputemail,
+      'car_number': 0, // An integer, not a string
+      'car_color': "",
+      'car_type': "",
+      'homeroom': inputhomeroom,
+      'user_type': "Passenger",
+      'warning': [""],
+      'penalty': 0,
+    };
+
+    final response = await http.post(
+      Uri.parse('http://10.0.2.2:8000/user/create'),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode(userData),
+    );
+
+    // final response =
+    //     await Dio().post('http://10.0.2.2:8000/users/create', data: userData);
+
+    if (response.statusCode == 422) {
+      print('Response body for 422 error: ${response.body}');
+    } else if (response.statusCode == 200) {
+      print('success');
+    } else {
+      // Handle other status codes
+    }
+  }
+
+  @override
+  bool checking() {
+    if (nameController.text.isNotEmpty &&
+        idController.text.isNotEmpty &&
+        pwController.text.isNotEmpty &&
+        phoneController.text.isNotEmpty &&
+        emailController.text.isNotEmpty &&
+        homeroomController.text.isNotEmpty) {
+      return true;
+    }
+    return false;
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    // fetch_users();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -125,33 +192,49 @@ class Signin_page extends StatelessWidget {
                 height: 10,
               ),
               Container(
-                height: 50,
-                width: 250,
-                decoration: BoxDecoration(
-                    color: Colors.blue,
-                    borderRadius: BorderRadius.circular(20)),
-                child: TextButton(
-                  onPressed: () {
-                    _insertToSigninPage(
-                      nameController.text,
-                      idController.text,
-                      pwController.text,
-                      phoneController.text,
-                      emailController.text,
-                      homeroomController.text,
-                    );
-
-                    Get.to(() => Login_Page());
-                  },
-                  child: Text(
-                    '회원가입',
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold),
-                  ),
-                ),
-              ),
+                  height: 50,
+                  width: 250,
+                  decoration: BoxDecoration(
+                      color: Colors.blue,
+                      borderRadius: BorderRadius.circular(20)),
+                  child: TextButton(
+                    child: Text("회원가입", style: TextStyle(color: Colors.white)),
+                    onPressed: () {
+                      if (checking()) {
+                        save(
+                            idController.text,
+                            nameController.text,
+                            pwController.text,
+                            phoneController.text,
+                            emailController.text,
+                            homeroomController.text);
+                        Provider.of<UserInformationProvider>(context,
+                                listen: false)
+                            .changeAllPassenger(
+                                idController.text,
+                                nameController.text,
+                                pwController.text,
+                                phoneController.text,
+                                emailController.text,
+                                homeroomController.text);
+                        Get.offAll(() => Homescreen());
+                      } else {
+                        showDialog(
+                          context: context,
+                          builder: (BuildContext context) => AlertDialog(
+                            title: const Text('입력 오류'),
+                            content: const Text('모든 필드를 입력해주세요.'),
+                            actions: <Widget>[
+                              TextButton(
+                                onPressed: () => Navigator.pop(context, 'OK'),
+                                child: const Text('OK'),
+                              ),
+                            ],
+                          ),
+                        );
+                      }
+                    },
+                  )),
               SizedBox(
                 height: 15,
               ),
@@ -160,31 +243,5 @@ class Signin_page extends StatelessWidget {
         ),
       ),
     );
-  }
-
-  Future<void> _insertToSigninPage(
-    // Id idho,
-    String name,
-    String username,
-    String pw,
-    String phone,
-    String email,
-    String homeroom,
-  ) async {
-    // var id = M.ObjectId();
-    final data = Welcome(
-        // id: idho,
-        userName: username,
-        realName: name,
-        password: pw,
-        phoneNumber: phone,
-        email: email,
-        carNumber: "",
-        carColor: "",
-        carType: "",
-        homeroom: homeroom,
-        userType: "Passenger",
-        warning: [],
-        penalty: "");
   }
 }

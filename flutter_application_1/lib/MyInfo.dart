@@ -63,6 +63,7 @@ class _MyInfoState extends State<MyInfo> {
                 onPressed: () {
                   Get.to(() => EditProflie());
                 },
+                // print(Provider.of<UserInformationProvider>(context).name.);
                 child: Text('내 정보 수정'),
               ),
             ),
