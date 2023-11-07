@@ -140,7 +140,6 @@ class Signin_page extends StatelessWidget {
                       emailController.text,
                       homeroomController.text,
                     );
-                    print();
 
                     Get.to(() => Login_Page());
                   },
