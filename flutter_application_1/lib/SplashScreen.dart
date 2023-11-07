@@ -27,7 +27,6 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   _asyncMethod() async {
-    print(await storage.read(key: 'login'));
     userInfo = await storage.read(key: 'login');
 
     // user의 정보가 있다면 로그인 후 들어가는 첫 페이지로 넘어가게 합니다.
@@ -36,7 +35,7 @@ class _SplashScreenState extends State<SplashScreen> {
       Get.to(Homescreen());
     } else {
       print('로그인이 필요합니다');
-      Get.to(() => LoginPage());
+      Get.to(() => Login_Page());
     }
   }
 
@@ -74,8 +73,7 @@ class _SplashScreenState extends State<SplashScreen> {
               SizedBox(width: 20),
               ElevatedButton(
                 onPressed: () {
-                  // Get.offAll(() => LoginPage());
-                  Get.to(() => LoginPage());
+                  Get.offAll(() => Login_Page());
                 },
                 child: Text('로그인 창으로 이동'),
               ),
@@ -84,6 +82,5 @@ class _SplashScreenState extends State<SplashScreen> {
         ],
       ),
     );
-    ;
   }
 }
