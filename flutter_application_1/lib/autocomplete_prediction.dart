@@ -1,6 +1,3 @@
-import 'package:http/http.dart' as http;
-import 'dart:convert' as convert;
-
 class AutocompletePrediction {
   final String? description;
 
@@ -41,28 +38,5 @@ class StructuredFormatting {
       mainText: json['main_text'] as String?,
       secondaryText: json['secondary_text'] as String?,
     );
-  }
-}
-
-class GetLocation {
-  Future<Map<String, dynamic>> GetLocByID(String? id) async {
-    final String url = "https://places.googleapis.com/v1/places/$id";
-    var response = await http.get(
-      Uri.parse(url),
-      headers: {
-        "Content-Type": 'application/json',
-        'X-Goog-Api-Key': 'AIzaSyDuA0YY1zQE7nyC-sj8i8s2VKt9WRDnGh4',
-        'X-Goog-FieldMask': 'displayName,formattedAddress',
-      },
-    );
-    Map<String, dynamic> placejson = convert.jsonDecode(response.body);
-
-    if (response.statusCode == 200) {
-      print(placejson);
-    } else {
-      print('Request failed: ${response.statusCode}');
-    }
-
-    return placejson;
   }
 }
