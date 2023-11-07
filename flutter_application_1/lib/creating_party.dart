@@ -1,7 +1,10 @@
-import "package:flutter/rendering.dart";
+import 'package:flutter_application_1/HomeScreen.dart';
+import 'package:flutter_application_1/provider/party_create_provider.dart';
 import 'package:intl/intl.dart';
 import "package:get/get.dart";
 import "package:flutter/material.dart";
+import 'package:provider/provider.dart';
+import 'package:toggle_switch/toggle_switch.dart';
 
 class creating_party extends StatefulWidget {
   @override
@@ -11,7 +14,10 @@ class creating_party extends StatefulWidget {
 class _creating_partyState extends State<creating_party> {
   TextEditingController dateController = TextEditingController();
   TextEditingController timeinput = TextEditingController();
-
+  TextEditingController startinput = TextEditingController();
+  TextEditingController endinput = TextEditingController();
+  TextEditingController numinput = TextEditingController();
+  String choice = "";
   @override
   void initState() {
     dateController.text = "";
@@ -20,32 +26,26 @@ class _creating_partyState extends State<creating_party> {
   }
 
   @override
+  bool checking() {
+    if (choice != "" &&
+        dateController.text.isNotEmpty &&
+        timeinput.text.isNotEmpty &&
+        startinput.text.isNotEmpty &&
+        endinput.text.isNotEmpty &&
+        numinput.text.isNotEmpty) {
+      return true;
+    }
+    return false;
+  }
+
+  @override
   Widget build(BuildContext context) {
     // Color taxi_button = const Color.fromARGB(255, 132, 132, 132);
     // Color carpool_button = Color.fromARGB(255, 254, 254, 254);
-    String notthingStatement = "";
-    String taxiStatement = "택시를 선택하셨습니다";
-    String carpoolStatement = "카풀을 선택하셨습니다";
-    Color carpoolButtonColor = Colors.grey;
-    Color taxiButtonColor = Colors.grey;
-    const List<Widget> statusChoice = <Widget>[
-      Text('카풀'),
-      Text('택시'),
-    ];
+
     final List<bool> _selectedStatus = <bool>[true, false];
     String selected = "none";
     bool vertical = false;
-    void _changeColor(String selected) {
-      setState(() {
-        if (selected == "carpool") {
-          carpoolButtonColor = Colors.blue;
-          taxiButtonColor = Colors.grey;
-        } else if (selected == "taxi") {
-          carpoolButtonColor = Colors.grey;
-          taxiButtonColor = Colors.blue;
-        }
-      });
-    }
 
     return Scaffold(
       resizeToAvoidBottomInset: true,
@@ -70,164 +70,32 @@ class _creating_partyState extends State<creating_party> {
             SizedBox(
               height: 20,
             ),
-            Row(
-              children: [
-                Expanded(
-                  flex: 1,
-                  child: GestureDetector(
-                    onTap: () {
-                      setState(() {
-                        selected = "first"; // Update the selected variable
-                      });
-                    },
-                    child: Container(
-                      decoration: BoxDecoration(
-                        color: selected == "first"
-                            ? Colors.grey
-                            : Colors.transparent,
-                        border: Border.all(width: 2, color: Colors.black),
-                      ),
-                      height: 60,
-                      child: Center(
-                        child: Text(
-                          '택시',
-                          style: TextStyle(color: Colors.black, fontSize: 20),
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-                Expanded(
-                  flex: 1,
-                  child: GestureDetector(
-                    onTap: () {
-                      setState(() {
-                        selected = "second";
-                      });
-                    },
-                    child: Container(
-                      decoration: BoxDecoration(
-                          color: selected == "second"
-                              ? Colors.grey
-                              : Colors.transparent,
-                          border: Border.all(width: 2, color: Colors.black)),
-                      height: 60,
-                      child: Center(
-                          child: Text('카풀',
-                              style: TextStyle(
-                                  color: Colors.black, fontSize: 20))),
-                    ),
-                  ),
-                ),
+            ToggleSwitch(
+              minWidth: 100.0,
+              // cornerRadius: -10,
+              initialLabelIndex: 3, radiusStyle: vertical,
+              // cornerRadius: 20.0,
+              activeFgColor: Colors.white,
+              inactiveBgColor: Colors.grey,
+              inactiveFgColor: Colors.white,
+              totalSwitches: 2,
+              labels: ['택시', '카풀'],
+              activeBgColors: [
+                [Colors.blue],
+                [Colors.blue]
               ],
+              onToggle: (index) {
+                print('switched to: $index');
+                if (index == 0) {
+                  choice = "택시";
+                } else if (index == 1) {
+                  choice = "카풀";
+                }
+                print(choice);
+              },
             ),
-            // GestureDetector(
-            //   onTap: () {
-            //     setState(() {
-            //       selected = 'first';
-            //     });
-            //   },
-            //   child: Container(
-            //     height: 200,
-            //     width: 200,
-            //     color: selected == 'first' ? Colors.blue : Colors.transparent,
-            //     child: Text("First"),
-            //   ),
-            // ),
-
-            // Expanded(
-            //   flex: 1,
-            //   child: GestureDetector(
-            //     child: Container(
-            //       decoration: BoxDecoration(
-            //           color: selected == "thrid"
-            //               ? Colors.black
-            //               : Colors.amberAccent),
-            //     ),
-            //     onTap: () {
-            //       setState(() {
-            //         selected = "thrid";
-            //       });
-            //     },
-            //   ),
-            // ),
-
-            // GestureDetector(
-            //   child: Expanded(
-            //     flex: 1,
-            //     child: Container(
-            //       decoration: BoxDecoration(
-            //           color: selected == "thrid"
-            //               ? Colors.black
-            //               : Colors.amberAccent),
-            //     ),
-            //   ),
-            //   onTap: () {
-            //     setState(() {
-            //       selected = "thrid";
-            //     });
-            //   },
-            // ),
-            // Container(
-            //   // color: const Color.fromARGB(255, 212, 212, 212),
-            //   decoration: BoxDecoration(
-            //       color: Colors.grey,
-            //       border: Border.all(width: 2, color: Colors.black)),
-            //   height: 60,
-            //   child: Row(
-            //     mainAxisAlignment: MainAxisAlignment.center,
-            //     children: <Widget>[
-            //       Expanded(
-            //           child: TextButton(
-            //               child: Text('택시',
-            //                   style:
-            //                       TextStyle(color: Colors.black, fontSize: 20)),
-            //               onPressed: () {})),
-            //       VerticalDivider(
-            //         color: const Color.fromARGB(255, 0, 0, 0),
-            //         thickness: 3,
-            //       ),
-            //       Expanded(
-            //           child: TextButton(
-            //               child: Text('카풀',
-            //                   style:
-            //                       TextStyle(color: Colors.black, fontSize: 20)),
-            //               onPressed: () {}))
-            //     ],
-            //   ),
-            // ),
             SizedBox(
               height: 20,
-            ),
-
-            ToggleButtons(
-              // direction: vertical ? Axis.vertical : Axis.horizontal,
-              onPressed: (int newIndex) {
-                print(newIndex);
-                setState(() {
-                  // The button that is tapped is set to true, and the others to false.
-                  for (int index = 0; index < _selectedStatus.length; index++) {
-                    if (index == newIndex) {
-                      // toggling between the button to set it to true
-                      _selectedStatus[index] = !_selectedStatus[index];
-                    } else {
-                      // other two buttons will not be selected and are set to false
-                      _selectedStatus[index] = false;
-                    }
-                  }
-                });
-              },
-              borderRadius: const BorderRadius.all(Radius.circular(8)),
-              selectedBorderColor: Colors.red[700],
-              selectedColor: Colors.white,
-              fillColor: Colors.red[200],
-              color: Colors.red[400],
-              constraints: const BoxConstraints(
-                minHeight: 40.0,
-                minWidth: 80.0,
-              ),
-              isSelected: _selectedStatus,
-              children: statusChoice,
             ),
             Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -316,11 +184,12 @@ class _creating_partyState extends State<creating_party> {
                         padding: EdgeInsets.all(10),
                         child: TextField(
                           controller: timeinput,
+
                           decoration: InputDecoration(
                             icon: Icon(Icons.access_time),
                             border: OutlineInputBorder(),
                           ),
-                          readOnly: false, // Allow user input
+                          readOnly: true, // Allow user input
                           onTap: () async {
                             TimeOfDay? pickedTime = await showTimePicker(
                               context: context,
@@ -371,9 +240,10 @@ class _creating_partyState extends State<creating_party> {
                       child: Padding(
                         padding: EdgeInsets.all(10),
                         child: TextField(
+                            controller: startinput,
                             decoration: InputDecoration(
-                          border: OutlineInputBorder(),
-                        )),
+                              border: OutlineInputBorder(),
+                            )),
                       ),
                     ),
                     Expanded(
@@ -402,9 +272,10 @@ class _creating_partyState extends State<creating_party> {
                       child: Padding(
                         padding: EdgeInsets.all(10),
                         child: TextField(
+                            controller: endinput,
                             decoration: InputDecoration(
-                          border: OutlineInputBorder(),
-                        )),
+                              border: OutlineInputBorder(),
+                            )),
                       ),
                     ),
                     Expanded(
@@ -433,9 +304,10 @@ class _creating_partyState extends State<creating_party> {
                       child: Padding(
                         padding: EdgeInsets.all(10),
                         child: TextField(
+                            controller: numinput,
                             decoration: InputDecoration(
-                          border: OutlineInputBorder(),
-                        )),
+                              border: OutlineInputBorder(),
+                            )),
                       ),
                     ),
                     Expanded(
@@ -483,7 +355,41 @@ class _creating_partyState extends State<creating_party> {
                       ),
                       child: TextButton(
                         onPressed: () {
-                          // Get.offAll(() => Homescreen());
+                          print(choice +
+                              dateController.text +
+                              timeinput.text +
+                              startinput.text +
+                              endinput.text +
+                              numinput.text);
+
+                          if (checking()) {
+                            Provider.of<PartyCreateProvider>(context,
+                                    listen: false)
+                                .changeAll(
+                                    choice,
+                                    dateController.text,
+                                    timeinput.text,
+                                    startinput.text,
+                                    endinput.text,
+                                    int.parse(numinput.text));
+
+                            Get.offAll(() => Homescreen());
+                          } else {
+                            showDialog(
+                              context: context,
+                              builder: (BuildContext context) => AlertDialog(
+                                title: const Text('입력 오류'),
+                                content: const Text('모든 필드를 입력해주세요.'),
+                                actions: <Widget>[
+                                  TextButton(
+                                    onPressed: () =>
+                                        Navigator.pop(context, 'OK'),
+                                    child: const Text('OK'),
+                                  ),
+                                ],
+                              ),
+                            );
+                          }
                         },
                         child: Text(
                           '완료',

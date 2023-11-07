@@ -1,39 +1,17 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/HomeScreen.dart';
-import 'package:flutter_application_1/models/user.dart';
+import 'package:flutter_application_1/provider/user_information.dart';
 import 'package:get/get.dart';
-// import 'package:mongo_dart/mongo_dart.dart' as M;
-
+import 'package:dio/dio.dart';
 import 'package:http/http.dart' as http;
+import 'package:provider/provider.dart';
 
 class Signin_page extends StatefulWidget {
   const Signin_page({super.key});
 
   @override
   State<Signin_page> createState() => _Signin_pageState();
-}
-
-Future fetch_users() async {
-  var response = await http.get(Uri.parse('http://127.0.0.1:8000'));
-  var users = [];
-  for (var u in jsonDecode(response.body)) {
-    users.add(User(
-        u['userName'],
-        u['realName'],
-        u['password'],
-        u['phoneNumber'],
-        u['email'],
-        u['carNumber'],
-        u['carColor'],
-        u['carType'],
-        u['homeroom'],
-        u['userType'],
-        u['warning'],
-        u['penalty']));
-  }
-  print(users);
-  return users;
 }
 
 class _Signin_pageState extends State<Signin_page> {
@@ -43,12 +21,63 @@ class _Signin_pageState extends State<Signin_page> {
   TextEditingController phoneController = TextEditingController();
   TextEditingController emailController = TextEditingController();
   TextEditingController homeroomController = TextEditingController();
-  static String baseUrl = "http://127.0.0.1:8000";
+  var dio = Dio(BaseOptions());
+
+  @override
+  Future save(String inputusername, String inputName, String inputpassword,
+      String inputphoneNumber, String inputemail, String inputhomeroom) async {
+    final Map<String, dynamic> userData = {
+      'user_name': inputusername,
+      'real_name': inputName,
+      'password': inputpassword,
+      'phone_number': inputphoneNumber,
+      'email': inputemail,
+      'car_number': 0, // An integer, not a string
+      'car_color': "",
+      'car_type': "",
+      'homeroom': inputhomeroom,
+      'user_type': "Passenger",
+      'warning': [""],
+      'penalty': 0,
+    };
+
+    final response = await http.post(
+      Uri.parse('http://10.0.2.2:8000/user/create'),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode(userData),
+    );
+
+    // final response =
+    //     await Dio().post('http://10.0.2.2:8000/users/create', data: userData);
+
+    if (response.statusCode == 422) {
+      print('Response body for 422 error: ${response.body}');
+    } else if (response.statusCode == 200) {
+      print('success');
+    } else {
+      // Handle other status codes
+    }
+  }
+
+  @override
+  bool checking() {
+    if (nameController.text.isNotEmpty &&
+        idController.text.isNotEmpty &&
+        pwController.text.isNotEmpty &&
+        phoneController.text.isNotEmpty &&
+        emailController.text.isNotEmpty &&
+        homeroomController.text.isNotEmpty) {
+      return true;
+    }
+    return false;
+  }
 
   @override
   void initState() {
     super.initState();
-    fetch_users();
+    // fetch_users();
   }
 
   @override
@@ -169,63 +198,43 @@ class _Signin_pageState extends State<Signin_page> {
                       color: Colors.blue,
                       borderRadius: BorderRadius.circular(20)),
                   child: TextButton(
-                    child: Text("회원가입"),
+                    child: Text("회원가입", style: TextStyle(color: Colors.white)),
                     onPressed: () {
-                      Get.to(Homescreen());
+                      if (checking()) {
+                        save(
+                            idController.text,
+                            nameController.text,
+                            pwController.text,
+                            phoneController.text,
+                            emailController.text,
+                            homeroomController.text);
+                        Provider.of<UserInformationProvider>(context,
+                                listen: false)
+                            .changeAllPassenger(
+                                idController.text,
+                                nameController.text,
+                                pwController.text,
+                                phoneController.text,
+                                emailController.text,
+                                homeroomController.text);
+                        Get.offAll(() => Homescreen());
+                      } else {
+                        showDialog(
+                          context: context,
+                          builder: (BuildContext context) => AlertDialog(
+                            title: const Text('입력 오류'),
+                            content: const Text('모든 필드를 입력해주세요.'),
+                            actions: <Widget>[
+                              TextButton(
+                                onPressed: () => Navigator.pop(context, 'OK'),
+                                child: const Text('OK'),
+                              ),
+                            ],
+                          ),
+                        );
+                      }
                     },
-                  )
-                  // FutureBuilder(
-                  //     future: postSigninInfo(),
-                  //     builder: (context, snapshot) {
-                  //       return TextButton(
-                  //           child: Text("회원가입"),
-                  //           onPressed: () {
-                  //             Get.to(Homescreen());
-
-                  //             // switch (snapshot.data) {
-                  //             //   case "FAILURE: 비밀번호가 일치하지 않습니다":
-                  //             //     showDialog(
-                  //             //         context: context,
-                  //             //         builder: (context) {
-                  //             //           return AlertDialog(
-                  //             //             title: Text("로그인 실패"),
-                  //             //             content: Text("비밀번호가 일치하지 않습니다"),
-                  //             //             actions: [
-                  //             //               TextButton(
-                  //             //                   onPressed: () {
-                  //             //                     Get.back();
-                  //             //                   },
-                  //             //                   child: Text("확인"))
-                  //             //             ],
-                  //             //           );
-                  //             //         });
-                  //             //     break;
-
-                  //             //   case "FAILURE: 이메일 주소가 존재하지 않습니다":
-                  //             //     showDialog(
-                  //             //         context: context,
-                  //             //         builder: (context) {
-                  //             //           return AlertDialog(
-                  //             //             title: Text("로그인 실패"),
-                  //             //             content: Text("이메일 주소가 존재하지 않습니다"),
-                  //             //             actions: [
-                  //             //               TextButton(
-                  //             //                   onPressed: () {
-                  //             //                     Get.back();
-                  //             //                   },
-                  //             //                   child: Text("확인"))
-                  //             //             ],
-                  //             //           );
-                  //             //         });
-                  //             //     break;
-
-                  //             //   default:
-                  //             //     Get.to(Homescreen());
-                  //             //     break;
-                  //             // }
-                  //           });
-                  //     })
-                  ),
+                  )),
               SizedBox(
                 height: 15,
               ),
@@ -235,26 +244,4 @@ class _Signin_pageState extends State<Signin_page> {
       ),
     );
   }
-
-  // Future<Map> postSigninInfo() async {
-  //   Map SigninInfo = {
-  //     'user_name': idController.text,
-  //     'real_name': nameController.text,
-  //     'password': pwController.text,
-  //     'phone_number': phoneController.text,
-  //     'email': emailController.text,
-  //     'car_number': 0,
-  //     'car_color': "none",
-  //     'homeroom': homeroomController.text,
-  //     'user_type': "Passenger",
-  //     'warning': ["none"],
-  //     'penalty': 0
-  //   };
-  //   print('##### loginInfoMap is ${SigninInfo} #####');
-  //   final response = await Dio().post(
-  //     'http://http://127.0.0.1:8000//user/create',
-  //     data: jsonEncode(SigninInfo),
-  //   );
-  //   return response.data;
-  // }
 }

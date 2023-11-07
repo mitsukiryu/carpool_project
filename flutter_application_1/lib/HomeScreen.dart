@@ -5,8 +5,6 @@ import 'package:get/get.dart';
 import 'dart:async';
 import 'MyInfo.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:get/get.dart';
-import 'party_list.dart';
 import 'bottom_popup.dart';
 import 'places_api.dart';
 
@@ -73,10 +71,16 @@ class _HomescreenState extends State<Homescreen> {
             Row(
               children: [
                 Expanded(
-                  child: TextFormField(
-                    controller: _searchCon,
-                    textCapitalization: TextCapitalization.words,
-                    decoration: InputDecoration(hintText: 'Search by KeyWords'),
+                  child: Padding(
+                    padding: EdgeInsets.only(left: 10, bottom: 10, top: 10),
+                    child: TextFormField(
+                      controller: _searchCon,
+                      textCapitalization: TextCapitalization.words,
+                      decoration: InputDecoration(
+                        hintText: 'Search by KeyWords',
+                        border: OutlineInputBorder(),
+                      ),
+                    ),
                   ),
                 ),
                 IconButton(
