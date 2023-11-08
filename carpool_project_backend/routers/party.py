@@ -63,29 +63,12 @@ async def delete_party(party_id: str, current_user: User = Depends(get_current_a
 
 #find_party
 @router.get("/find")
-# async def get_party_list():
-#     docs =  app.database.party.find()
-#     all_party_list = []
-#     party_list = []
-    
-#     crt_time = str(dt.datetime.now())
-#     print("Current time is" + crt_time)
-
-    
-#     for party in docs:
-#         party["_id"] = str(party["_id"]) 
-
-#         if party["date_time"] > crt_time:
-#             party_list.append(party)
-#     for each in party_list:
-#         print(each)
 async def get_party_list():
     docs = router.database.party.find()
 
     party_list = []
     all_party_list = []
 
-    # 현재 시간을 string으로 저장한 변수
     crt_time = str(dt.datetime.now())
     print("Current time is " + crt_time)
 
@@ -96,8 +79,7 @@ async def get_party_list():
         if party["date_time"] > crt_time:
             party_list.append(party)
     
-    for each in party_list:
-        return each
+    return party_list
         
 #current_party
 @router.get("/find/current/{user_id}")
@@ -204,8 +186,6 @@ async def search_party(Lat: float , Lng: float):
   # 1km 구간
     lat_change = 1 / 111.19
     lng_change = abs(math.cos(Lat * (math.pi / 180)))
-    # lat_change = 1
-    # lng_change = 1
     party = router.database.party.find(
         {
             "$and": [
