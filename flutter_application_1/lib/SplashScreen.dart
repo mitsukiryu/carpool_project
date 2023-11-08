@@ -67,13 +67,13 @@ class _SplashScreenState extends State<SplashScreen> {
             children: [
               TextButton(
                   onPressed: () {
-                    Get.offAll(() => LoginPage());
+                    Get.to(() => LoginPage());
                   },
                   child: Text('로그인')),
               SizedBox(width: 5),
               TextButton(
                   onPressed: () {
-                    Get.offAll(() => Signin_choose());
+                    Get.to(() => Signin_choose());
                   },
                   child: Text('회원가입')),
             ],

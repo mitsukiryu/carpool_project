@@ -88,18 +88,20 @@ class _Login_PageState extends State<LoginPage> {
     final response = await http.post(
       Uri.parse('http://10.0.2.2:8000/user/login'),
       headers: <String, String>{
-        'Content-Type': 'application/json; charset=UTF-8',
+        'Content-Type': 'application/x-www-form-urlencoded'
       },
-      body: jsonEncode(userDate),
+      body: userDate,
     );
 
-    if (response.statusCode == 422) {
-      print('Response body for 422 error: ${response.body}');
-    } else if (response.statusCode == 200) {
+    if (response.statusCode == 200) {
       var val = jsonEncode(
           User(usernameEditingController.text, passwordEditingController.text));
       await storage.write(key: 'login', value: val);
       print('success');
+      return true;
+    } else if (response.statusCode == 422) {
+      print('Response body for 422 error: ${response.body}');
+      return false;
     } else {
       // Handle other status codes
     }
@@ -230,7 +232,7 @@ class _Login_PageState extends State<LoginPage> {
                   ),
                   onPressed: () async {
                     print("Went in");
-                    if (await saveThree(usernameEditingController.text,
+                    if (await save(usernameEditingController.text,
                             passwordEditingController.text) ==
                         true) {
                       Provider.of<UserInformationProvider>(context,
