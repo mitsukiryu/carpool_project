@@ -35,7 +35,7 @@ class _SplashScreenState extends State<SplashScreen> {
       Get.to(Homescreen());
     } else {
       print('로그인이 필요합니다');
-      Get.to(() => Login_Page());
+      Get.to(() => LoginPage());
     }
   }
 
@@ -73,7 +73,7 @@ class _SplashScreenState extends State<SplashScreen> {
               SizedBox(width: 20),
               ElevatedButton(
                 onPressed: () {
-                  Get.offAll(() => Login_Page());
+                  Get.offAll(() => LoginPage());
                 },
                 child: Text('로그인 창으로 이동'),
               ),
