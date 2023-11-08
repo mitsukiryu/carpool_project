@@ -43,34 +43,50 @@ class Signin_choose extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              GestureDetector(
-                onTap: () {
-                  Get.to(() => Signin_page());
-                },
-                child: Container(
-                  width: 150,
-                  height: 150,
-                  decoration: BoxDecoration(
-                    color: Colors.blue,
-                    borderRadius: BorderRadius.circular(10),
+              Column(
+                children: [
+                  Text(
+                    '페신저',
+                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
                   ),
-                  child: Image.asset("assets/images/saferide.png"),
-                ),
-              ),
-              GestureDetector(
-                onTap: () {
-                  Get.to(() => Driver_Signin_page());
-                },
-                child: Container(
-                  width: 150,
-                  height: 150,
-                  decoration: BoxDecoration(
-                    color: Colors.green,
-                    borderRadius: BorderRadius.circular(10),
+                  GestureDetector(
+                    onTap: () {
+                      Get.to(() => Signin_page());
+                    },
+                    child: Container(
+                      width: 150,
+                      height: 150,
+                      decoration: BoxDecoration(
+                        color: Colors.blue,
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: Image.asset("assets/images/saferide.png"),
+                    ),
                   ),
-                  child: Image.asset("assets/images/saferide.png"),
-                ),
+                ],
               ),
+              Column(
+                children: [
+                  Text(
+                    '드라이버',
+                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                      Get.to(() => Driver_Signin_page());
+                    },
+                    child: Container(
+                      width: 150,
+                      height: 150,
+                      decoration: BoxDecoration(
+                        color: Colors.green,
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: Image.asset("assets/images/saferide.png"),
+                    ),
+                  ),
+                ],
+              )
             ],
           ),
         ],
