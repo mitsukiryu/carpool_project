@@ -4,7 +4,7 @@ import 'dart:convert' as convert;
 class places_api {
   final String key = 'AIzaSyDuA0YY1zQE7nyC-sj8i8s2VKt9WRDnGh4';
 
-  Future<Map<String, dynamic>> get_place_id(String input) async {
+  Future<Map<String, dynamic>> get_place_id(String? input) async {
     final String url = 'https://places.googleapis.com/v1/places:searchText';
 
     var response = await http.post(Uri.parse(url),
@@ -13,7 +13,7 @@ class places_api {
           'X-Goog-Api-Key': 'AIzaSyDuA0YY1zQE7nyC-sj8i8s2VKt9WRDnGh4',
           // 'rankPreference': 'DISTANCE',
           'X-Goog-FieldMask':
-              'places.displayName,places.formattedAddress,places.location,places.photos',
+              'places.displayName,places.formattedAddress,places.location',
         },
         body: convert.jsonEncode({'textQuery': '$input'}));
 
