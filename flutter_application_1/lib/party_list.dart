@@ -42,360 +42,360 @@ class _party_listState extends State<party_list> {
                 fontWeight: FontWeight.bold)),
       ),
       body: Column(children: [
-        Row(
-          children: [
-            Expanded(
-              flex: 1,
-              child: SizedBox(),
-            ),
-            Expanded(
-              flex: boxSize,
-              child: Container(
-                child: DropdownButtonFormField2<String>(
-                  isExpanded: true,
-                  decoration: InputDecoration(
-                    // Add Horizontal padding using menuItemStyleData.padding so it matches
-                    // the menu padding when button's width is not specified.
-                    contentPadding:
-                        const EdgeInsets.symmetric(horizontal: 0, vertical: 16),
+        // Row(
+        //   children: [
+        //     Expanded(
+        //       flex: 1,
+        //       child: SizedBox(),
+        //     ),
+        //     Expanded(
+        //       flex: boxSize,
+        //       child: Container(
+        //         child: DropdownButtonFormField2<String>(
+        //           isExpanded: true,
+        //           decoration: InputDecoration(
+        //             // Add Horizontal padding using menuItemStyleData.padding so it matches
+        //             // the menu padding when button's width is not specified.
+        //             contentPadding:
+        //                 const EdgeInsets.symmetric(horizontal: 0, vertical: 16),
 
-                    isDense: true,
+        //             isDense: true,
 
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(15),
-                    ),
-                    // Add more decoration..
-                  ),
-                  hint: Text(
-                    '날짜',
-                    style: TextStyle(fontSize: textSize),
-                  ),
-                  items: genderItems
-                      .map((item) => DropdownMenuItem<String>(
-                            value: item,
-                            child: Text(
-                              item,
-                              style: TextStyle(
-                                fontSize: textSize,
-                              ),
-                            ),
-                          ))
-                      .toList(),
-                  validator: (value) {
-                    if (value == null) {
-                      return '원하시는 날짜를 입력해주세요.';
-                    }
-                    return null;
-                  },
-                  onChanged: (value) {
-                    //Do something when selected item is changed.
-                  },
-                  onSaved: (value) {
-                    selectedValue = value.toString();
-                  },
-                  buttonStyleData: const ButtonStyleData(
-                    padding: EdgeInsets.only(right: 8),
-                  ),
-                  iconStyleData: const IconStyleData(
-                    icon: Icon(
-                      Icons.arrow_drop_down,
-                      color: Colors.black45,
-                    ),
-                    iconSize: 20,
-                  ),
-                  dropdownStyleData: DropdownStyleData(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(15),
-                    ),
-                  ),
-                  menuItemStyleData: const MenuItemStyleData(
-                    padding: EdgeInsets.symmetric(horizontal: 16),
-                  ),
-                ),
-              ),
-            ),
-            Expanded(
-              flex: 1,
-              child: SizedBox(),
-            ),
+        //             border: OutlineInputBorder(
+        //               borderRadius: BorderRadius.circular(15),
+        //             ),
+        //             // Add more decoration..
+        //           ),
+        //           hint: Text(
+        //             '날짜',
+        //             style: TextStyle(fontSize: textSize),
+        //           ),
+        //           items: genderItems
+        //               .map((item) => DropdownMenuItem<String>(
+        //                     value: item,
+        //                     child: Text(
+        //                       item,
+        //                       style: TextStyle(
+        //                         fontSize: textSize,
+        //                       ),
+        //                     ),
+        //                   ))
+        //               .toList(),
+        //           validator: (value) {
+        //             if (value == null) {
+        //               return '원하시는 날짜를 입력해주세요.';
+        //             }
+        //             return null;
+        //           },
+        //           onChanged: (value) {
+        //             //Do something when selected item is changed.
+        //           },
+        //           onSaved: (value) {
+        //             selectedValue = value.toString();
+        //           },
+        //           buttonStyleData: const ButtonStyleData(
+        //             padding: EdgeInsets.only(right: 8),
+        //           ),
+        //           iconStyleData: const IconStyleData(
+        //             icon: Icon(
+        //               Icons.arrow_drop_down,
+        //               color: Colors.black45,
+        //             ),
+        //             iconSize: 20,
+        //           ),
+        //           dropdownStyleData: DropdownStyleData(
+        //             decoration: BoxDecoration(
+        //               borderRadius: BorderRadius.circular(15),
+        //             ),
+        //           ),
+        //           menuItemStyleData: const MenuItemStyleData(
+        //             padding: EdgeInsets.symmetric(horizontal: 16),
+        //           ),
+        //         ),
+        //       ),
+        //     ),
+        //     Expanded(
+        //       flex: 1,
+        //       child: SizedBox(),
+        //     ),
 
-            Expanded(
-              flex: boxSize,
-              child: Container(
-                child: DropdownButtonFormField2<String>(
-                  isExpanded: true,
-                  decoration: InputDecoration(
-                    // Add Horizontal padding using menuItemStyleData.padding so it matches
-                    // the menu padding when button's width is not specified.
-                    contentPadding:
-                        const EdgeInsets.symmetric(horizontal: 0, vertical: 16),
+        //     Expanded(
+        //       flex: boxSize,
+        //       child: Container(
+        //         child: DropdownButtonFormField2<String>(
+        //           isExpanded: true,
+        //           decoration: InputDecoration(
+        //             // Add Horizontal padding using menuItemStyleData.padding so it matches
+        //             // the menu padding when button's width is not specified.
+        //             contentPadding:
+        //                 const EdgeInsets.symmetric(horizontal: 0, vertical: 16),
 
-                    isDense: true,
+        //             isDense: true,
 
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(15),
-                    ),
-                    // Add more decoration..
-                  ),
-                  hint: Text(
-                    '시간',
-                    style: TextStyle(fontSize: textSize),
-                  ),
-                  items: genderItems
-                      .map((item) => DropdownMenuItem<String>(
-                            value: item,
-                            child: Text(
-                              item,
-                              style: TextStyle(
-                                fontSize: textSize,
-                              ),
-                            ),
-                          ))
-                      .toList(),
-                  validator: (value) {
-                    if (value == null) {
-                      return '원하시는 시간을 입력해주세요.';
-                    }
-                    return null;
-                  },
-                  onChanged: (value) {
-                    //Do something when selected item is changed.
-                  },
-                  onSaved: (value) {
-                    selectedValue = value.toString();
-                  },
-                  buttonStyleData: const ButtonStyleData(
-                    padding: EdgeInsets.only(right: 8),
-                  ),
-                  iconStyleData: const IconStyleData(
-                    icon: Icon(
-                      Icons.arrow_drop_down,
-                      color: Colors.black45,
-                    ),
-                    iconSize: 20,
-                  ),
-                  dropdownStyleData: DropdownStyleData(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(15),
-                    ),
-                  ),
-                  menuItemStyleData: const MenuItemStyleData(
-                    padding: EdgeInsets.symmetric(horizontal: 16),
-                  ),
-                ),
-              ),
-            ),
+        //             border: OutlineInputBorder(
+        //               borderRadius: BorderRadius.circular(15),
+        //             ),
+        //             // Add more decoration..
+        //           ),
+        //           hint: Text(
+        //             '시간',
+        //             style: TextStyle(fontSize: textSize),
+        //           ),
+        //           items: genderItems
+        //               .map((item) => DropdownMenuItem<String>(
+        //                     value: item,
+        //                     child: Text(
+        //                       item,
+        //                       style: TextStyle(
+        //                         fontSize: textSize,
+        //                       ),
+        //                     ),
+        //                   ))
+        //               .toList(),
+        //           validator: (value) {
+        //             if (value == null) {
+        //               return '원하시는 시간을 입력해주세요.';
+        //             }
+        //             return null;
+        //           },
+        //           onChanged: (value) {
+        //             //Do something when selected item is changed.
+        //           },
+        //           onSaved: (value) {
+        //             selectedValue = value.toString();
+        //           },
+        //           buttonStyleData: const ButtonStyleData(
+        //             padding: EdgeInsets.only(right: 8),
+        //           ),
+        //           iconStyleData: const IconStyleData(
+        //             icon: Icon(
+        //               Icons.arrow_drop_down,
+        //               color: Colors.black45,
+        //             ),
+        //             iconSize: 20,
+        //           ),
+        //           dropdownStyleData: DropdownStyleData(
+        //             decoration: BoxDecoration(
+        //               borderRadius: BorderRadius.circular(15),
+        //             ),
+        //           ),
+        //           menuItemStyleData: const MenuItemStyleData(
+        //             padding: EdgeInsets.symmetric(horizontal: 16),
+        //           ),
+        //         ),
+        //       ),
+        //     ),
 
-            // Expanded(
-            //   flex: boxSize,
-            //   child: Container(
-            //     child: DropdownButtonFormField2<String>(
-            //       isExpanded: true,
-            //       decoration: InputDecoration(
-            //         // Add Horizontal padding using menuItemStyleData.padding so it matches
-            //         // the menu padding when button's width is not specified.
-            //         contentPadding:
-            //             const EdgeInsets.symmetric(horizontal: 0, vertical: 16),
-            //         isDense: true,
-            //         border: OutlineInputBorder(
-            //           borderRadius: BorderRadius.circular(15),
-            //         ),
-            //         // Add more decoration..
-            //       ),
-            //       hint: Text(
-            //         '시간',
-            //         style: TextStyle(fontSize: textSize),
-            //       ),
-            //       items: genderItems
-            //           .map((item) => DropdownMenuItem<String>(
-            //                 value: item,
-            //                 child: Text(
-            //                   item,
-            //                   style: TextStyle(
-            //                     fontSize: textSize,
-            //                   ),
-            //                 ),
-            //               ))
-            //           .toList(),
-            //       validator: (value) {
-            //         if (value == null) {
-            //           return '원하시는 시간을 선택해주세요';
-            //         }
-            //         return null;
-            //       },
-            //       onChanged: (value) {
-            //         //Do something when selected item is changed.
-            //       },
-            //       onSaved: (value) {
-            //         selectedValue = value.toString();
-            //       },
-            //       buttonStyleData: const ButtonStyleData(
-            //         padding: EdgeInsets.only(right: 8),
-            //       ),
-            //       iconStyleData: const IconStyleData(
-            //         icon: Icon(
-            //           Icons.arrow_drop_down,
-            //           color: Colors.black45,
-            //         ),
-            //         iconSize: 24,
-            //       ),
-            //       dropdownStyleData: DropdownStyleData(
-            //         decoration: BoxDecoration(
-            //           borderRadius: BorderRadius.circular(15),
-            //         ),
-            //       ),
-            //       menuItemStyleData: const MenuItemStyleData(
-            //         padding: EdgeInsets.symmetric(horizontal: 16),
-            //       ),
-            //     ),
-            //   ),
-            // ),
-            Expanded(
-              flex: 1,
-              child: SizedBox(),
-            ),
-            Expanded(
-              flex: boxSize + 3,
-              child: Container(
-                child: DropdownButtonFormField2<String>(
-                  isExpanded: true,
-                  decoration: InputDecoration(
-                    // Add Horizontal padding using menuItemStyleData.padding so it matches
-                    // the menu padding when button's width is not specified.
-                    contentPadding:
-                        const EdgeInsets.symmetric(horizontal: 0, vertical: 16),
+        //     // Expanded(
+        //     //   flex: boxSize,
+        //     //   child: Container(
+        //     //     child: DropdownButtonFormField2<String>(
+        //     //       isExpanded: true,
+        //     //       decoration: InputDecoration(
+        //     //         // Add Horizontal padding using menuItemStyleData.padding so it matches
+        //     //         // the menu padding when button's width is not specified.
+        //     //         contentPadding:
+        //     //             const EdgeInsets.symmetric(horizontal: 0, vertical: 16),
+        //     //         isDense: true,
+        //     //         border: OutlineInputBorder(
+        //     //           borderRadius: BorderRadius.circular(15),
+        //     //         ),
+        //     //         // Add more decoration..
+        //     //       ),
+        //     //       hint: Text(
+        //     //         '시간',
+        //     //         style: TextStyle(fontSize: textSize),
+        //     //       ),
+        //     //       items: genderItems
+        //     //           .map((item) => DropdownMenuItem<String>(
+        //     //                 value: item,
+        //     //                 child: Text(
+        //     //                   item,
+        //     //                   style: TextStyle(
+        //     //                     fontSize: textSize,
+        //     //                   ),
+        //     //                 ),
+        //     //               ))
+        //     //           .toList(),
+        //     //       validator: (value) {
+        //     //         if (value == null) {
+        //     //           return '원하시는 시간을 선택해주세요';
+        //     //         }
+        //     //         return null;
+        //     //       },
+        //     //       onChanged: (value) {
+        //     //         //Do something when selected item is changed.
+        //     //       },
+        //     //       onSaved: (value) {
+        //     //         selectedValue = value.toString();
+        //     //       },
+        //     //       buttonStyleData: const ButtonStyleData(
+        //     //         padding: EdgeInsets.only(right: 8),
+        //     //       ),
+        //     //       iconStyleData: const IconStyleData(
+        //     //         icon: Icon(
+        //     //           Icons.arrow_drop_down,
+        //     //           color: Colors.black45,
+        //     //         ),
+        //     //         iconSize: 24,
+        //     //       ),
+        //     //       dropdownStyleData: DropdownStyleData(
+        //     //         decoration: BoxDecoration(
+        //     //           borderRadius: BorderRadius.circular(15),
+        //     //         ),
+        //     //       ),
+        //     //       menuItemStyleData: const MenuItemStyleData(
+        //     //         padding: EdgeInsets.symmetric(horizontal: 16),
+        //     //       ),
+        //     //     ),
+        //     //   ),
+        //     // ),
+        //     Expanded(
+        //       flex: 1,
+        //       child: SizedBox(),
+        //     ),
+        //     Expanded(
+        //       flex: boxSize + 3,
+        //       child: Container(
+        //         child: DropdownButtonFormField2<String>(
+        //           isExpanded: true,
+        //           decoration: InputDecoration(
+        //             // Add Horizontal padding using menuItemStyleData.padding so it matches
+        //             // the menu padding when button's width is not specified.
+        //             contentPadding:
+        //                 const EdgeInsets.symmetric(horizontal: 0, vertical: 16),
 
-                    isDense: true,
+        //             isDense: true,
 
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(15),
-                    ),
-                    // Add more decoration..
-                  ),
-                  hint: Text(
-                    '목적지',
-                    style: TextStyle(fontSize: textSize),
-                  ),
-                  items: genderItems
-                      .map((item) => DropdownMenuItem<String>(
-                            value: item,
-                            child: Text(
-                              item,
-                              style: TextStyle(
-                                fontSize: textSize,
-                              ),
-                            ),
-                          ))
-                      .toList(),
-                  validator: (value) {
-                    if (value == null) {
-                      return '원하시는 목적지를 입력해주세요.';
-                    }
-                    return null;
-                  },
-                  onChanged: (value) {
-                    //Do something when selected item is changed.
-                  },
-                  onSaved: (value) {
-                    selectedValue = value.toString();
-                  },
-                  buttonStyleData: const ButtonStyleData(
-                    padding: EdgeInsets.only(right: 8),
-                  ),
-                  iconStyleData: const IconStyleData(
-                    icon: Icon(
-                      Icons.arrow_drop_down,
-                      color: Colors.black45,
-                    ),
-                    iconSize: 20,
-                  ),
-                  dropdownStyleData: DropdownStyleData(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(15),
-                    ),
-                  ),
-                  menuItemStyleData: const MenuItemStyleData(
-                    padding: EdgeInsets.symmetric(horizontal: 16),
-                  ),
-                ),
-              ),
-            ),
-            Expanded(
-              flex: 1,
-              child: SizedBox(),
-            ),
-            Expanded(
-              flex: boxSize,
-              child: Container(
-                child: DropdownButtonFormField2<String>(
-                  isExpanded: true,
-                  decoration: InputDecoration(
-                    // Add Horizontal padding using menuItemStyleData.padding so it matches
-                    // the menu padding when button's width is not specified.
-                    contentPadding:
-                        const EdgeInsets.symmetric(horizontal: 0, vertical: 16),
+        //             border: OutlineInputBorder(
+        //               borderRadius: BorderRadius.circular(15),
+        //             ),
+        //             // Add more decoration..
+        //           ),
+        //           hint: Text(
+        //             '목적지',
+        //             style: TextStyle(fontSize: textSize),
+        //           ),
+        //           items: genderItems
+        //               .map((item) => DropdownMenuItem<String>(
+        //                     value: item,
+        //                     child: Text(
+        //                       item,
+        //                       style: TextStyle(
+        //                         fontSize: textSize,
+        //                       ),
+        //                     ),
+        //                   ))
+        //               .toList(),
+        //           validator: (value) {
+        //             if (value == null) {
+        //               return '원하시는 목적지를 입력해주세요.';
+        //             }
+        //             return null;
+        //           },
+        //           onChanged: (value) {
+        //             //Do something when selected item is changed.
+        //           },
+        //           onSaved: (value) {
+        //             selectedValue = value.toString();
+        //           },
+        //           buttonStyleData: const ButtonStyleData(
+        //             padding: EdgeInsets.only(right: 8),
+        //           ),
+        //           iconStyleData: const IconStyleData(
+        //             icon: Icon(
+        //               Icons.arrow_drop_down,
+        //               color: Colors.black45,
+        //             ),
+        //             iconSize: 20,
+        //           ),
+        //           dropdownStyleData: DropdownStyleData(
+        //             decoration: BoxDecoration(
+        //               borderRadius: BorderRadius.circular(15),
+        //             ),
+        //           ),
+        //           menuItemStyleData: const MenuItemStyleData(
+        //             padding: EdgeInsets.symmetric(horizontal: 16),
+        //           ),
+        //         ),
+        //       ),
+        //     ),
+        //     Expanded(
+        //       flex: 1,
+        //       child: SizedBox(),
+        //     ),
+        //     Expanded(
+        //       flex: boxSize,
+        //       child: Container(
+        //         child: DropdownButtonFormField2<String>(
+        //           isExpanded: true,
+        //           decoration: InputDecoration(
+        //             // Add Horizontal padding using menuItemStyleData.padding so it matches
+        //             // the menu padding when button's width is not specified.
+        //             contentPadding:
+        //                 const EdgeInsets.symmetric(horizontal: 0, vertical: 16),
 
-                    isDense: true,
+        //             isDense: true,
 
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(15),
-                    ),
-                    // Add more decoration..
-                  ),
-                  hint: Text(
-                    '종류',
-                    style: TextStyle(fontSize: textSize),
-                  ),
-                  items: genderItems
-                      .map((item) => DropdownMenuItem<String>(
-                            value: item,
-                            child: Text(
-                              item,
-                              style: TextStyle(
-                                fontSize: textSize,
-                              ),
-                            ),
-                          ))
-                      .toList(),
-                  validator: (value) {
-                    if (value == null) {
-                      return '원하시는 종류를 입력해주세요.';
-                    }
-                    return null;
-                  },
-                  onChanged: (value) {
-                    //Do something when selected item is changed.
-                  },
-                  onSaved: (value) {
-                    selectedValue = value.toString();
-                  },
-                  buttonStyleData: const ButtonStyleData(
-                    padding: EdgeInsets.only(right: 8),
-                  ),
-                  iconStyleData: const IconStyleData(
-                    icon: Icon(
-                      Icons.arrow_drop_down,
-                      color: Colors.black45,
-                    ),
-                    iconSize: 20,
-                  ),
-                  dropdownStyleData: DropdownStyleData(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(15),
-                    ),
-                  ),
-                  menuItemStyleData: const MenuItemStyleData(
-                    padding: EdgeInsets.symmetric(horizontal: 16),
-                  ),
-                ),
-              ),
-            ),
-            Expanded(
-              flex: 1,
-              child: SizedBox(),
-            ),
-          ],
-        ),
+        //             border: OutlineInputBorder(
+        //               borderRadius: BorderRadius.circular(15),
+        //             ),
+        //             // Add more decoration..
+        //           ),
+        //           hint: Text(
+        //             '종류',
+        //             style: TextStyle(fontSize: textSize),
+        //           ),
+        //           items: genderItems
+        //               .map((item) => DropdownMenuItem<String>(
+        //                     value: item,
+        //                     child: Text(
+        //                       item,
+        //                       style: TextStyle(
+        //                         fontSize: textSize,
+        //                       ),
+        //                     ),
+        //                   ))
+        //               .toList(),
+        //           validator: (value) {
+        //             if (value == null) {
+        //               return '원하시는 종류를 입력해주세요.';
+        //             }
+        //             return null;
+        //           },
+        //           onChanged: (value) {
+        //             //Do something when selected item is changed.
+        //           },
+        //           onSaved: (value) {
+        //             selectedValue = value.toString();
+        //           },
+        //           buttonStyleData: const ButtonStyleData(
+        //             padding: EdgeInsets.only(right: 8),
+        //           ),
+        //           iconStyleData: const IconStyleData(
+        //             icon: Icon(
+        //               Icons.arrow_drop_down,
+        //               color: Colors.black45,
+        //             ),
+        //             iconSize: 20,
+        //           ),
+        //           dropdownStyleData: DropdownStyleData(
+        //             decoration: BoxDecoration(
+        //               borderRadius: BorderRadius.circular(15),
+        //             ),
+        //           ),
+        //           menuItemStyleData: const MenuItemStyleData(
+        //             padding: EdgeInsets.symmetric(horizontal: 16),
+        //           ),
+        //         ),
+        //       ),
+        //     ),
+        //     Expanded(
+        //       flex: 1,
+        //       child: SizedBox(),
+        //     ),
+        //   ],
+        // ),
         SizedBox(
           height: 10,
         ),
