@@ -2,7 +2,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert' as convert;
 
 class places_api {
-  final String key = 'AIzaSyDb07Vf1svXpIzmxKzzqskSkDARb5Nzeco';
+  final String key = 'AIzaSyDuA0YY1zQE7nyC-sj8i8s2VKt9WRDnGh4';
 
   Future<Map<String, dynamic>> get_place_id(String input) async {
     final String url = 'https://places.googleapis.com/v1/places:searchText';
@@ -10,7 +10,7 @@ class places_api {
     var response = await http.post(Uri.parse(url),
         headers: {
           "Content-Type": 'application/json',
-          'X-Goog-Api-Key': 'AIzaSyDb07Vf1svXpIzmxKzzqskSkDARb5Nzeco',
+          'X-Goog-Api-Key': 'AIzaSyDuA0YY1zQE7nyC-sj8i8s2VKt9WRDnGh4',
           // 'rankPreference': 'DISTANCE',
           'X-Goog-FieldMask':
               'places.displayName,places.formattedAddress,places.location,places.photos',

@@ -1,9 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/HomeScreen.dart';
+import 'package:flutter_application_1/provider/user_information.dart';
 import 'package:get/get.dart';
+import 'package:provider/provider.dart';
 import 'changepw.dart';
 
 class EditProflie extends StatelessWidget {
-  const EditProflie({super.key});
+  EditProflie({super.key});
+
+  @override
+  TextEditingController nameController = TextEditingController();
+  TextEditingController idController = TextEditingController();
+  TextEditingController phoneNumberController = TextEditingController();
+  TextEditingController emailController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -30,6 +39,7 @@ class EditProflie extends StatelessWidget {
               Padding(
                 padding: EdgeInsets.all(10),
                 child: TextField(
+                  controller: nameController,
                   decoration: InputDecoration(
                       border: OutlineInputBorder(),
                       labelText: '이름',
@@ -39,6 +49,7 @@ class EditProflie extends StatelessWidget {
               Padding(
                 padding: EdgeInsets.all(10),
                 child: TextField(
+                  controller: idController,
                   decoration: InputDecoration(
                       border: OutlineInputBorder(),
                       labelText: '아이디',
@@ -51,6 +62,8 @@ class EditProflie extends StatelessWidget {
                     flex: 1,
                     child: SizedBox(),
                   ),
+
+                  //지금 비밀번호변경 방식을 같은 페이지에서 비밀번호 인증하고 돌아와서 하게 만들기 위해서, index 사용하는 리스트 위젯 사용해야함 추후에
                   Expanded(
                     flex: 35,
                     child: GestureDetector(
@@ -98,6 +111,7 @@ class EditProflie extends StatelessWidget {
               Padding(
                 padding: EdgeInsets.all(10),
                 child: TextField(
+                  controller: phoneNumberController,
                   decoration: InputDecoration(
                       border: OutlineInputBorder(),
                       labelText: '전화번호',
@@ -107,6 +121,7 @@ class EditProflie extends StatelessWidget {
               Padding(
                 padding: EdgeInsets.all(10),
                 child: TextField(
+                  controller: emailController,
                   decoration: InputDecoration(
                       border: OutlineInputBorder(),
                       labelText: '이메일',
@@ -153,7 +168,31 @@ class EditProflie extends StatelessWidget {
                     ),
                     child: TextButton(
                       onPressed: () {
-                        // Get.offAll(() => Homescreen());
+                        if (nameController.text.isNotEmpty) {
+                          Provider.of<UserInformationProvider>(context,
+                                  listen: false)
+                              .changeName(nameController.text);
+                        }
+                        if (idController.text.isNotEmpty) {
+                          Provider.of<UserInformationProvider>(context,
+                                  listen: false)
+                              .changeId(idController.text);
+                        }
+                        if (phoneNumberController.text.isNotEmpty) {
+                          Provider.of<UserInformationProvider>(context,
+                                  listen: false)
+                              .changeName(phoneNumberController.text);
+                        }
+                        if (emailController.text.isNotEmpty) {
+                          Provider.of<UserInformationProvider>(context,
+                                  listen: false)
+                              .changeName(emailController.text);
+                        }
+                        print(Provider.of<UserInformationProvider>(context,
+                                listen: false)
+                            .name);
+
+                        Get.offAll(() => Homescreen());
                       },
                       child: Text(
                         '완료',

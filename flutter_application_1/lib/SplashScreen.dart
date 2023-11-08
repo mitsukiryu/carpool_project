@@ -6,6 +6,9 @@ import 'login & signin/login_page.dart';
 import 'package:flutter_application_1/provider/user_information.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'HomeScreen.dart';
+import 'package:flutter_application_1/provider/user_information.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'HomeScreen.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -19,25 +22,7 @@ class _SplashScreenState extends State<SplashScreen> {
   dynamic userInfo = '';
 
   @override
-  void initState() {
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      _asyncMethod();
-    });
-    super.initState();
-  }
-
-  _asyncMethod() async {
-    userInfo = await storage.read(key: 'login');
-
-    // user의 정보가 있다면 로그인 후 들어가는 첫 페이지로 넘어가게 합니다.
-
-    if (userInfo != null) {
-      Get.to(Homescreen());
-    } else {
-      print('로그인이 필요합니다');
-      Get.to(() => Login_Page());
-    }
-  }
+  void initState() {}
 
   @override
   Widget build(BuildContext context) {
@@ -66,15 +51,13 @@ class _SplashScreenState extends State<SplashScreen> {
               ElevatedButton(
                 onPressed: () {
                   Get.offAll(() => Homescreen());
-                  Get.to(() => Homescreen());
                 },
                 child: Text('홈페이지로 이동'),
               ),
               SizedBox(width: 20),
               ElevatedButton(
                 onPressed: () {
-                  // Get.offAll(() => LoginPage());
-                  Get.to(() => Login_Page());
+                  Get.offAll(() => LoginPage());
                 },
                 child: Text('로그인 창으로 이동'),
               ),
@@ -83,6 +66,5 @@ class _SplashScreenState extends State<SplashScreen> {
         ],
       ),
     );
-    ;
   }
 }

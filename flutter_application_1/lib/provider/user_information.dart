@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/MongoDBModel.dart';
 import 'package:provider/provider.dart';
@@ -11,10 +9,10 @@ class UserInformationProvider extends ChangeNotifier {
   String _phoneNumber = "01063004833";
   String _email = "his1234@his.sc.kr";
   String _status = "Passenger";
-  String _carNumber = "";
-  String _carColor = "";
-  String _carType = "";
-  String _homeroom = "";
+  int _carNumber = 3;
+  String _carColor = "Blue";
+  String _carType = "Sonata";
+  String _homeroom = "12-B";
   int _penealty = 0;
   List _warnings = [];
 
@@ -24,30 +22,67 @@ class UserInformationProvider extends ChangeNotifier {
   String get phoneNumber => _phoneNumber;
   String get email => _email;
   String get status => _status;
-  String get CarNumber => _carNumber;
+  int get CarNumber => _carNumber;
   String get carColor => _carColor;
   String get carType => _carType;
   String get homeroom => _homeroom;
   int get penealty => _penealty;
   List get warnings => _warnings;
 
-  void changeCarColor(String inputCarColor) {
-    _name = inputCarColor;
+  void changeAllDriver(
+      String inputName,
+      String inputId,
+      String inputPW,
+      String inputPhoneNumber,
+      String inputEmail,
+      int inputCarNumber,
+      String inputCarColor,
+      String inputCarType) {
+    _name = inputName;
+    _id = inputId;
+    _pw = inputPW;
+    _phoneNumber = inputPhoneNumber;
+    _email = inputEmail;
+    _carNumber = inputCarNumber;
+    _carColor = inputCarColor;
+    _carType = inputCarType;
     notifyListeners();
   }
 
-  void changeCarNumber(String inputCarNumber) {
-    _name = inputCarNumber;
+  void changeAllPassenger(
+    String inputName,
+    String inputId,
+    String inputPW,
+    String inputPhoneNumber,
+    String inputEmail,
+    String inputHomeroom,
+  ) {
+    _name = inputName;
+    _id = inputId;
+    _pw = inputPW;
+    _phoneNumber = inputPhoneNumber;
+    _email = inputEmail;
+    _homeroom = inputHomeroom;
+    notifyListeners();
+  }
+
+  void changeCarColor(String inputCarColor) {
+    _carColor = inputCarColor;
+    notifyListeners();
+  }
+
+  void changeCarNumber(int inputCarNumber) {
+    _carNumber = inputCarNumber;
     notifyListeners();
   }
 
   void changeCarType(String inputCarType) {
-    _name = inputCarType;
+    _carType = inputCarType;
     notifyListeners();
   }
 
   void changeHomeroom(String inputHomeroom) {
-    _name = inputHomeroom;
+    _homeroom = inputHomeroom;
     notifyListeners();
   }
 
