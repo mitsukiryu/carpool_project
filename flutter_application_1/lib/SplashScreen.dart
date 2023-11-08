@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_application_1/HomeScreen.dart';
+import 'package:flutter_application_1/login%20&%20signin/Passenger_Singin_page.dart';
+import 'package:flutter_application_1/login%20&%20signin/Signin_choose.dart';
 import 'package:get/get.dart';
 import 'login & signin/login_page.dart';
-import 'package:flutter_application_1/provider/user_information.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'HomeScreen.dart';
 import 'package:flutter_application_1/provider/user_information.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'HomeScreen.dart';
@@ -22,7 +21,26 @@ class _SplashScreenState extends State<SplashScreen> {
   dynamic userInfo = '';
 
   @override
-  void initState() {}
+  void initState() {
+    // WidgetsBinding.instance.addPostFrameCallback((_) {
+    //   _asyncMethod();
+    // });
+    super.initState();
+  }
+
+  _asyncMethod() async {
+    print(await storage.read(key: 'login'));
+    userInfo = await storage.read(key: 'login');
+
+    // user의 정보가 있다면 로그인 후 들어가는 첫 페이지로 넘어가게 합니다.
+
+    if (userInfo != null) {
+      Get.to(() => Homescreen());
+    } else {
+      print('로그인이 필요합니다');
+      Get.to(() => LoginPage());
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -44,27 +62,26 @@ class _SplashScreenState extends State<SplashScreen> {
               valueColor: AlwaysStoppedAnimation<Color>(
                   Colors.black)), // Replace with your desired loading indicator
           SizedBox(height: 20),
-          // Buttons
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              ElevatedButton(
-                onPressed: () {
-                  Get.offAll(() => Homescreen());
-                },
-                child: Text('홈페이지로 이동'),
-              ),
-              SizedBox(width: 20),
-              ElevatedButton(
-                onPressed: () {
-                  Get.offAll(() => LoginPage());
-                },
-                child: Text('로그인 창으로 이동'),
-              ),
+              TextButton(
+                  onPressed: () {
+                    Get.offAll(() => LoginPage());
+                  },
+                  child: Text('로그인')),
+              SizedBox(width: 5),
+              TextButton(
+                  onPressed: () {
+                    Get.offAll(() => Signin_choose());
+                  },
+                  child: Text('회원가입')),
             ],
-          ),
+          )
+          // Buttons
         ],
       ),
     );
+    ;
   }
 }
