@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_application_1/HomeScreen.dart';
+import 'package:flutter_application_1/login%20&%20signin/Passenger_Singin_page.dart';
+import 'package:flutter_application_1/login%20&%20signin/Signin_choose.dart';
 import 'package:get/get.dart';
 import 'login & signin/login_page.dart';
 import 'package:flutter_application_1/provider/user_information.dart';
@@ -20,9 +22,9 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   void initState() {
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      _asyncMethod();
-    });
+    // WidgetsBinding.instance.addPostFrameCallback((_) {
+    //   _asyncMethod();
+    // });
     super.initState();
   }
 
@@ -32,7 +34,7 @@ class _SplashScreenState extends State<SplashScreen> {
     // user의 정보가 있다면 로그인 후 들어가는 첫 페이지로 넘어가게 합니다.
 
     if (userInfo != null) {
-      Get.to(Homescreen());
+      Get.to(() => Homescreen());
     } else {
       print('로그인이 필요합니다');
       Get.to(() => LoginPage());
@@ -59,7 +61,6 @@ class _SplashScreenState extends State<SplashScreen> {
               valueColor: AlwaysStoppedAnimation<Color>(
                   Colors.black)), // Replace with your desired loading indicator
           SizedBox(height: 20),
-          // Buttons
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -78,7 +79,8 @@ class _SplashScreenState extends State<SplashScreen> {
                 child: Text('로그인 창으로 이동'),
               ),
             ],
-          ),
+          )
+          // Buttons
         ],
       ),
     );

@@ -1,10 +1,15 @@
+import 'dart:convert';
+
 import 'package:flutter_application_1/HomeScreen.dart';
+import 'package:flutter_application_1/models/user.dart';
 import 'package:flutter_application_1/provider/party_create_provider.dart';
+import 'package:flutter_application_1/provider/user_information.dart';
 import 'package:intl/intl.dart';
 import "package:get/get.dart";
 import "package:flutter/material.dart";
 import 'package:provider/provider.dart';
 import 'package:toggle_switch/toggle_switch.dart';
+import 'package:http/http.dart' as http;
 
 class creating_party extends StatefulWidget {
   @override
@@ -36,6 +41,42 @@ class _creating_partyState extends State<creating_party> {
       return true;
     }
     return false;
+  }
+
+  @override
+  Future save(String inputDate, String inputName, String inputStart,
+      String inputEnd, int inputNum, String inputStatus) async {
+    final Map<String, dynamic> userData = {
+      'date_time': inputDate,
+      'departure': inputStart,
+      'destination': inputEnd,
+      'max_recruitment': inputNum,
+      'cur_recruitment': 0,
+      'party_type': inputStatus,
+      'party_recruiter_id': inputName,
+      'party_member_id': [inputName],
+      'party_Lat': 0.0,
+      'party_Lng': 0.0
+    };
+
+    final response = await http.post(
+      Uri.parse('http://10.0.2.2:8000/party/create/$inputName'),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode(userData),
+    );
+
+    // final response =
+    //     await Dio().post('http://10.0.2.2:8000/users/create', data: userData);
+
+    if (response.statusCode == 422) {
+      print('Response body for 422 error: ${response.body}');
+    } else if (response.statusCode == 200) {
+      print('success');
+    } else {
+      // Handle other status codes
+    }
   }
 
   @override
@@ -184,7 +225,6 @@ class _creating_partyState extends State<creating_party> {
                         padding: EdgeInsets.all(10),
                         child: TextField(
                           controller: timeinput,
-
                           decoration: InputDecoration(
                             icon: Icon(Icons.access_time),
                             border: OutlineInputBorder(),
@@ -195,21 +235,38 @@ class _creating_partyState extends State<creating_party> {
                               context: context,
                               initialTime: TimeOfDay.now(),
                             );
-
                             if (pickedTime != null) {
-                              print(pickedTime
-                                  .format(context)); // Output formatted time
-
-                              // Format the pickedTime to your desired pattern
-                              String formattedTime = pickedTime.format(context);
+                              // Format the pickedTime to 24-hour format
+                              String formattedTime =
+                                  DateFormat('HH:mm:ss').format(
+                                DateTime(
+                                    DateTime.now().year,
+                                    DateTime.now().month,
+                                    DateTime.now().day,
+                                    pickedTime.hour,
+                                    pickedTime.minute),
+                              );
 
                               setState(() {
-                                timeinput.text =
-                                    formattedTime; // Set the value of the text field
+                                timeinput.text = formattedTime;
                               });
                             } else {
                               print("Time is not selected");
                             }
+                            // if (pickedTime != null) {
+                            //   print(pickedTime
+                            //       .format(context)); // Output formatted time
+
+                            //   // Format the pickedTime to your desired pattern
+                            //   String formattedTime = pickedTime.format(context);
+
+                            //   setState(() {
+                            //     timeinput.text =
+                            //         formattedTime; // Set the value of the text field
+                            //   });
+                            // } else {
+                            //   print("Time is not selected");
+                            // }
                           },
                         ),
                       ),
@@ -355,14 +412,17 @@ class _creating_partyState extends State<creating_party> {
                       ),
                       child: TextButton(
                         onPressed: () {
-                          print(choice +
-                              dateController.text +
-                              timeinput.text +
-                              startinput.text +
-                              endinput.text +
-                              numinput.text);
-
                           if (checking()) {
+                            save(
+                                dateController.text + ' ' + timeinput.text,
+                                Provider.of<UserInformationProvider>(context,
+                                        listen: false)
+                                    .id
+                                    .toString(),
+                                startinput.text,
+                                endinput.text,
+                                int.parse(numinput.text),
+                                choice);
                             Provider.of<PartyCreateProvider>(context,
                                     listen: false)
                                 .changeAll(
