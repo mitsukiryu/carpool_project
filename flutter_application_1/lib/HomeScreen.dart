@@ -99,7 +99,7 @@ class _HomescreenState extends State<Homescreen> {
                 children: [
                   Flexible(
                     child: Padding(
-                      padding: EdgeInsets.only(left: 10, bottom: 10, top: 10),
+                      padding: EdgeInsets.all(10),
                       child: TextFormField(
                         onChanged: (value) {
                           placeAutocomplete(value);
