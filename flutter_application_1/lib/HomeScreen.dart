@@ -140,10 +140,12 @@ class _HomescreenState extends State<Homescreen> {
                       itemCount: placePrediction.length,
                       itemBuilder: (context, index) => LocationListTile(
                             press: () async {
-                              var IndexLoc = await GetLocation()
-                                  .GetLocByID(placePrediction[index].placeId);
-                              goToPlace(LatLng(IndexLoc['location']['latitude'],
-                                  IndexLoc['location']['longitude']));
+                              var IndexLoc = await places_api().get_place_id(
+                                  placePrediction[index].description);
+                              goToPlace(LatLng(
+                                  IndexLoc['places'][0]['location']['latitude'],
+                                  IndexLoc['places'][0]['location']
+                                      ['longitude']));
                             },
                             location: placePrediction[index].description!,
                           ))),
