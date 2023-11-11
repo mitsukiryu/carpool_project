@@ -27,6 +27,8 @@ class _creating_partyState extends State<creating_party> {
   TextEditingController startinput = TextEditingController();
   TextEditingController endinput = TextEditingController();
   TextEditingController numinput = TextEditingController();
+  FocusNode _startfocus = FocusNode();
+  FocusNode _endfocus = FocusNode();
   String choice = "";
   static final storage = FlutterSecureStorage();
 
@@ -56,6 +58,7 @@ class _creating_partyState extends State<creating_party> {
   void initState() {
     dateController.text = "";
     timeinput.text = "";
+    _startfocus = FocusNode();
     super.initState();
   }
 
@@ -331,6 +334,7 @@ class _creating_partyState extends State<creating_party> {
                         padding: EdgeInsets.all(10),
                         child: TextFormField(
                           controller: startinput,
+                          focusNode: _startfocus,
                           decoration: InputDecoration(
                             border: OutlineInputBorder(),
                           ),
@@ -368,6 +372,7 @@ class _creating_partyState extends State<creating_party> {
                         padding: EdgeInsets.all(10),
                         child: TextField(
                           controller: endinput,
+                          focusNode: _endfocus,
                           decoration: InputDecoration(
                             border: OutlineInputBorder(),
                           ),
@@ -520,10 +525,13 @@ class _creating_partyState extends State<creating_party> {
                             press: () async {
                               var IndexLoc = await places_api().get_place_id(
                                   placePrediction[index].description);
-                              startinput.text =
-                                  IndexLoc['places'][0]['displayName']['text'];
-                              endinput.text =
-                                  IndexLoc['places'][0]['displayName']['text'];
+                              if (_startfocus.hasListeners) {
+                                startinput.text = IndexLoc['places'][0]
+                                    ['displayName']['text'];
+                              } else if (_endfocus.hasListeners) {
+                                endinput.text = IndexLoc['places'][0]
+                                    ['displayName']['text'];
+                              }
                             },
                             location: placePrediction[index].description!,
                           ))),
