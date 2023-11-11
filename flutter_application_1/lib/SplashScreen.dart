@@ -73,7 +73,7 @@ class _SplashScreenState extends State<SplashScreen> {
               SizedBox(width: 5),
               TextButton(
                   onPressed: () {
-                    Get.to(() => Signin_choose());
+                    Get.to(() => Homescreen());
                   },
                   child: Text('회원가입')),
             ],
