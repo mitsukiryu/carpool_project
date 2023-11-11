@@ -10,6 +10,7 @@ class Party(BaseModel):
     party_type: str
     party_recruiter_id: str
     party_member_id: list[str]
-    party_Lat: float
-    party_Lng: float
-
+    departure_party_Lat: float
+    departure_party_Lng: float
+    destination_party_Lat: float
+    destination_party_Lng: float
