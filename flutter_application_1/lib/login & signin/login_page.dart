@@ -85,7 +85,7 @@ class _Login_PageState extends State<LoginPage> {
       'password': inputpassword,
     };
 
-    final response = await http.post(
+    var response = await http.post(
       Uri.parse('http://10.0.2.2:8000/user/login'),
       headers: <String, String>{
         'Content-Type': 'application/x-www-form-urlencoded'
@@ -94,9 +94,19 @@ class _Login_PageState extends State<LoginPage> {
     );
 
     if (response.statusCode == 200) {
-      var val = jsonEncode(
-          User(usernameEditingController.text, passwordEditingController.text));
-      await storage.write(key: 'login', value: val);
+      // var val = jsonEncode(
+      //     User(usernameEditingController.text, passwordEditingController.text));
+      Map<String, dynamic> data = json.decode(response.body);
+      String accessToken = data['access_token'];
+      print(accessToken);
+
+      await storage.write(
+          key: 'loginId', value: usernameEditingController.text);
+      await storage.write(
+          key: 'loginPw', value: passwordEditingController.text);
+      await storage.write(key: 'token', value: accessToken);
+      print(await storage.read(key: 'token'));
+
       print('success');
       return true;
     } else if (response.statusCode == 422) {
@@ -105,6 +115,11 @@ class _Login_PageState extends State<LoginPage> {
     } else {
       // Handle other status codes
     }
+  }
+
+  @override
+  static void storeToken(String token) async {
+    await storage.write(key: "token", value: token);
   }
 
   @override

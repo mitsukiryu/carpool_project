@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/autocomplete_prediction.dart';
 import 'package:flutter_application_1/party_list.dart';
@@ -79,6 +78,7 @@ class _HomescreenState extends State<Homescreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButtonLocation: FloatingActionButtonLocation.startFloat,
       floatingActionButton: FloatingActionButton(
         tooltip: 'Add', // used by assistive technologies
         onPressed: () {
