@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'sub_party_list.dart';
+import 'widget/card_partylist.dart';
+import 'package:http/http.dart' as http;
 
 class party_list extends StatefulWidget {
   const party_list({super.key});
@@ -22,6 +24,30 @@ class _party_listState extends State<party_list> {
   int contextSpace = 1;
 
   String? selectedValue;
+
+  @override
+  Future getData() async {
+    var response = await http.post(
+      Uri.parse('http://10.0.2.2:8000/user/login'),
+      headers: <String, String>{
+        'Content-Type': 'application/x-www-form-urlencoded'
+      },
+    );
+
+    if (response.statusCode == 200) {
+      // var val = jsonEncode(
+      //     User(usernameEditingController.text, passwordEditingController.text));
+
+      print(response);
+      print('success');
+      return response;
+    } else if (response.statusCode == 422) {
+      print('Response body for 422 error: ${response.body}');
+      return;
+    } else {
+      return;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -95,10 +121,19 @@ class _party_listState extends State<party_list> {
           ),
         ),
         // FutureBuilder(
-        //   future: Future,
+        //   future: ,
         //   builder: (context, snapshot) {
         //     if (snapshot.hasData) {
-        //       return ListView.builder();
+        //       return ListView.builder(  itemCount: ,
+        //       itemBuilder: (context, index) {
+        //         final studentInfo = [index];
+        //         return Padding(
+        //           padding: const EdgeInsets.all(8.0),
+        //           //10
+        //           child: card_partylist(inputdate, inputType, inputTime, inputStart, inputEnd, inputStatus)
+
+        //         );
+        //       },);
         //     }
 
         //     if (snapshot.hasError) return Text("error");

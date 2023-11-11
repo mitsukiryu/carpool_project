@@ -246,10 +246,10 @@ class _Login_PageState extends State<LoginPage> {
                         fontWeight: FontWeight.bold),
                   ),
                   onPressed: () async {
-                    print("Went in");
                     if (await save(usernameEditingController.text,
                             passwordEditingController.text) ==
                         true) {
+                      print("Went in");
                       Provider.of<UserInformationProvider>(context,
                               listen: false)
                           .changeId(
