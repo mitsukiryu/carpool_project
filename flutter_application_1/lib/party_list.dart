@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
@@ -27,8 +29,8 @@ class _party_listState extends State<party_list> {
 
   @override
   Future getData() async {
-    var response = await http.post(
-      Uri.parse('http://10.0.2.2:8000/user/login'),
+    var response = await http.get(
+      Uri.parse('http://10.0.2.2:8000/party/find'),
       headers: <String, String>{
         'Content-Type': 'application/x-www-form-urlencoded'
       },
@@ -37,10 +39,11 @@ class _party_listState extends State<party_list> {
     if (response.statusCode == 200) {
       // var val = jsonEncode(
       //     User(usernameEditingController.text, passwordEditingController.text));
+      List responseJson = json.decode(response.body);
 
-      print(response);
+      print(responseJson);
       print('success');
-      return response;
+      return responseJson;
     } else if (response.statusCode == 422) {
       print('Response body for 422 error: ${response.body}');
       return;
@@ -120,26 +123,29 @@ class _party_listState extends State<party_list> {
             ],
           ),
         ),
-        // FutureBuilder(
-        //   future: ,
-        //   builder: (context, snapshot) {
-        //     if (snapshot.hasData) {
-        //       return ListView.builder(  itemCount: ,
-        //       itemBuilder: (context, index) {
-        //         final studentInfo = [index];
-        //         return Padding(
-        //           padding: const EdgeInsets.all(8.0),
-        //           //10
-        //           child: card_partylist(inputdate, inputType, inputTime, inputStart, inputEnd, inputStatus)
+        FutureBuilder(
+          future: getData(),
+          builder: (context, snapshot) {
+            if (snapshot.hasData) {
+              return ListView.builder(
+                itemCount: snapshot.data.length,
+                itemBuilder: (context, index) {
+                  final studentInfo = [index];
+                  return Text(snapshot.data.toString());
+                  // Padding(
+                  //   padding: const EdgeInsets.all(8.0),
+                  //   //10
+                  //   child: card_partylist(inputdate, inputType, inputTime, inputStart, inputEnd, inputStatus)
 
-        //         );
-        //       },);
-        //     }
+                  // );
+                },
+              );
+            }
 
-        //     if (snapshot.hasError) return Text("error");
-        //     return CircularProgressIndicator();
-        //   },
-        // ),
+            if (snapshot.hasError) return Text("error");
+            return CircularProgressIndicator();
+          },
+        ),
         GestureDetector(
           onTap: () {
             Get.to(() => sub_party_list());

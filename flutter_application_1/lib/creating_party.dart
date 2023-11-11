@@ -84,8 +84,10 @@ class _creating_partyState extends State<creating_party> {
       'party_type': inputStatus,
       'party_recruiter_id': inputName,
       'party_member_id': [inputName],
-      'party_Lat': 0.0,
-      'party_Lng': 0.0
+      'departure_party_Lat': 0.0,
+      'departure_party_Lng': 0.0,
+      'destination_party_Lat': 0.0,
+      'destination_party_Lng': 0.0
     };
 
     String? dataToken = await storage.read(key: "token");

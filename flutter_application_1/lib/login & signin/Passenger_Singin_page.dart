@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/HomeScreen.dart';
+import 'package:flutter_application_1/login%20&%20signin/login_page.dart';
 import 'package:flutter_application_1/provider/user_information.dart';
 import 'package:get/get.dart';
 import 'package:dio/dio.dart';
@@ -217,7 +218,7 @@ class _Signin_pageState extends State<Signin_page> {
                                 phoneController.text,
                                 emailController.text,
                                 homeroomController.text);
-                        Get.offAll(() => Homescreen());
+                        Get.to(() => LoginPage());
                       } else {
                         showDialog(
                           context: context,
