@@ -10,6 +10,11 @@ import "package:flutter/material.dart";
 import 'package:provider/provider.dart';
 import 'package:toggle_switch/toggle_switch.dart';
 import 'package:http/http.dart' as http;
+import 'autocomplete.dart';
+import 'autocomplete_prediction.dart';
+import 'complete_response.dart';
+import 'location_list_tile.dart';
+import 'places_api.dart';
 
 class creating_party extends StatefulWidget {
   @override
@@ -23,6 +28,28 @@ class _creating_partyState extends State<creating_party> {
   TextEditingController endinput = TextEditingController();
   TextEditingController numinput = TextEditingController();
   String choice = "";
+  List<AutocompletePrediction> placePrediction = [];
+  bool _isWriting = false;
+
+  void placeAutocomplete(String query) async {
+    Uri uri =
+        Uri.https('maps.googleapis.com', '/maps/api/place/autocomplete/json', {
+      "input": query,
+      'key': 'AIzaSyDuA0YY1zQE7nyC-sj8i8s2VKt9WRDnGh4',
+    });
+    String? response = await get_method.fetchUrl(uri);
+
+    if (response != null) {
+      CompleteResponse result =
+          CompleteResponse.parseAutocompleteResult(response);
+      if (result.predictions != null) {
+        setState(() {
+          placePrediction = result.predictions!;
+        });
+      }
+    }
+  }
+
   @override
   void initState() {
     dateController.text = "";
@@ -296,11 +323,16 @@ class _creating_partyState extends State<creating_party> {
                       flex: 6,
                       child: Padding(
                         padding: EdgeInsets.all(10),
-                        child: TextField(
-                            controller: startinput,
-                            decoration: InputDecoration(
-                              border: OutlineInputBorder(),
-                            )),
+                        child: TextFormField(
+                          controller: startinput,
+                          decoration: InputDecoration(
+                            border: OutlineInputBorder(),
+                          ),
+                          onChanged: (value) {
+                            placeAutocomplete(value);
+                            _isWriting = value.length > 0;
+                          },
+                        ),
                       ),
                     ),
                     Expanded(
@@ -329,10 +361,15 @@ class _creating_partyState extends State<creating_party> {
                       child: Padding(
                         padding: EdgeInsets.all(10),
                         child: TextField(
-                            controller: endinput,
-                            decoration: InputDecoration(
-                              border: OutlineInputBorder(),
-                            )),
+                          controller: endinput,
+                          decoration: InputDecoration(
+                            border: OutlineInputBorder(),
+                          ),
+                          onChanged: (value) {
+                            placeAutocomplete(value);
+                            _isWriting = value.length > 0;
+                          },
+                        ),
                       ),
                     ),
                     Expanded(
@@ -465,6 +502,22 @@ class _creating_partyState extends State<creating_party> {
                 ]),
               ],
             ),
+            if (_isWriting)
+              Container(
+                  height: 50,
+                  child: ListView.builder(
+                      itemCount: placePrediction.length,
+                      itemBuilder: (context, index) => LocationListTile(
+                            press: () async {
+                              var IndexLoc = await places_api().get_place_id(
+                                  placePrediction[index].description);
+                              startinput.text =
+                                  IndexLoc['places'][0]['displayName']['text'];
+                              endinput.text =
+                                  IndexLoc['places'][0]['displayName']['text'];
+                            },
+                            location: placePrediction[index].description!,
+                          ))),
           ],
         ),
       ),
