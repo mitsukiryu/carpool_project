@@ -176,7 +176,6 @@ async def sort_party(party_type: str = Query(None), destination: str = Query(Non
                 if i["date_time"].split(" ")[1][0:7] >= time:
                     final_party.append(i)
     
-
     return final_party
 
 # party search

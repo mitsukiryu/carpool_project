@@ -1,7 +1,7 @@
 import 'dart:convert';
-
+import 'dart:io';
 import 'package:flutter_application_1/HomeScreen.dart';
-import 'package:flutter_application_1/models/user.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter_application_1/provider/party_create_provider.dart';
 import 'package:flutter_application_1/provider/user_information.dart';
 import 'package:intl/intl.dart';
@@ -28,6 +28,8 @@ class _creating_partyState extends State<creating_party> {
   TextEditingController endinput = TextEditingController();
   TextEditingController numinput = TextEditingController();
   String choice = "";
+  static final storage = FlutterSecureStorage();
+
   List<AutocompletePrediction> placePrediction = [];
   bool _isWriting = false;
 
@@ -86,10 +88,14 @@ class _creating_partyState extends State<creating_party> {
       'party_Lng': 0.0
     };
 
+    String? dataToken = await storage.read(key: "token");
+    String? dataId = await storage.read(key: "loginId");
+
     final response = await http.post(
-      Uri.parse('http://10.0.2.2:8000/party/create/$inputName'),
+      Uri.parse('http://10.0.2.2:8000/party/create/$dataId'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
+        'Authorization': 'Bearer $dataToken',
       },
       body: jsonEncode(userData),
     );
@@ -450,12 +456,15 @@ class _creating_partyState extends State<creating_party> {
                       child: TextButton(
                         onPressed: () {
                           if (checking()) {
+                            // save(inputDate, inputName, inputStart, inputEnd, inputNum, inputStatus, inputId)
+
                             save(
                                 dateController.text + ' ' + timeinput.text,
                                 Provider.of<UserInformationProvider>(context,
                                         listen: false)
-                                    .id
+                                    .name
                                     .toString(),
+                                //이거 로그인 하면 프로하이더에 저장되지 않아서 값들
                                 startinput.text,
                                 endinput.text,
                                 int.parse(numinput.text),

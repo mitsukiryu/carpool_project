@@ -14,7 +14,7 @@ from datetime import datetime, timedelta
 from typing import Union
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from jose import JWTError, jwt
-from typing import Annotated
+from typing import Annotated, Union
 
 
 SECRET_KEY = "2d7459bf7a03b0f5479a677f31b599cd0107088886c4aa95114ede8dc7e978c2"
@@ -76,7 +76,7 @@ async def get_current_user(token: str = Depends(oauth2_scheme)):
 
 #get_user_active
 async def get_current_active_user(
-    current_user: User = Depends(get_current_user)
+    current_user: User =  Depends(get_current_user)
 ):
     if current_user.disabled:
         raise HTTPException(status_code=400, detail="Inactive user")
