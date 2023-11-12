@@ -1,18 +1,29 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/HomeScreen.dart';
 import 'package:flutter_application_1/provider/user_information.dart';
-import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import 'changepw.dart';
+import 'package:get/get.dart';
 
-class EditProflie extends StatelessWidget {
-  EditProflie({super.key});
+class EditProfile extends StatefulWidget {
+  const EditProfile({super.key});
 
   @override
+  State<EditProfile> createState() => _EditProfileState();
+}
+
+class _EditProfileState extends State<EditProfile> {
   TextEditingController nameController = TextEditingController();
   TextEditingController idController = TextEditingController();
   TextEditingController phoneNumberController = TextEditingController();
   TextEditingController emailController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    nameController = new TextEditingController(
+        text: Provider.of<UserInformationProvider>(context).name.toString());
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +49,7 @@ class EditProflie extends StatelessWidget {
               //패딩에서 안에 변수로 묶에서 사용자 마다 처음에 보이는게 다르게 예를들어 "박경태" 이런식으로 보일수 있게 해야함
               Padding(
                 padding: EdgeInsets.all(10),
-                child: TextField(
+                child: TextFormField(
                   controller: nameController,
                   decoration: InputDecoration(
                       border: OutlineInputBorder(),

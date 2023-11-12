@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'Passenger_Singin_page.dart';
-import 'Driver_Signin_page.dart';
+import 'Driver_Singin_page.dart';
+import 'Passenger_Signin_page.dart';
 
 class Signin_choose extends StatelessWidget {
   const Signin_choose({super.key});

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/HomeScreen.dart';
+import 'package:flutter_application_1/login%20&%20signin/Signin_choose.dart';
 import 'package:get/get.dart';
 import 'login & signin/login_page.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -68,7 +69,7 @@ class _SplashScreenState extends State<SplashScreen> {
               SizedBox(width: 5),
               TextButton(
                   onPressed: () {
-                    Get.to(() => Homescreen());
+                    Get.to(() => Signin_choose());
                   },
                   child: Text('회원가입')),
             ],
