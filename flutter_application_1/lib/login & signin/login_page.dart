@@ -10,8 +10,6 @@ import 'package:provider/provider.dart';
 import 'package:http/http.dart' as http;
 import 'package:dio/dio.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:get/get_connect/http/src/response/response.dart';
-import 'package:flutter_application_1/models/user.dart';
 
 // const String baseUrl = "http://127.0.0.1:8000";
 

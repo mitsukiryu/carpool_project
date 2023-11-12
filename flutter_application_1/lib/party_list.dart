@@ -2,9 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:dropdown_button2/dropdown_button2.dart';
 import 'sub_party_list.dart';
-import 'widget/card_partylist.dart';
 import 'package:http/http.dart' as http;
 
 class party_list extends StatefulWidget {

@@ -1,11 +1,9 @@
 import 'dart:convert';
 import 'login_page.dart';
-import 'package:flutter_application_1/provider/user_information.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:dio/dio.dart';
 import 'package:http/http.dart' as http;
-import 'package:provider/provider.dart';
 
 class Driver_Signin_page extends StatelessWidget {
   TextEditingController nameController = TextEditingController();

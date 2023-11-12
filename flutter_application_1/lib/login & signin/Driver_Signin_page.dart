@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_application_1/HomeScreen.dart';
 import 'package:flutter_application_1/login%20&%20signin/login_page.dart';
 import 'package:flutter_application_1/provider/user_information.dart';
 import 'package:get/get.dart';

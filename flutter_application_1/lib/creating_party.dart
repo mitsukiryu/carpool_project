@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:io';
 import 'package:flutter_application_1/HomeScreen.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter_application_1/provider/party_create_provider.dart';
@@ -39,7 +38,7 @@ class _creating_partyState extends State<creating_party> {
     Uri uri =
         Uri.https('maps.googleapis.com', '/maps/api/place/autocomplete/json', {
       "input": query,
-      'key': 'AIzaSyDuA0YY1zQE7nyC-sj8i8s2VKt9WRDnGh4',
+      'key': 'mapAPIKey',
     });
     String? response = await get_method.fetchUrl(uri);
 

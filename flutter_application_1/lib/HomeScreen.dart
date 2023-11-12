@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/autocomplete_prediction.dart';
 import 'package:flutter_application_1/party_list.dart';
@@ -25,10 +24,10 @@ class _HomescreenState extends State<Homescreen> {
   bool _isWriting = false;
 
   void placeAutocomplete(String query) async {
-    Uri uri =
-        Uri.https('maps.googleapis.com', '/maps/api/place/autocomplete/json', {
+    Uri uri = Uri.https(
+        'maps.googleapis.com', 'https://maps/api/place/autocomplete/json', {
       "input": query,
-      'key': 'AIzaSyDuA0YY1zQE7nyC-sj8i8s2VKt9WRDnGh4',
+      'key': 'mapAPIKey',
     });
     String? response = await get_method.fetchUrl(uri);
 
