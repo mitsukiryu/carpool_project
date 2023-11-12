@@ -1,11 +1,27 @@
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/class/party.dart';
 import 'package:get/get.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'sub_party_list.dart';
 import 'widget/card_partylist.dart';
 import 'package:http/http.dart' as http;
+
+class name extends StatefulWidget {
+  const name({super.key});
+
+  @override
+  State<name> createState() => _nameState();
+}
+
+class _nameState extends State<name> {
+  @override
+  Widget build(BuildContext context) {
+    return Container();
+  }
+}
 
 class party_list extends StatefulWidget {
   const party_list({super.key});
@@ -35,22 +51,96 @@ class _party_listState extends State<party_list> {
         'Content-Type': 'application/x-www-form-urlencoded'
       },
     );
-
     if (response.statusCode == 200) {
-      // var val = jsonEncode(
-      //     User(usernameEditingController.text, passwordEditingController.text));
-      List responseJson = json.decode(response.body);
+      List<dynamic> jsonDataList = json.decode(response.body);
 
-      print(responseJson);
-      print('success');
-      return responseJson;
-    } else if (response.statusCode == 422) {
-      print('Response body for 422 error: ${response.body}');
-      return;
+      // List<Party> parties =
+      //     jsonDataList.map((json) => Party.fromJson(json)).toList();
+
+      // print(parties);
+      return response;
+
+      // List <Party> = parties =  List<Party>.from(json.decode(response.body));
+//       Iterable l = json.decode(response.body);
+// List<Party> posts = List<Party>.from(l.map((model)=> Party.fromJson(model)));
+      // List<Party> parties;
+      // parties = (json.decode(response.body) as List)
+      //     .map((i) => parties.(i))
+      //     .toList();
+      // print('success');
+
+      // final parsed =
+      //     (jsonDecode(response.body) as List).cast<Map<String, dynamic>>();
+
+      // parsed.map<Party>((json) => Party.fromJson(json).toList());
+
+      // List jsonData = json.decode(response.body);
+      // print(jsonData[0]);
+      // print(jsonData.length);
+
+      // List<dynamic> jsonDataList = jsonDecode(response.body);
+      // print('success');
+
+      // print(jsonDataList.length);
+      // print(jsonDataList[1]);
+      // print("\n");
+      // print("\n");
+
+      // print(jsonDataList[1]);
+      // List<Party> parties = [];
+      // for (var u in jsonDataList) {
+      //   Party party = Party(
+      //       u['date_time'],
+      //       u['destination'],
+      //       u['departure'],
+      //       u['max_recruitment'],
+      //       u['cur_recruitment'],
+      //       u['party_type'],
+      //       u['party_recruiter_id'],
+      //       u['party_member_id'],
+      //       u['departure_party_Lat'],
+      //       u['departure_party_Lng'],
+      //       u['destination_party_Lat'],
+      //       u['destination_party_Lng']);
+
+      //   parties.add(party);
+      // }
+      // print(parties.length);
+      // return jsonDataList;
     } else {
+      print("힝");
       return;
     }
   }
+  // @override
+  // Future List<Party> getData() async {
+  //   var response = await http.get(
+  //     Uri.parse('http://10.0.2.2:8000/party/find'),
+  //     headers: <String, String>{
+  //       'Content-Type': 'application/x-www-form-urlencoded'
+  //     },
+  //   );
+
+  //   if (response.statusCode == 200) {
+  //     // List<dynamic> responseJson = json.decode(response.body);
+  //     print("페이지1 완료");
+  //     // List<Party> parties =
+  //         // responseJson.map((json) => Party.fromJson(json)).toList();
+
+  //     // List responseJson = json.decode(response.body);
+
+  //     // print('데이터나옵니다$parties');
+
+  //     return response.map<Party>().toList();
+  //     print('success');
+  //     return parties;
+  //   } else if (response.statusCode == 422) {
+  //     print('Response body for 422 error: ${response.body}');
+  //     return;
+  //   } else {
+  //     return;
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -123,29 +213,85 @@ class _party_listState extends State<party_list> {
             ],
           ),
         ),
-        FutureBuilder(
-          future: getData(),
-          builder: (context, snapshot) {
-            if (snapshot.hasData) {
-              return ListView.builder(
-                itemCount: snapshot.data.length,
-                itemBuilder: (context, index) {
-                  final studentInfo = [index];
-                  return Text(snapshot.data.toString());
-                  // Padding(
-                  //   padding: const EdgeInsets.all(8.0),
-                  //   //10
-                  //   child: card_partylist(inputdate, inputType, inputTime, inputStart, inputEnd, inputStatus)
+        // FutureBuilder(
+        //     future: getData(),
+        //     builder: (context, snapshot) {
+        //       if (snapshot.data == null) {
+        //         print(snapshot);
+        //         return CircularProgressIndicator();
+        //       } else {
+        //         return ListView.builder(
+        //             itemCount: snapshot.data!.legnth,
+        //             itemBuilder: (BuildContext context, int index) {
+        //               return Padding(
+        //                 padding: const EdgeInsets.all(8.0),
+        //                 child: card_partylist(
+        //                     snapshot.data[index].date_time,
+        //                     snapshot.data[index].party_type,
+        //                     snapshot.data[index].dateTime,
+        //                     snapshot.data[index].departure,
+        //                     snapshot.data[index].destination,
+        //                     '&snapshot.data[index].cur_recruitment/&snapshot.data[index].max_recruitment'),
+        //               );
+        //             });
+        //       }
+        //     }),
 
-                  // );
-                },
-              );
-            }
+        // FutureBuilder(
+        //   future: getData(),
+        //   builder: (context, AsyncSnapshot<dynamic> snapshot) {
+        //     if (snapshot.connectionState == ConnectionState.waiting) {
+        //       return CircularProgressIndicator();
+        //     } else if (snapshot.hasError) {
+        //       return Text("Error: ${snapshot.error}");
+        //     } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+        //       return Text("No data available");
+        //     } else {
+        //       // print('데이터나옵니다&snapshot.data!.length');
+        //       return ListView.builder(
+        //         itemCount: snapshot.data!.length,
+        //         itemBuilder: (context, index) {
+        //           final party = snapshot.data![index];
+        //           return Padding(
+        //             padding: const EdgeInsets.all(8.0),
+        //             child: card_partylist(
+        //               party.dateTime,
+        //               party.partyType,
+        //               party.dateTime,
+        //               party.departure,
+        //               party.destination,
+        //               party.curRecruitment.toString(),
+        //             ),
+        //           );
+        //         },
+        //       );
+        //     }
+        //   },
+        // ),
 
-            if (snapshot.hasError) return Text("error");
-            return CircularProgressIndicator();
-          },
-        ),
+        // FutureBuilder(
+        //   future: getData(),
+        //   builder: (context, snapshot) {
+        //     if (snapshot.hasData) {
+        //       return ListView.builder(
+        //         itemCount: snapshot.data.length,
+        //         itemBuilder: (context, index) {
+        //           final studentInfo = [index];
+        //           return Padding(
+        //             padding: const EdgeInsets.all(8.0),
+        //             //10
+        //             child: card_partylist(inputdate, inputType, inputTime, inputStart, inputEnd, inputStatus)
+
+        //           );
+        //         },
+        //       );
+        //     }
+
+        //     if (snapshot.hasError) return Text("error");
+        //     return CircularProgressIndicator();
+        //   },
+        // ),
+
         GestureDetector(
           onTap: () {
             Get.to(() => sub_party_list());

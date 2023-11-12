@@ -86,7 +86,8 @@ class _Login_PageState extends State<LoginPage> {
     };
 
     var response = await http.post(
-      Uri.parse('http://10.0.2.2:8000/user/login'),
+      // Uri.parse('http://10.0.2.1:8000/user/login'),
+      Uri.parse('http://127.0.0.1:8000/user/login'),
       headers: <String, String>{
         'Content-Type': 'application/x-www-form-urlencoded'
       },
