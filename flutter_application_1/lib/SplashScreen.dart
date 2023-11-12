@@ -1,13 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
 import 'package:flutter_application_1/HomeScreen.dart';
-import 'package:flutter_application_1/login%20&%20signin/Passenger_Singin_page.dart';
-import 'package:flutter_application_1/login%20&%20signin/Signin_choose.dart';
 import 'package:get/get.dart';
 import 'login & signin/login_page.dart';
-import 'package:flutter_application_1/provider/user_information.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'HomeScreen.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});

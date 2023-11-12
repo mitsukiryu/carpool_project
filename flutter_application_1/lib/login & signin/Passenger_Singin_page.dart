@@ -1,11 +1,9 @@
 import 'dart:convert';
 import 'login_page.dart';
-import 'package:flutter_application_1/provider/user_information.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:dio/dio.dart';
 import 'package:http/http.dart' as http;
-import 'package:provider/provider.dart';
 
 class Driver_Signin_page extends StatelessWidget {
   TextEditingController nameController = TextEditingController();
@@ -62,8 +60,9 @@ class Driver_Signin_page extends StatelessWidget {
 
     final response = await http.post(
       // Uri.parse('http://10.0.2.2:8000/user/create'),
-      Uri.parse('http://127.0.0.1:8000/user/login'),
+      // Uri.parse('http://127.0.0.1:8000/user/login'),
 
+      Uri.parse('http://127.0.0.1:8000/user/create'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },

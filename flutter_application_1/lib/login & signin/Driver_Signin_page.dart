@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_application_1/HomeScreen.dart';
 import 'package:flutter_application_1/login%20&%20signin/login_page.dart';
 import 'package:flutter_application_1/provider/user_information.dart';
 import 'package:get/get.dart';
@@ -45,7 +44,7 @@ class _Signin_pageState extends State<Signin_page> {
     };
 
     final response = await http.post(
-      Uri.parse('http://10.0.2.2:8000/user/create'),
+      Uri.parse('http://127.0.0.1:8000/user/create'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
@@ -53,7 +52,7 @@ class _Signin_pageState extends State<Signin_page> {
     );
 
     // final response =
-    //     await Dio().post('http://10.0.2.2:8000/users/create', data: userData);
+    //     await Dio().post('http://127.0.0.1:8000/users/create', data: userData);
 
     if (response.statusCode == 422) {
       print('Response body for 422 error: ${response.body}');
