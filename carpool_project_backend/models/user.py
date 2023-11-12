@@ -1,5 +1,4 @@
 from pydantic import BaseModel
-from typing import Annotated, Union
 
 class User(BaseModel):
     user_name: str
@@ -15,7 +14,6 @@ class User(BaseModel):
     user_type: str
     warning: list[str]
     penalty: int
-    disabled: Union[bool, None] = None
 
 class User_login(BaseModel):
     username: str
