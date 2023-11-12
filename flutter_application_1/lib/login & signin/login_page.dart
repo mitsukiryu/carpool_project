@@ -50,7 +50,7 @@ class _Login_PageState extends State<LoginPage> {
   //       'password': inputpassword,
   //     };
 
-  //     final response = await dio.post('http://10.0.2.2:8000/users/login',
+  //     final response = await dio.post('http://127.0.0.1:8000/users/login',
   //         data: jsonEncode(userData));
   //     if (response.statusCode == 200) {
   //       final jsonBody = json.decode(response.data['user_id'].toString());
@@ -84,7 +84,7 @@ class _Login_PageState extends State<LoginPage> {
     };
 
     var response = await http.post(
-      Uri.parse('http://10.0.2.2:8000/user/login'),
+      Uri.parse('http://127.0.0.1:8000/user/login'),
       headers: <String, String>{
         'Content-Type': 'application/x-www-form-urlencoded'
       },
@@ -131,12 +131,12 @@ class _Login_PageState extends State<LoginPage> {
     };
 
     final response = await Dio().post(
-      'http://10.0.2.2:8000/user/login',
+      'http://127.0.0.1:8000/user/login',
       data: jsonEncode(userData),
     );
 
     //     await http.post(
-    //   Uri.parse('http://10.0.2.2:8000/user/login'),
+    //   Uri.parse('http://127.0.0.1:8000/user/login'),
     //   headers: <String, String>{
     //     'Content-Type': 'application/json; charset=UTF-8',
     //   },
@@ -163,7 +163,7 @@ class _Login_PageState extends State<LoginPage> {
       var param = {'username': inputusername, 'password': inputpassword};
 
       final response =
-          await dio.post('http://10.0.2.2:8000/user/login', data: param);
+          await dio.post('http://127.0.0.1:8000/user/login', data: param);
 
       if (response.statusCode == 200) {
         final jsonBody = json.decode(response.data['user_id'].toString());
@@ -519,7 +519,7 @@ class _Login_PageState extends State<LoginPage> {
                 flex: 2,
                 child: TextButton(
                   onPressed: () {
-                    // final response = await Dio().post('http://10.0.2.2:8000/user/login', data: jsonEncode(Map loginInfo))
+                    // final response = await Dio().post('http://127.0.0.1:8000/user/login', data: jsonEncode(Map loginInfo))
 
                     Get.to(() => Signin_choose());
                   },
