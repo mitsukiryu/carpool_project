@@ -29,10 +29,13 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
+      // home: party_list(),
       home: SplashScreen(),
       getPages: [
         GetPage(
           name: '/',
+          // page: () => party_list(),
+
           page: () => SplashScreen(),
         ),
         GetPage(

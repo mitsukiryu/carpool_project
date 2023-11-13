@@ -7,6 +7,7 @@ Widget card_partylist(
   String inputType,
   // List<dynamic> inputType,
   String inputStart,
+  String inputId,
   String inputEnd,
   String inputStatus,
   String inputsubLeaderName,
@@ -32,6 +33,7 @@ Widget card_partylist(
           inputsubMemberPhone2,
           inputsubMemberName3,
           inputsubMemberPhone3,
+          inputId,
           inputdate,
           inputType,
           inputStart,
@@ -41,8 +43,11 @@ Widget card_partylist(
     child: Container(
       height: 90,
       decoration: BoxDecoration(
-          color: Colors.white,
-          border: Border(bottom: BorderSide(width: 1, color: Colors.black))),
+          color: Color.fromARGB(255, 229, 228, 228),
+          border: Border.all(
+            color: const Color.fromARGB(255, 229, 228, 228),
+          ),
+          borderRadius: BorderRadius.all(Radius.circular(20))),
       child: Row(
         children: [
           Expanded(
@@ -50,75 +55,89 @@ Widget card_partylist(
             child: SizedBox(),
           ),
           Expanded(
-            flex: contextFont,
-            child: Text(inputdate[0] +
-                inputdate[1] +
-                inputdate[2] +
-                inputdate[3] +
-                inputdate[4] +
-                inputdate[5] +
-                inputdate[6] +
-                inputdate[7] +
-                inputdate[8] +
-                inputdate[9]),
+            flex: 6,
+            child: Column(children: [
+              Expanded(
+                flex: 1,
+                child: SizedBox(),
+              ),
+              Expanded(flex: 3, child: Text(inputType)),
+              Expanded(
+                  flex: 6,
+                  child: Container(
+                    width: 70, // 동그란 모양의 틀의 지름을 나타내는 값
+                    height: 70,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: Colors.grey, // 동그란 모양의 틀의 배경색
+                      image: DecorationImage(
+                        image: inputType == '택시'
+                            ? AssetImage('images/taxi_icon.jpg') // 택시 이미지의 경로
+                            : inputType == '카풀'
+                                ? AssetImage(
+                                    'images/car_icon.jpg') // 카풀 이미지의 경로
+                                : AssetImage(
+                                    'assets/default_image.png'), // 기본 이미지 경로
+                        fit: BoxFit.cover, // 이미지를 동그란 틀에 맞춰서 보여주도록 설정
+                      ),
+                    ),
+                  )),
+              Expanded(
+                child: SizedBox(),
+                flex: 1,
+              )
+            ]),
           ),
           Expanded(
-            flex: contextSpace,
             child: SizedBox(),
+            flex: 2,
           ),
           Expanded(
-            flex: contextSpace,
-            child: SizedBox(),
-          ),
-          Expanded(flex: contextFont, child: Text(inputType.toString())),
-          Expanded(
-            flex: contextSpace,
-            child: SizedBox(),
-          ),
-          Expanded(
-            flex: contextSpace,
-            child: SizedBox(),
-          ),
-          Expanded(
-              flex: contextFont,
+              flex: 18,
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Expanded(
-                    flex: 1,
-                    child: SizedBox(),
-                  ),
-                  Expanded(
-                      flex: 2,
-                      child: Text(inputdate[11] +
-                          inputdate[12] +
-                          inputdate[13] +
-                          inputdate[14] +
-                          inputdate[15])),
-                  Expanded(
-                    flex: 2,
-                    child: Text(inputStart),
-                  )
-                ],
-              )),
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(' ',
+                        style: TextStyle(
+                          fontSize: 3.0,
+                        )),
+                    Text(inputStart,
+                        style: TextStyle(
+                          fontSize: 16.0,
+                        )),
+                    Text(inputEnd,
+                        style: TextStyle(
+                          fontSize: 16.0,
+                        )),
+                    Text(' ',
+                        style: TextStyle(
+                          fontSize: 3.0,
+                        )),
+                    Text(inputdate[0] +
+                        inputdate[1] +
+                        inputdate[2] +
+                        inputdate[3] +
+                        '.' +
+                        inputdate[5] +
+                        inputdate[6] +
+                        '.' +
+                        inputdate[8] +
+                        inputdate[9] +
+                        '   ' +
+                        inputdate[11] +
+                        inputdate[12] +
+                        inputdate[13] +
+                        inputdate[14] +
+                        inputdate[15])
+                  ])),
           Expanded(
-            flex: contextSpace,
             child: SizedBox(),
+            flex: 1,
           ),
           Expanded(
-            flex: contextSpace,
-            child: SizedBox(),
-          ),
-          Expanded(flex: contextFont, child: Text(inputEnd)),
-          Expanded(
-            flex: contextSpace,
-            child: SizedBox(),
-          ),
-          Expanded(
-            flex: contextSpace,
-            child: SizedBox(),
-          ),
-          Expanded(flex: contextFont, child: Text(inputStatus)),
+            flex: 3,
+            child: Text(inputStatus),
+          )
         ],
       ),
     ),

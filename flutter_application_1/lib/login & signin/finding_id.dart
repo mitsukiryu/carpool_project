@@ -1,8 +1,56 @@
+import 'dart:html';
+import 'package:flutter_application_1/login%20&%20signin/login_page.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 class finding_id extends StatelessWidget {
-  const finding_id({super.key});
+  finding_id({super.key});
+  TextEditingController EmailInputController = TextEditingController();
+  static final storage = FlutterSecureStorage();
+
+  @override
+  Future<String> save(String inputEmail) async {
+    // final Map<String, String> userDate = {
+    //   'username': inputusername,
+    //   'password': inputpassword,
+    // };
+    String? dataToken = await storage.read(key: "token");
+
+    var response = await http.post(
+      // Uri.parse('http://10.0.2.1:8000/user/login'),
+      Uri.parse('http://127.0.0.1:8000/user/find'),
+      headers: <String, String>{
+        // 'Content-Type': 'application/x-www-form-urlencoded'
+
+        'Content-Type': 'application/json; charset=UTF-8',
+        // 'Authorization': 'Bearer $dataToken',
+      },
+      body: jsonEncode(<String, String>{
+        'email': inputEmail,
+      }),
+    );
+
+    if (response.statusCode == 200) {
+      // print('okay untul response');
+      // print(response.body);
+      // print('okay until reponse printing');
+      // var val = jsonEncode(r
+      //     User(usernameEditingController.text, passwordEditingController.text));
+      var data = json.decode(response.body);
+      // print(data['message'].runtimeType);
+
+      print('success');
+      return data['message'];
+    } else if (response.statusCode == 422) {
+      print('Response body for 422 error: ${response.body}');
+      return "입력하신 이메일이 존재하지 않습니다422";
+    } else {
+      return "입력하신 이메일이 존재하지 않습니다";
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -30,6 +78,7 @@ class finding_id extends StatelessWidget {
         Padding(
           padding: EdgeInsets.all(10),
           child: TextField(
+            controller: EmailInputController,
             decoration: InputDecoration(
                 border: OutlineInputBorder(),
                 labelText: '이메일',
@@ -38,16 +87,6 @@ class finding_id extends StatelessWidget {
         ),
         SizedBox(
           height: 20,
-        ),
-        Text('가입시 입력하신 이름을 입력해주세요', style: TextStyle(fontSize: 17)),
-        Padding(
-          padding: EdgeInsets.all(10),
-          child: TextField(
-            decoration: InputDecoration(
-                border: OutlineInputBorder(),
-                labelText: '이름',
-                hintText: '이름을 입력해주세요'),
-          ),
         ),
         SizedBox(
           height: 20,
@@ -63,8 +102,51 @@ class finding_id extends StatelessWidget {
               ),
               // borderRadius: BorderRadius.circular(20)),
               child: TextButton(
-                onPressed: () {
-                  // Get.back();
+                onPressed: () async {
+                  String data = await save(EmailInputController.text);
+                  if (!data.isEmpty) {
+                    print(data);
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) => AlertDialog(
+                        title: const Text('아이디 찾기'),
+                        content: Text(data),
+                        actions: <Widget>[
+                          TextButton(
+                            onPressed: () {
+                              Get.to(() => LoginPage());
+                            },
+                            child: const Text('Go to Login Page'),
+                          ),
+                          TextButton(
+                            onPressed: () => Navigator.pop(context, 'OK'),
+                            child: const Text('OK'),
+                          ),
+                        ],
+                      ),
+                    );
+                  } else {
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) => AlertDialog(
+                        title: const Text('아이디 찾기 실패'),
+                        content: Text(data),
+                        actions: <Widget>[
+                          TextButton(
+                            onPressed: () => Navigator.pop(context, 'OK'),
+                            child: const Text('OK'),
+                          ),
+                          TextButton(
+                            onPressed: () {
+                              Get.to(() => LoginPage());
+                            },
+                            child: const Text('Go to Home'),
+                          ),
+                        ],
+                      ),
+                    );
+                  }
+                  Get.back();
                 },
                 child: Text(
                   '아이디 찾기',
