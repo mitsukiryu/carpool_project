@@ -3,23 +3,24 @@ import 'package:flutter_application_1/sub_party_list.dart';
 import 'package:get/get.dart';
 
 Widget card_partylist(
-  String inputdate,
-  String inputType,
-  // List<dynamic> inputType,
-  String inputStart,
-  String inputId,
-  String inputEnd,
-  String inputStatus,
-  String inputsubLeaderName,
-  // String inputsubLeaderPhone,
-  List<dynamic> inputMemberList,
-  // String inputsubMemberName1,
-  // String inputsubMemberPhone1,
-  // String inputsubMemberName2,
-  // String inputsubMemberPhone2,
-  // String inputsubMemberName3,
-  // String inputsubMemberPhone3,
-) {
+    String inputdate,
+    String inputType,
+    // List<dynamic> inputType,
+    String inputStart,
+    String inputId,
+    String inputEnd,
+    String inputStatus,
+    String inputsubLeaderName,
+    // String inputsubLeaderPhone,
+    List<dynamic> inputMemberList,
+    int inputMaxNum
+    // String inputsubMemberName1,
+    // String inputsubMemberPhone1,
+    // String inputsubMemberName2,
+    // String inputsubMemberPhone2,
+    // String inputsubMemberName3,
+    // String inputsubMemberPhone3,
+    ) {
   int contextSpace = 1;
   int contextFont = 3;
 
@@ -40,7 +41,8 @@ Widget card_partylist(
           inputStart,
           inputEnd,
           inputStatus,
-          inputMemberList));
+          inputMemberList,
+          inputMaxNum));
     },
     child: Container(
       height: 90,

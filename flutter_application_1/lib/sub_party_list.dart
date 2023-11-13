@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/HomeScreen.dart';
+import 'package:flutter_application_1/provider/party_create_provider.dart';
 import 'package:get/get.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
+import 'package:provider/provider.dart';
 
 class sub_party_list extends StatelessWidget {
   final String subLeaderName;
@@ -21,6 +23,7 @@ class sub_party_list extends StatelessWidget {
   final String inputEnd;
   final String inputStatus;
   final List<dynamic> inputMemberList;
+  final int inputMaxNum;
   static final storage = FlutterSecureStorage();
 
   sub_party_list(
@@ -38,7 +41,8 @@ class sub_party_list extends StatelessWidget {
       this.inputStart,
       this.inputEnd,
       this.inputStatus,
-      this.inputMemberList);
+      this.inputMemberList,
+      this.inputMaxNum);
 
   @override
   Future save() async {
@@ -52,6 +56,9 @@ class sub_party_list extends StatelessWidget {
         'Authorization': 'Bearer $dataToken',
       },
     );
+    if (response.statusCode == 200) {
+      return true;
+    }
   }
 
   @override
@@ -297,9 +304,34 @@ class sub_party_list extends StatelessWidget {
                   ),
                   // borderRadius: BorderRadius.circular(20)),
                   child: TextButton(
-                    onPressed: () {
-                      save();
-                      Get.to(() => Homescreen());
+                    onPressed: () async {
+                      if (await save()) {
+                        Provider.of<PartyCreateProvider>(context, listen: false)
+                            .changeAll(
+                                inputStatus,
+                                inputdate[0] +
+                                    inputdate[1] +
+                                    inputdate[2] +
+                                    inputdate[3] +
+                                    '.' +
+                                    inputdate[5] +
+                                    inputdate[6] +
+                                    '.' +
+                                    inputdate[8] +
+                                    inputdate[9],
+                                inputdate[11] +
+                                    inputdate[12] +
+                                    inputdate[13] +
+                                    inputdate[14] +
+                                    inputdate[15],
+                                inputStart,
+                                inputEnd,
+                                inputMaxNum);
+
+                        Get.to(() => Homescreen());
+                      }
+
+                      // Get.to(() => Homescreen());
                     },
                     child: Text(
                       '참여하기',
