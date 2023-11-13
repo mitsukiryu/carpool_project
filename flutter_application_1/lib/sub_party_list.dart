@@ -3,20 +3,48 @@ import 'package:flutter_application_1/HomeScreen.dart';
 import 'package:get/get.dart';
 
 class sub_party_list extends StatelessWidget {
-  sub_party_list({super.key});
+  final String subLeaderName;
+  final String subLeaderPhone;
+  final String subMemberName1;
+  final String subMemberPhone1;
+  final String subMemberName2;
+  final String subMemberPhone2;
+  final String subMemberName3;
+  final String subMemberPhone3;
+  final String datetime;
+  final String type;
+  // final List<dynamic> type;
+  final String start;
+  final String end;
+  final String status;
+
+  sub_party_list(
+      this.subLeaderName,
+      this.subLeaderPhone,
+      this.subMemberName1,
+      this.subMemberPhone1,
+      this.subMemberName2,
+      this.subMemberPhone2,
+      this.subMemberName3,
+      this.subMemberPhone3,
+      this.datetime,
+      this.type,
+      this.start,
+      this.end,
+      this.status);
 
   @override
   int contextFont = 3;
   int contextSpace = 1;
   double subInfo = 22;
-  String subLeaderName = "김강희";
-  String subLeaderPhone = "010-5555-5555";
-  String subMemberName1 = "류황희";
-  String subMemberPhone1 = "010-6666-6666";
-  String subMemberName2 = "박경태";
-  String subMemberPhone2 = "010-7777-7777";
-  String subMemberName3 = "안현빈";
-  String subMemberPhone3 = "010-8888-8888";
+  // String subLeaderName = "김강희";
+  // String subLeaderPhone = "010-5555-5555";
+  // String subMemberName1 = "류황희";
+  // String subMemberPhone1 = "010-6666-6666";
+  // String subMemberName2 = "박경태";
+  // String subMemberPhone2 = "010-7777-7777";
+  // String subMemberName3 = "안현빈";
+  // String subMemberPhone3 = "010-8888-8888";
 
   @override
   Widget build(BuildContext context) {
@@ -91,7 +119,7 @@ class sub_party_list extends StatelessWidget {
                     flex: contextSpace,
                     child: SizedBox(),
                   ),
-                  Expanded(flex: contextFont, child: Text('날짜')),
+                  Expanded(flex: contextFont, child: Text(datetime)),
                   Expanded(
                     flex: contextSpace,
                     child: SizedBox(),
@@ -100,7 +128,9 @@ class sub_party_list extends StatelessWidget {
                     flex: contextSpace,
                     child: SizedBox(),
                   ),
-                  Expanded(flex: contextFont, child: Text('종류')),
+                  // Expanded(flex: contextFont, child: Text(type)),
+                  Expanded(flex: contextFont, child: Text(type)),
+
                   Expanded(
                     flex: contextSpace,
                     child: SizedBox(),
@@ -113,18 +143,18 @@ class sub_party_list extends StatelessWidget {
                       flex: contextFont,
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
-                        children: const [
+                        children: [
                           Expanded(
                             flex: 1,
                             child: SizedBox(),
                           ),
                           Expanded(
                             flex: 2,
-                            child: Text('시간'),
+                            child: Text(datetime),
                           ),
                           Expanded(
                             flex: 2,
-                            child: Text('출발'),
+                            child: Text(start),
                           )
                         ],
                       )),
@@ -136,7 +166,7 @@ class sub_party_list extends StatelessWidget {
                     flex: contextSpace,
                     child: SizedBox(),
                   ),
-                  Expanded(flex: contextFont, child: Text('도착')),
+                  Expanded(flex: contextFont, child: Text(end)),
                   Expanded(
                     flex: contextSpace,
                     child: SizedBox(),
@@ -145,7 +175,7 @@ class sub_party_list extends StatelessWidget {
                     flex: contextSpace,
                     child: SizedBox(),
                   ),
-                  Expanded(flex: contextFont, child: Text('현황')),
+                  Expanded(flex: contextFont, child: Text(status)),
                 ],
               ),
             ),
@@ -172,7 +202,7 @@ class sub_party_list extends StatelessWidget {
                 Expanded(
                   flex: 7,
                   child: Text(
-                    subLeaderName,
+                    this.subLeaderName,
                     style: TextStyle(fontSize: subInfo),
                   ),
                 ),
@@ -183,7 +213,7 @@ class sub_party_list extends StatelessWidget {
                 Expanded(
                   flex: 14,
                   child: Text(
-                    subLeaderPhone,
+                    this.subLeaderPhone,
                     style: TextStyle(fontSize: subInfo),
                   ),
                 ),
@@ -216,7 +246,7 @@ class sub_party_list extends StatelessWidget {
                 Expanded(
                   flex: 7,
                   child: Text(
-                    subMemberName1,
+                    this.subMemberName1,
                     style: TextStyle(fontSize: subInfo),
                   ),
                 ),
@@ -227,7 +257,7 @@ class sub_party_list extends StatelessWidget {
                 Expanded(
                   flex: 14,
                   child: Text(
-                    subMemberPhone1,
+                    this.subMemberPhone1,
                     style: TextStyle(fontSize: subInfo),
                   ),
                 ),
@@ -260,7 +290,7 @@ class sub_party_list extends StatelessWidget {
                 Expanded(
                   flex: 7,
                   child: Text(
-                    subMemberName2,
+                    this.subMemberName2,
                     style: TextStyle(fontSize: subInfo),
                   ),
                 ),
@@ -271,7 +301,7 @@ class sub_party_list extends StatelessWidget {
                 Expanded(
                   flex: 14,
                   child: Text(
-                    subMemberPhone2,
+                    this.subMemberPhone2,
                     style: TextStyle(fontSize: subInfo),
                   ),
                 ),
@@ -304,7 +334,7 @@ class sub_party_list extends StatelessWidget {
                 Expanded(
                   flex: 7,
                   child: Text(
-                    subMemberName3,
+                    this.subMemberName3,
                     style: TextStyle(fontSize: subInfo),
                   ),
                 ),
@@ -315,7 +345,7 @@ class sub_party_list extends StatelessWidget {
                 Expanded(
                   flex: 14,
                   child: Text(
-                    subMemberPhone3,
+                    this.subMemberPhone3,
                     style: TextStyle(fontSize: subInfo),
                   ),
                 ),

@@ -11,8 +11,6 @@ import 'package:http/http.dart' as http;
 import 'package:dio/dio.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
-// const String baseUrl = "http://127.0.0.1:8000";
-
 class LoginPage extends StatefulWidget {
   @override
   _Login_PageState createState() => _Login_PageState();

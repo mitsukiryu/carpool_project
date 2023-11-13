@@ -27,7 +27,7 @@ class _HomescreenState extends State<Homescreen> {
     Uri uri = Uri.https(
         'maps.googleapis.com', 'https://maps/api/place/autocomplete/json', {
       "input": query,
-      'key': 'mapAPIKey',
+      'key': 'AIzaSyDuA0YY1zQE7nyC-sj8i8s2VKt9WRDnGh4',
     });
     String? response = await get_method.fetchUrl(uri);
 

@@ -51,7 +51,7 @@ class GetLocation {
       Uri.parse(url),
       headers: {
         "Content-Type": 'application/json',
-        'X-Goog-Api-Key': 'mapAPIKey',
+        'X-Goog-Api-Key': 'AIzaSyDuA0YY1zQE7nyC-sj8i8s2VKt9WRDnGh4',
         'X-Goog-FieldMask': 'displayName,formattedAddress',
       },
     );

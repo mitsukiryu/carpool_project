@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/SplashScreen.dart';
+import 'package:flutter_application_1/login%20&%20signin/login_page.dart';
 import 'package:flutter_application_1/provider/user_information.dart';
 import 'package:flutter_application_1/provider/party_create_provider.dart';
 import 'package:get/get.dart';
@@ -33,6 +34,10 @@ class MyApp extends StatelessWidget {
         GetPage(
           name: '/',
           page: () => SplashScreen(),
+        ),
+        GetPage(
+          name: '/login',
+          page: () => LoginPage(),
         ),
         GetPage(
           name: '/home',

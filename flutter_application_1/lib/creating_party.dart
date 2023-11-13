@@ -38,7 +38,7 @@ class _creating_partyState extends State<creating_party> {
     Uri uri =
         Uri.https('maps.googleapis.com', '/maps/api/place/autocomplete/json', {
       "input": query,
-      'key': 'mapAPIKey',
+      'key': 'AIzaSyDuA0YY1zQE7nyC-sj8i8s2VKt9WRDnGh4',
     });
     String? response = await get_method.fetchUrl(uri);
 
@@ -217,7 +217,7 @@ class _creating_partyState extends State<creating_party> {
                             if (pickedDate != null) {
                               print(
                                   pickedDate); //get the picked date in the format => 2022-07-04 00:00:00.000
-                              String formattedDate = DateFormat('yyyy-MM-dd')
+                              String formattedDate = DateFormat('yyyy/MM/dd')
                                   .format(
                                       pickedDate); // format date in required form here we use yyyy-MM-dd that means time is removed
                               print(

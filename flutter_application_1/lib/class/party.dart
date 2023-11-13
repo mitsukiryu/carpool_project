@@ -9,7 +9,7 @@ class Party {
   final int cur_recruitment;
   final String party_type;
   final String party_recruiter_id;
-  final List<String> party_member_id;
+  final List<dynamic> party_member_id;
   final double departure_party_Lat;
   final double departure_party_Lng;
   final double destination_party_Lat;
@@ -39,25 +39,10 @@ class Party {
         json['cur_recruitment'] as int,
         json['party_type'] as String,
         json['party_recruiter_id'] as String,
-        json['party_member_id'] as List<String>,
+        json['party_member_id'] as List<dynamic>,
         json['departure_party_Lat'] as double,
         json['departure_party_Lng'] as double,
         json['destination_party_Lat'] as double,
         json['destination_party_Lng'] as double);
   }
-
-  // static Party fromJson(json) => Party(
-  //       date_time: json['date_time'],
-  //       destination: json['destination'],
-  //       departure: json['departure'],
-  //       max_recruitment: json['max_recruitment'],
-  //       cur_recruitment: json['cur_recruitment'],
-  //       party_type: json['party_type'],
-  //       party_recruiter_id: json['party_recruiter_id'],
-  //       party_member_id: List<String>.from(json['party_member_id']),
-  //       departure_party_Lat: json['departure_party_Lat'],
-  //       departure_party_Lng: json['departure_party_Lng'],
-  //       destination_party_Lat: json['destination_party_Lat'],
-  //       destination_party_Lng: json['destination_party_Lng'],
-  //     );
 }
