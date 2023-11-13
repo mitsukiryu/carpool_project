@@ -153,7 +153,7 @@ async def delete_user(user_id: str, current_user: User = Depends(get_current_act
 
 # find ID
 @router.post("/find")
-async def find_user(request: email, current_user: User = Depends(get_current_active_user)):
+async def find_user(request: email):
     user = router.database.user.find_one({"email": request.email})
     
     if user == None:
