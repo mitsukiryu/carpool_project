@@ -119,11 +119,13 @@ async def user_login(login_user: OAuth2PasswordRequestForm = Depends()):
         )
         return {"access_token": access_token, "token_type": "bearer"}
     
-#logout
-
-
-
-
+#user_info
+@router.get("/user_info")
+async def user_info(current_user: User = Depends(get_current_active_user)):
+    # user = router.database.user.find_one({"user_name": user_name })
+    current_user["_id"] = str(current_user["_id"])
+    return current_user
+    
 # edit_user
 @router.put("/edit/{user_id}")
 async def edit_user(user_id: str, edited_user: User, current_user: User = Depends(get_current_active_user)):
