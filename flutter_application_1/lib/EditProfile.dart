@@ -4,6 +4,7 @@ import 'package:flutter_application_1/provider/user_information.dart';
 import 'package:provider/provider.dart';
 import 'changepw.dart';
 import 'package:get/get.dart';
+import 'package:http/http.dart' as http;
 
 class EditProfile extends StatefulWidget {
   const EditProfile({super.key});
@@ -19,10 +20,41 @@ class _EditProfileState extends State<EditProfile> {
   TextEditingController emailController = TextEditingController();
 
   @override
+  Future save(
+      String inputUsername,
+      String inputId,
+      String inputPhoneNumber,
+      String inputEmail,
+      String inputpassword,
+      String inputphoneNumber,
+      String inputCarNumber,
+      String inputCarColor,
+      String inputCarType,
+      String inputhomeroom,
+      String inputUserType,
+      List<String> inputWarning,
+      int inputPenalty) async {
+    final Map<String, dynamic> userData = {
+      'user_name': inputId,
+      'real_name': inputUsername,
+      'password': inputpassword,
+      'phone_number': inputphoneNumber,
+      'email': inputEmail,
+      'car_number': inputCarNumber, // An integer, not a string
+      'car_color': inputCarColor,
+      'car_type': inputCarType,
+      'homeroom': inputhomeroom,
+      'user_type': inputUserType,
+      'warning': inputWarning,
+      'penalty': inputPenalty,
+    };
+  }
+
+  @override
   void initState() {
     super.initState();
-    nameController = new TextEditingController(
-        text: Provider.of<UserInformationProvider>(context).name.toString());
+    // nameController = new TextEditingController(
+    //     text: Provider.of<UserInformationProvider>(context).name.toString());
   }
 
   @override
@@ -69,14 +101,14 @@ class _EditProfileState extends State<EditProfile> {
               ),
               Row(
                 children: [
-                  Expanded(
-                    flex: 1,
-                    child: SizedBox(),
-                  ),
+                  // Expanded(
+                  //   flex: 1,
+                  //   child: SizedBox(),
+                  // ),
 
                   //지금 비밀번호변경 방식을 같은 페이지에서 비밀번호 인증하고 돌아와서 하게 만들기 위해서, index 사용하는 리스트 위젯 사용해야함 추후에
                   Expanded(
-                    flex: 35,
+                    flex: 50,
                     child: GestureDetector(
                       onTap: () {
                         Get.to(() => ChangePasswordPage());
@@ -87,10 +119,12 @@ class _EditProfileState extends State<EditProfile> {
                           color: const Color.fromARGB(255, 206, 206,
                               206), // Set the desired background color
                           borderRadius:
-                              BorderRadius.circular(8), // Add rounded corners
+                              BorderRadius.circular(4), // Add rounded corners
+
                           border: Border.all(
-                              color: Colors.black, width: 2), // Add border
+                              color: Colors.black, width: 1), // Add border
                         ),
+                        margin: EdgeInsets.only(left: 8, right: 8),
                         padding: EdgeInsets.all(
                             10), // Add padding to center the content
                         child: Text(
@@ -103,10 +137,10 @@ class _EditProfileState extends State<EditProfile> {
                       ),
                     ),
                   ),
-                  Expanded(
-                    flex: 1,
-                    child: SizedBox(),
-                  )
+                  // Expanded(
+                  //   flex: 1,
+                  //   child: SizedBox(),
+                  // )
                 ],
               ),
 
