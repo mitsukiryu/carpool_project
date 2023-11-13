@@ -1,4 +1,5 @@
 import 'dart:html';
+import 'package:flutter_application_1/login%20&%20signin/login_page.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -22,20 +23,27 @@ class finding_id extends StatelessWidget {
       // Uri.parse('http://10.0.2.1:8000/user/login'),
       Uri.parse('http://127.0.0.1:8000/user/find'),
       headers: <String, String>{
-        'Content-Type': 'application/x-www-form-urlencoded'
-        // 'Content-Type': 'application/json; charset=UTF-8',
+        // 'Content-Type': 'application/x-www-form-urlencoded'
+
+        'Content-Type': 'application/json; charset=UTF-8',
         // 'Authorization': 'Bearer $dataToken',
       },
-      body: {"email": inputEmail},
+      body: jsonEncode(<String, String>{
+        'email': inputEmail,
+      }),
     );
 
     if (response.statusCode == 200) {
-      // var val = jsonEncode(
+      // print('okay untul response');
+      // print(response.body);
+      // print('okay until reponse printing');
+      // var val = jsonEncode(r
       //     User(usernameEditingController.text, passwordEditingController.text));
-      String data = json.decode(response.body);
+      var data = json.decode(response.body);
+      // print(data['message'].runtimeType);
 
       print('success');
-      return data;
+      return data['message'];
     } else if (response.statusCode == 422) {
       print('Response body for 422 error: ${response.body}');
       return "입력하신 이메일이 존재하지 않습니다422";
@@ -96,14 +104,20 @@ class finding_id extends StatelessWidget {
               child: TextButton(
                 onPressed: () async {
                   String data = await save(EmailInputController.text);
-                  if (data != "") {
+                  if (!data.isEmpty) {
                     print(data);
                     showDialog(
                       context: context,
                       builder: (BuildContext context) => AlertDialog(
-                        title: const Text('인증되었습니다'),
+                        title: const Text('아이디 찾기'),
                         content: Text(data),
                         actions: <Widget>[
+                          TextButton(
+                            onPressed: () {
+                              Get.to(() => LoginPage());
+                            },
+                            child: const Text('Go to Login Page'),
+                          ),
                           TextButton(
                             onPressed: () => Navigator.pop(context, 'OK'),
                             child: const Text('OK'),
@@ -115,18 +129,24 @@ class finding_id extends StatelessWidget {
                     showDialog(
                       context: context,
                       builder: (BuildContext context) => AlertDialog(
-                        title: const Text('인증 실패'),
+                        title: const Text('아이디 찾기 실패'),
                         content: Text(data),
                         actions: <Widget>[
                           TextButton(
                             onPressed: () => Navigator.pop(context, 'OK'),
                             child: const Text('OK'),
                           ),
+                          TextButton(
+                            onPressed: () {
+                              Get.to(() => LoginPage());
+                            },
+                            child: const Text('Go to Home'),
+                          ),
                         ],
                       ),
                     );
                   }
-                  // Get.back();
+                  Get.back();
                 },
                 child: Text(
                   '아이디 찾기',

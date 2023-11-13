@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/login%20&%20signin/finding_id.dart';
 import 'package:flutter_application_1/models/user.dart';
 import 'package:flutter_application_1/provider/user_information.dart';
 import '../HomeScreen.dart';
@@ -22,14 +23,6 @@ class _Login_PageState extends State<LoginPage> {
   static final storage = FlutterSecureStorage();
   dynamic userInfo = '';
 
-  // Future<Map> loginInfo = Future.value({"user_name": usernameEditingController.text, "password": });
-
-  // @override
-  // Widget build(BuildContext context) {
-  //   Future<Map> getData() async {
-  //     Map SigninInfo = {"user_name" : usernameEditingController.text, "password" : }
-  //   }
-
   @override
   bool checking() {
     if (usernameEditingController.text.isNotEmpty &&
@@ -38,41 +31,6 @@ class _Login_PageState extends State<LoginPage> {
     }
     return false;
   }
-
-  // @override
-  // saveThree(String inputusername, String inputpassword) async {
-  //   try {
-  //     var dio = Dio();
-  //     final Map<String, String> userData = {
-  //       'user_name': inputusername,
-  //       'password': inputpassword,
-  //     };
-
-  //     final response = await dio.post('http://127.0.0.1:8000/users/login',
-  //         data: jsonEncode(userData));
-  //     if (response.statusCode == 200) {
-  //       final jsonBody = json.decode(response.data['user_id'].toString());
-  //       return true;
-  //       // 직렬화를 이용하여 데이터를 입출력하기 위해 model.dart에 Login 정의 참고
-  //       //   var val = jsonEncode(Login('$accountName', '$password', '$jsonBody'));
-
-  //       // 	await storage.write(
-  //       //     key: 'login',
-  //       //     value: val,
-  //       //   );
-  //       //   print('접속 성공!');
-  //       //   return true;
-  //       // } else {
-  //       //   print('error');
-  //       //   return false;
-  //       // }
-  //     } else {
-  //       return false;
-  //     }
-  //   } catch (e) {
-  //     return false;
-  //   }
-  // }
 
   @override
   Future save(String inputusername, String inputpassword) async {
@@ -228,7 +186,6 @@ class _Login_PageState extends State<LoginPage> {
           SizedBox(
             height: 10,
           ),
-
           Container(
               height: 50,
               width: 250,
@@ -291,201 +248,6 @@ class _Login_PageState extends State<LoginPage> {
                   //           ));
                   // }
                   )),
-
-          //     switch (snapshot.data) {
-          //       case "message: No such username exist.":
-          //         showDialog(
-          //             context: context,
-          //             builder: (BuildContext context) =>
-          //                 AlertDialog(
-          //                   title: const Text('로그인 실패'),
-          //                   content:
-          //                       const Text('비밀번호가 일치하지 않습니다'),
-          //                   actions: <Widget>[
-          //                     TextButton(
-          //                       onPressed: () =>
-          //                           Navigator.pop(context, 'OK'),
-          //                       child: const Text('OK'),
-          //                     ),
-          //                   ],
-          //                 ));
-          //         break;
-          //       default:
-          //         Provider.of<UserInformationProvider>(context,
-          //                 listen: false)
-          //             .changeId(
-          //           usernameEditingController.text,
-          //         );
-          //         Provider.of<UserInformationProvider>(context,
-          //                 listen: false)
-          //             .changeId(
-          //           passwordEditingController.text,
-          //         );
-          //         Get.offAll(() => Homescreen());
-          //     }
-          //   } else {
-          //     showDialog(
-          //       context: context,
-          //       builder: (BuildContext context) => AlertDialog(
-          //         title: const Text('입력 오류'),
-          //         content: const Text('모든 필드를 입력해주세요.'),
-          //         actions: <Widget>[
-          //           TextButton(
-          //             onPressed: () =>
-          //                 Navigator.pop(context, 'OK'),
-          //             child: const Text('OK'),
-          //           ),
-          //         ],
-          //       ),
-          //     );
-          //   }
-
-          //   // if (checking()) {
-          //   //   save(
-          //   //     usernameEditingController.text,
-          //   //     passwordEditingController.text,
-          //   //   );
-          //   //   print('##### 토큰 정보 : ${save(
-          //   //     usernameEditingController.text,
-          //   //     passwordEditingController.text,
-          //   //   ).toString()} #####');
-          //   //   Provider.of<UserInformationProvider>(context, listen: false)
-          //   //       .changeId(
-          //   //     usernameEditingController.text,
-          //   //   );
-          //   //   Provider.of<UserInformationProvider>(context, listen: false)
-          //   //       .changeId(
-          //   //     passwordEditingController.text,
-          //   //   );
-          //   //   Get.offAll(() => Homescreen());
-          //   // } else {
-          //   //   showDialog(
-          //   //     context: context,
-          //   //     builder: (BuildContext context) => AlertDialog(
-          //   //       title: const Text('입력 오류'),
-          //   //       content: const Text('모든 필드를 입력해주세요.'),
-          //   //       actions: <Widget>[
-          //   //         TextButton(
-          //   //           onPressed: () => Navigator.pop(context, 'OK'),
-          //   //           child: const Text('OK'),
-          //   //         ),
-          //   //       ],
-          //   //     ),
-          //   //   );
-          //   // }
-          // },
-          // child: Text(
-          //   '로그인',
-          //   style: TextStyle(
-          //       color: Colors.white,
-          //       fontSize: 20,
-          //       fontWeight: FontWeight.bold),
-          // )));
-
-          // FutureBuilder(
-          //     future: saveThree(usernameEditingController.text,
-          //         passwordEditingController.text),
-          //     builder: (context, snapshot) {
-          //       return Container(
-          //           height: 50,
-          //           width: 250,
-          //           decoration: BoxDecoration(
-          //               color: Colors.blue,
-          //               borderRadius: BorderRadius.circular(20)),
-          //           child: TextButton(
-          //               onPressed: () {
-          //                 print(snapshot.data.toString());
-          //                 if (checking()) {
-          //                   switch (snapshot.data) {
-          //                     case "message: No such username exist.":
-          //                       showDialog(
-          //                           context: context,
-          //                           builder: (BuildContext context) =>
-          //                               AlertDialog(
-          //                                 title: const Text('로그인 실패'),
-          //                                 content:
-          //                                     const Text('비밀번호가 일치하지 않습니다'),
-          //                                 actions: <Widget>[
-          //                                   TextButton(
-          //                                     onPressed: () =>
-          //                                         Navigator.pop(context, 'OK'),
-          //                                     child: const Text('OK'),
-          //                                   ),
-          //                                 ],
-          //                               ));
-          //                       break;
-          //                     default:
-          //                       Provider.of<UserInformationProvider>(context,
-          //                               listen: false)
-          //                           .changeId(
-          //                         usernameEditingController.text,
-          //                       );
-          //                       Provider.of<UserInformationProvider>(context,
-          //                               listen: false)
-          //                           .changeId(
-          //                         passwordEditingController.text,
-          //                       );
-          //                       Get.offAll(() => Homescreen());
-          //                   }
-          //                 } else {
-          //                   showDialog(
-          //                     context: context,
-          //                     builder: (BuildContext context) => AlertDialog(
-          //                       title: const Text('입력 오류'),
-          //                       content: const Text('모든 필드를 입력해주세요.'),
-          //                       actions: <Widget>[
-          //                         TextButton(
-          //                           onPressed: () =>
-          //                               Navigator.pop(context, 'OK'),
-          //                           child: const Text('OK'),
-          //                         ),
-          //                       ],
-          //                     ),
-          //                   );
-          //                 }
-
-          //                 // if (checking()) {
-          //                 //   save(
-          //                 //     usernameEditingController.text,
-          //                 //     passwordEditingController.text,
-          //                 //   );
-          //                 //   print('##### 토큰 정보 : ${save(
-          //                 //     usernameEditingController.text,
-          //                 //     passwordEditingController.text,
-          //                 //   ).toString()} #####');
-          //                 //   Provider.of<UserInformationProvider>(context, listen: false)
-          //                 //       .changeId(
-          //                 //     usernameEditingController.text,
-          //                 //   );
-          //                 //   Provider.of<UserInformationProvider>(context, listen: false)
-          //                 //       .changeId(
-          //                 //     passwordEditingController.text,
-          //                 //   );
-          //                 //   Get.offAll(() => Homescreen());
-          //                 // } else {
-          //                 //   showDialog(
-          //                 //     context: context,
-          //                 //     builder: (BuildContext context) => AlertDialog(
-          //                 //       title: const Text('입력 오류'),
-          //                 //       content: const Text('모든 필드를 입력해주세요.'),
-          //                 //       actions: <Widget>[
-          //                 //         TextButton(
-          //                 //           onPressed: () => Navigator.pop(context, 'OK'),
-          //                 //           child: const Text('OK'),
-          //                 //         ),
-          //                 //       ],
-          //                 //     ),
-          //                 //   );
-          //                 // }
-          //               },
-          //               child: Text(
-          //                 '로그인',
-          //                 style: TextStyle(
-          //                     color: Colors.white,
-          //                     fontSize: 20,
-          //                     fontWeight: FontWeight.bold),
-          //               )));
-          //     }),
           SizedBox(
             height: 15,
           ),
@@ -499,10 +261,10 @@ class _Login_PageState extends State<LoginPage> {
                 flex: 4,
                 child: TextButton(
                   onPressed: () {
-                    Get.to(() => Choosing_finding_id_pw());
+                    Get.to(() => finding_id());
                   },
                   child: Text(
-                    '아이디 / 비밀번호 찾기',
+                    '아이디 찾기',
                     style: TextStyle(
                         color: Colors.blue,
                         fontSize: 15,

@@ -2,6 +2,7 @@ import 'package:flutter_application_1/models/user.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 class Party {
+  final String id;
   final String date_time;
   final String destination;
   final String departure;
@@ -16,6 +17,7 @@ class Party {
   final double destination_party_Lng;
 
   const Party(
+    this.id,
     this.date_time,
     this.destination,
     this.departure,
@@ -32,6 +34,7 @@ class Party {
 
   factory Party.fromJson(Map<String, dynamic> json) {
     return Party(
+        json['_id'] as String,
         json['date_time'] as String,
         json['destination'] as String,
         json['departure'] as String,

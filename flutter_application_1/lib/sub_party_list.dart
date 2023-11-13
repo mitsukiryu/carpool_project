@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/HomeScreen.dart';
 import 'package:get/get.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:http/http.dart' as http;
 
 class sub_party_list extends StatelessWidget {
   final String subLeaderName;
@@ -11,12 +13,14 @@ class sub_party_list extends StatelessWidget {
   final String subMemberPhone2;
   final String subMemberName3;
   final String subMemberPhone3;
-  final String datetime;
-  final String type;
+  final String inputId;
+  final String inputdate;
+  final String inputType;
   // final List<dynamic> type;
-  final String start;
-  final String end;
-  final String status;
+  final String inputStart;
+  final String inputEnd;
+  final String inputStatus;
+  static final storage = FlutterSecureStorage();
 
   sub_party_list(
       this.subLeaderName,
@@ -27,11 +31,26 @@ class sub_party_list extends StatelessWidget {
       this.subMemberPhone2,
       this.subMemberName3,
       this.subMemberPhone3,
-      this.datetime,
-      this.type,
-      this.start,
-      this.end,
-      this.status);
+      this.inputId,
+      this.inputdate,
+      this.inputType,
+      this.inputStart,
+      this.inputEnd,
+      this.inputStatus);
+
+  @override
+  Future save() async {
+    String? dataId = await storage.read(key: "loginId");
+    String? dataToken = await storage.read(key: "token");
+
+    final response = await http.put(
+      Uri.parse('http://127.0.0.1:8000/party/join/$inputId/$dataId'),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        'Authorization': 'Bearer $dataToken',
+      },
+    );
+  }
 
   @override
   int contextFont = 3;
@@ -63,119 +82,105 @@ class sub_party_list extends StatelessWidget {
         body: Column(
           children: [
             Container(
-              color: Color.fromARGB(255, 222, 222, 222),
-              height: 30,
-              child: Row(
-                children: [
-                  Expanded(
-                    flex: contextSpace,
-                    child: SizedBox(),
-                  ),
-                  Expanded(flex: contextFont, child: Text('날짜')),
-                  Expanded(
-                    flex: contextSpace,
-                    child: SizedBox(),
-                  ),
-                  Expanded(
-                    flex: contextSpace,
-                    child: SizedBox(),
-                  ),
-                  Expanded(flex: contextFont, child: Text('종류')),
-                  Expanded(
-                    flex: contextSpace,
-                    child: SizedBox(),
-                  ),
-                  Expanded(
-                    flex: contextSpace,
-                    child: SizedBox(),
-                  ),
-                  Expanded(flex: contextFont, child: Text('출발')),
-                  Expanded(
-                    flex: contextSpace,
-                    child: SizedBox(),
-                  ),
-                  Expanded(
-                    flex: contextSpace,
-                    child: SizedBox(),
-                  ),
-                  Expanded(flex: contextFont, child: Text('도착')),
-                  Expanded(
-                    flex: contextSpace,
-                    child: SizedBox(),
-                  ),
-                  Expanded(
-                    flex: contextSpace,
-                    child: SizedBox(),
-                  ),
-                  Expanded(flex: contextFont, child: Text('현황')),
-                ],
+              height: 110,
+              decoration: BoxDecoration(
+                color: Color.fromARGB(255, 229, 228, 228),
+                border: Border.all(
+                  color: const Color.fromARGB(255, 229, 228, 228),
+                ),
+                // borderRadius: BorderRadius.all(Radius.circular(20))
               ),
-            ),
-            SizedBox(
-              height: 90,
               child: Row(
                 children: [
                   Expanded(
                     flex: contextSpace,
                     child: SizedBox(),
                   ),
-                  Expanded(flex: contextFont, child: Text(datetime)),
                   Expanded(
-                    flex: contextSpace,
-                    child: SizedBox(),
+                    flex: 6,
+                    child: Column(children: [
+                      Expanded(
+                        flex: 1,
+                        child: SizedBox(),
+                      ),
+                      Expanded(flex: 3, child: Text(inputType)),
+                      Expanded(
+                          flex: 6,
+                          child: Container(
+                            width: 70, // 동그란 모양의 틀의 지름을 나타내는 값
+                            height: 70,
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: Colors.grey, // 동그란 모양의 틀의 배경색
+                              image: DecorationImage(
+                                image: inputType == '택시'
+                                    ? AssetImage(
+                                        'images/taxi_icon.jpg') // 택시 이미지의 경로
+                                    : inputType == '카풀'
+                                        ? AssetImage(
+                                            'images/car_icon.jpg') // 카풀 이미지의 경로
+                                        : AssetImage(
+                                            'assets/default_image.png'), // 기본 이미지 경로
+                                fit: BoxFit.cover, // 이미지를 동그란 틀에 맞춰서 보여주도록 설정
+                              ),
+                            ),
+                          )),
+                      Expanded(
+                        child: SizedBox(),
+                        flex: 1,
+                      )
+                    ]),
                   ),
                   Expanded(
-                    flex: contextSpace,
                     child: SizedBox(),
-                  ),
-                  // Expanded(flex: contextFont, child: Text(type)),
-                  Expanded(flex: contextFont, child: Text(type)),
-
-                  Expanded(
-                    flex: contextSpace,
-                    child: SizedBox(),
+                    flex: 2,
                   ),
                   Expanded(
-                    flex: contextSpace,
-                    child: SizedBox(),
-                  ),
-                  Expanded(
-                      flex: contextFont,
+                      flex: 18,
                       child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Expanded(
-                            flex: 1,
-                            child: SizedBox(),
-                          ),
-                          Expanded(
-                            flex: 2,
-                            child: Text(datetime),
-                          ),
-                          Expanded(
-                            flex: 2,
-                            child: Text(start),
-                          )
-                        ],
-                      )),
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(' ',
+                                style: TextStyle(
+                                  fontSize: 3.0,
+                                )),
+                            Text(inputStart,
+                                style: TextStyle(
+                                  fontSize: 20.0,
+                                )),
+                            Text(inputEnd,
+                                style: TextStyle(
+                                  fontSize: 20.0,
+                                )),
+                            Text(' ',
+                                style: TextStyle(
+                                  fontSize: 7.0,
+                                )),
+                            Text(inputdate[0] +
+                                inputdate[1] +
+                                inputdate[2] +
+                                inputdate[3] +
+                                '.' +
+                                inputdate[5] +
+                                inputdate[6] +
+                                '.' +
+                                inputdate[8] +
+                                inputdate[9] +
+                                '   ' +
+                                inputdate[11] +
+                                inputdate[12] +
+                                inputdate[13] +
+                                inputdate[14] +
+                                inputdate[15])
+                          ])),
                   Expanded(
-                    flex: contextSpace,
                     child: SizedBox(),
+                    flex: 1,
                   ),
                   Expanded(
-                    flex: contextSpace,
-                    child: SizedBox(),
-                  ),
-                  Expanded(flex: contextFont, child: Text(end)),
-                  Expanded(
-                    flex: contextSpace,
-                    child: SizedBox(),
-                  ),
-                  Expanded(
-                    flex: contextSpace,
-                    child: SizedBox(),
-                  ),
-                  Expanded(flex: contextFont, child: Text(status)),
+                    flex: 3,
+                    child: Text(inputStatus),
+                  )
                 ],
               ),
             ),
@@ -370,6 +375,7 @@ class sub_party_list extends StatelessWidget {
                   // borderRadius: BorderRadius.circular(20)),
                   child: TextButton(
                     onPressed: () {
+                      save();
                       Get.to(() => Homescreen());
                     },
                     child: Text(
