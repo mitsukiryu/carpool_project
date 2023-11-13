@@ -17,12 +17,14 @@ class Driver_Signin_page extends StatelessWidget {
   TextEditingController carTypeController = TextEditingController();
   var dio = Dio(BaseOptions());
 
+  static String ErrorText = '';
+
   @override
   bool checking() {
     if (nameController.text.isNotEmpty &&
         idController.text.isNotEmpty &&
         pwController.text.isNotEmpty &&
-        pwController.text == pwCheckController.text &&
+        pwCheckController.text.isNotEmpty &&
         phoneController.text.isNotEmpty &&
         emailController.text.isNotEmpty &&
         carNumberController.text.isNotEmpty &&
@@ -31,6 +33,26 @@ class Driver_Signin_page extends StatelessWidget {
       return true;
     }
     return false;
+  }
+
+  bool PW_format_check() {
+    if (pwController.text.contains(RegExp(r'[0-9]')) &&
+        pwController.text.contains(RegExp(r'[A-Za-z]'))) {
+      return true;
+    }
+    return false;
+  }
+
+  String error_text() {
+    if (checking() && !PW_format_check()) {
+      return '비밀번호 형식은 숫자와 문자 조합입니다 숫자를 포함해주세요.';
+    } else if (checking() &&
+        PW_format_check() &&
+        pwController.text != pwCheckController.text) {
+      return '비밀번호 확인이 되지 않았습니다.';
+    } else {
+      return '모든 필드를 확인해주세요.';
+    }
   }
 
   @override
@@ -213,6 +235,16 @@ class Driver_Signin_page extends StatelessWidget {
               Container(
                 height: 50,
                 width: 250,
+                decoration: BoxDecoration(color: Colors.blue),
+                child: TextButton(
+                    onPressed: () {
+                      print(PW_format_check());
+                    },
+                    child: Text("check")),
+              ),
+              Container(
+                height: 50,
+                width: 250,
                 decoration: BoxDecoration(
                   color: Colors.blue,
                   borderRadius: BorderRadius.circular(20),
@@ -220,7 +252,8 @@ class Driver_Signin_page extends StatelessWidget {
                 child: TextButton(
                   child: Text("회원가입", style: TextStyle(color: Colors.white)),
                   onPressed: () {
-                    if (checking()) {
+                    ErrorText = error_text();
+                    if (checking() && PW_format_check()) {
                       save(
                         idController.text,
                         nameController.text,
@@ -244,26 +277,12 @@ class Driver_Signin_page extends StatelessWidget {
                       //   carTypeController.text,
                       // );
                       Get.to(() => LoginPage());
-                    } else if (pwCheckController.text == pwController.text) {
-                      showDialog(
-                        context: context,
-                        builder: (BuildContext context) => AlertDialog(
-                          title: const Text('입력 오류'),
-                          content: const Text('모든 필드를 입력해주세요.'),
-                          actions: <Widget>[
-                            TextButton(
-                              onPressed: () => Navigator.pop(context, 'OK'),
-                              child: const Text('OK'),
-                            ),
-                          ],
-                        ),
-                      );
                     } else {
                       showDialog(
                         context: context,
                         builder: (BuildContext context) => AlertDialog(
                           title: const Text('입력 오류'),
-                          content: const Text('비밀번호 확인이 되지 않았습니다.'),
+                          content: Text(ErrorText),
                           actions: <Widget>[
                             TextButton(
                               onPressed: () => Navigator.pop(context, 'OK'),

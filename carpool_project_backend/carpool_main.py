@@ -1,3 +1,5 @@
+from typing import Union
+
 from fastapi import FastAPI, Query
 from pymongo import MongoClient
 from pydantic import BaseModel
@@ -7,13 +9,20 @@ import os
 import certifi
 import datetime as dt
 from routers import user, party
-
+from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
 
+app.add_middleware(
+    CORSMiddleware, 
+    allow_origins='*',
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 app.include_router(party.router)
 app.include_router(user.router)
-
 
 @app.on_event("startup")
 def startup_db_client():

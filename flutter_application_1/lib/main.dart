@@ -53,7 +53,7 @@ class MyApp extends StatelessWidget {
         ),
         GetPage(
           name: '/EditProflie',
-          page: () => EditProflie(),
+          page: () => EditProfile(),
         )
       ],
     );

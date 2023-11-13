@@ -61,7 +61,7 @@ class _MyInfoState extends State<MyInfo> {
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(backgroundColor: Colors.grey),
                 onPressed: () {
-                  Get.to(() => EditProflie());
+                  Get.to(() => EditProfile());
                 },
                 // print(Provider.of<UserInformationProvider>(context).name.);
                 child: Text('내 정보 수정'),

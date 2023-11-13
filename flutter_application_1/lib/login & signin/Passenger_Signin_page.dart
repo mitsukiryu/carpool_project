@@ -70,11 +70,30 @@ class _Signin_pageState extends State<Signin_page> {
         pwController.text.isNotEmpty &&
         phoneController.text.isNotEmpty &&
         emailController.text.isNotEmpty &&
-        homeroomController.text.isNotEmpty &&
-        pwController.text == pwCheckController.text) {
+        homeroomController.text.isNotEmpty) {
       return true;
     }
     return false;
+  }
+
+  bool PW_format_check() {
+    if (pwController.text.contains(RegExp(r'[0-9]')) &&
+        pwController.text.contains(RegExp(r'[A-Za-z]'))) {
+      return true;
+    }
+    return false;
+  }
+
+  String error_text() {
+    if (checking() && !PW_format_check()) {
+      return '비밀번호 형식은 숫자와 문자 조합입니다 숫자를 포함해주세요.';
+    } else if (checking() &&
+        PW_format_check() &&
+        pwController.text != pwCheckController.text) {
+      return '비밀번호 확인이 되지 않았습니다.';
+    } else {
+      return '모든 필드를 확인해주세요.';
+    }
   }
 
   @override
@@ -209,7 +228,9 @@ class _Signin_pageState extends State<Signin_page> {
                   child: TextButton(
                     child: Text("회원가입", style: TextStyle(color: Colors.white)),
                     onPressed: () {
-                      if (checking()) {
+                      if (checking() &&
+                          PW_format_check() &&
+                          pwCheckController.text == pwController.text) {
                         save(
                             idController.text,
                             nameController.text,
@@ -227,26 +248,12 @@ class _Signin_pageState extends State<Signin_page> {
                                 emailController.text,
                                 homeroomController.text);
                         Get.offAll(() => LoginPage());
-                      } else if (pwCheckController.text == pwController.text) {
-                        showDialog(
-                          context: context,
-                          builder: (BuildContext context) => AlertDialog(
-                            title: const Text('입력 오류'),
-                            content: const Text('모든 필드를 입력해주세요.'),
-                            actions: <Widget>[
-                              TextButton(
-                                onPressed: () => Navigator.pop(context, 'OK'),
-                                child: const Text('OK'),
-                              ),
-                            ],
-                          ),
-                        );
                       } else {
                         showDialog(
                           context: context,
                           builder: (BuildContext context) => AlertDialog(
                             title: const Text('입력 오류'),
-                            content: const Text('비밀번호 확인이 되지 않았습니다.'),
+                            content: Text(error_text()),
                             actions: <Widget>[
                               TextButton(
                                 onPressed: () => Navigator.pop(context, 'OK'),
