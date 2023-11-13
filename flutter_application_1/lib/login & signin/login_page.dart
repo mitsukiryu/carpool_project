@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/class/user_Info.dart';
 import 'package:flutter_application_1/login%20&%20signin/finding_id.dart';
 import 'package:flutter_application_1/models/user.dart';
 import 'package:flutter_application_1/provider/user_information.dart';
@@ -51,7 +52,9 @@ class _Login_PageState extends State<LoginPage> {
     if (response.statusCode == 200) {
       // var val = jsonEncode(
       //     User(usernameEditingController.text, passwordEditingController.text));
-      Map<String, dynamic> data = json.decode(response.body);
+      Map<String, dynamic> data = jsonDecode(utf8.decode(response.bodyBytes));
+
+      // Map<String, dynamic> data = json.decode(response.body);
       String accessToken = data['access_token'];
       print(accessToken);
 
@@ -73,75 +76,42 @@ class _Login_PageState extends State<LoginPage> {
   }
 
   @override
+  Future getData() async {
+    String? dataToken = await storage.read(key: "token");
+
+    final response = await http.get(
+        Uri.parse('http://127.0.0.1:8000/user/user_info'),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+          'Authorization': 'Bearer $dataToken',
+        });
+    if (response.statusCode == 200) {
+      // Here i declare the jsonDecode typ as
+      // List<dynamic> to give it the right type
+
+      Map<String, dynamic> data = json.decode(utf8.decode(response.bodyBytes));
+
+      // final jsonData =
+      //     jsonDecode(utf8.decode(response.bodyBytes)) as List<dynamic>;
+      // // final jsonData = jsonDecode(response.body) as List<dynamic>;
+
+      // final data = jsonDecode(response.body);
+
+      // // Here i cast the List<dynamic> jsonData to List<Map<String,dynamic>>
+      // final castedData = List<Map<String, dynamic>>.from(data);
+      // // Here i convert the castedData to the a List<Party> model
+      // final users = castedData.map(User_Info.fromJson);
+      // // print(users);
+      return data;
+    } else {
+      print("bad");
+      return;
+    }
+  }
+
+  @override
   static void storeToken(String token) async {
     await storage.write(key: "token", value: token);
-  }
-
-  @override
-  Future<Map<String, String>> saveTwo(
-    String inputusername,
-    String inputpassword,
-  ) async {
-    final Map<String, String> userData = {
-      'username': inputusername,
-      'password': inputpassword,
-    };
-
-    final response = await Dio().post(
-      'http://127.0.0.1:8000/user/login',
-      data: jsonEncode(userData),
-    );
-
-    //     await http.post(
-    //   Uri.parse('http://127.0.0.1:8000/user/login'),
-    //   headers: <String, String>{
-    //     'Content-Type': 'application/json; charset=UTF-8',
-    //   },
-    //   body: jsonEncode(userData),
-    // );
-
-    if (response.statusCode == 401) {
-      print('Response body for 401 error: ${response.data}');
-    } else if (response.statusCode == 404) {
-      print('Response body for 404 error: ${response.data}');
-    } else if (response.statusCode == 200) {
-      print('success');
-    } else {
-      print("other error");
-    }
-
-    return response.data;
-  }
-
-  @override
-  saveThree(inputusername, inputpassword) async {
-    try {
-      var dio = Dio();
-      var param = {'username': inputusername, 'password': inputpassword};
-
-      final response =
-          await dio.post('http://127.0.0.1:8000/user/login', data: param);
-
-      if (response.statusCode == 200) {
-        final jsonBody = json.decode(response.data['user_id'].toString());
-        // 직렬화를 이용하여 데이터를 입출력하기 위해 model.dart에 Login 정의 참고
-        var val = jsonEncode(User(
-            usernameEditingController.text, passwordEditingController.text));
-        await storage.write(key: 'login', value: val);
-
-        await storage.write(
-          key: 'login',
-          value: val,
-        );
-        print('접속 성공!');
-        return true;
-      } else {
-        print('error');
-        return false;
-      }
-    } catch (e) {
-      return false;
-    }
   }
 
   @override
@@ -204,16 +174,34 @@ class _Login_PageState extends State<LoginPage> {
                             passwordEditingController.text) ==
                         true) {
                       print("Went in");
-                      Provider.of<UserInformationProvider>(context,
-                              listen: false)
-                          .changeId(
-                        usernameEditingController.text,
-                      );
-                      Provider.of<UserInformationProvider>(context,
-                              listen: false)
-                          .changeId(
-                        passwordEditingController.text,
-                      );
+                      var data = await getData();
+                      print(data.toString());
+                      print(data['real_name'].toString());
+                      if (data['user_type'] == "Passenger") {
+                        Provider.of<UserInformationProvider>(context,
+                                listen: false)
+                            .changeAllPassenger(
+                                data['real_name'],
+                                data['user_name'],
+                                data['password'],
+                                data['phone_number'],
+                                data['email'],
+                                data['homeroom']);
+                      } else if (data['user_type'] == "Driver") {
+                        Provider.of<UserInformationProvider>(context,
+                                listen: false)
+                            .changeAllDriver(
+                                data['real_name'],
+                                data['user_name'],
+                                data['password'],
+                                data['phone_number'],
+                                data['email'],
+                                data['car_number'],
+                                data['car_color'],
+                                data['car_type']);
+                      }
+                      print('성공');
+
                       Get.offAll(() => Homescreen());
                     } else {
                       showDialog(
