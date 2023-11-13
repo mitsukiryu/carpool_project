@@ -135,7 +135,7 @@ async def drop_party(party_id: str, user_id: str, current_user: User = Depends(g
 
 # party sort
 
-@router.get("/party/sort/")
+@router.get("/sort/")
 async def sort_party(party_type: str = Query(None), destination: str = Query(None), date: str = Query(None), time: str = Query(None)):
     party_list = []
     if party_type is not None and destination is not None:
@@ -180,7 +180,7 @@ async def sort_party(party_type: str = Query(None), destination: str = Query(Non
 
 # party search
 
-@router.get("/party/search/{Lat}/{Lng}")
+@router.get("/search/{Lat}/{Lng}")
 async def search_party(Lat: float , Lng: float):
   # 1km 구간
     lat_change = 1 / 111.19
