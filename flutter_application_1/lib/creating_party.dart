@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:flutter_application_1/HomeScreen.dart';
+import 'package:flutter_application_1/party_list.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter_application_1/provider/party_create_provider.dart';
 import 'package:flutter_application_1/provider/user_information.dart';
@@ -110,6 +111,25 @@ class _creating_partyState extends State<creating_party> {
     if (response.statusCode == 422) {
       print('Response body for 422 error: ${response.body}');
     } else if (response.statusCode == 200) {
+      Provider.of<PartyCreateProvider>(context, listen: false).changeAll(
+          inputStatus,
+          inputDate[0] +
+              inputDate[1] +
+              inputDate[2] +
+              inputDate[3] +
+              inputDate[4] +
+              inputDate[5] +
+              inputDate[6] +
+              inputDate[7] +
+              inputDate[8],
+          inputDate[10] +
+              inputDate[11] +
+              inputDate[12] +
+              inputDate[13] +
+              inputDate[14],
+          inputStart,
+          inputEnd,
+          inputNum);
       print('success');
     } else {
       // Handle other status codes

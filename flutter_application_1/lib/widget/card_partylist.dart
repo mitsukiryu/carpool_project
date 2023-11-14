@@ -3,22 +3,24 @@ import 'package:flutter_application_1/sub_party_list.dart';
 import 'package:get/get.dart';
 
 Widget card_partylist(
-  String inputdate,
-  String inputType,
-  // List<dynamic> inputType,
-  String inputStart,
-  String inputId,
-  String inputEnd,
-  String inputStatus,
-  String inputsubLeaderName,
-  String inputsubLeaderPhone,
-  String inputsubMemberName1,
-  String inputsubMemberPhone1,
-  String inputsubMemberName2,
-  String inputsubMemberPhone2,
-  String inputsubMemberName3,
-  String inputsubMemberPhone3,
-) {
+    String inputdate,
+    String inputType,
+    // List<dynamic> inputType,
+    String inputStart,
+    String inputId,
+    String inputEnd,
+    String inputStatus,
+    String inputsubLeaderName,
+    // String inputsubLeaderPhone,
+    List<dynamic> inputMemberList,
+    int inputMaxNum
+    // String inputsubMemberName1,
+    // String inputsubMemberPhone1,
+    // String inputsubMemberName2,
+    // String inputsubMemberPhone2,
+    // String inputsubMemberName3,
+    // String inputsubMemberPhone3,
+    ) {
   int contextSpace = 1;
   int contextFont = 3;
 
@@ -26,19 +28,21 @@ Widget card_partylist(
     onTap: () {
       Get.to(() => sub_party_list(
           inputsubLeaderName,
-          inputsubLeaderPhone,
-          inputsubMemberName1,
-          inputsubMemberPhone1,
-          inputsubMemberName2,
-          inputsubMemberPhone2,
-          inputsubMemberName3,
-          inputsubMemberPhone3,
+          // inputsubLeaderPhone,
+          // inputsubMemberName1,
+          // inputsubMemberPhone1,
+          // inputsubMemberName2,
+          // inputsubMemberPhone2,
+          // inputsubMemberName3,
+          // inputsubMemberPhone3,
           inputId,
           inputdate,
           inputType,
           inputStart,
           inputEnd,
-          inputStatus));
+          inputStatus,
+          inputMemberList,
+          inputMaxNum));
     },
     child: Container(
       height: 90,
@@ -105,13 +109,26 @@ Widget card_partylist(
                         style: TextStyle(
                           fontSize: 16.0,
                         )),
-                    Text(inputEnd,
-                        style: TextStyle(
-                          fontSize: 16.0,
-                        )),
+                    // Text(inputEnd,
+                    //     style: TextStyle(
+                    //       fontSize: 16.0,
+                    //     )),
+                    RichText(
+                      text: TextSpan(
+                        children: [
+                          WidgetSpan(
+                            child: Icon(Icons.arrow_forward, size: 14),
+                          ),
+                          TextSpan(text: '  '),
+                          TextSpan(
+                            text: (inputEnd),
+                          ),
+                        ],
+                      ),
+                    ),
                     Text(' ',
                         style: TextStyle(
-                          fontSize: 3.0,
+                          fontSize: 10.0,
                         )),
                     Text(inputdate[0] +
                         inputdate[1] +

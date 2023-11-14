@@ -94,7 +94,7 @@ class _party_listState extends State<party_list> {
             builder: (context, snapshot) {
               if (snapshot.hasData && snapshot.data != null) {
                 final data = snapshot.data!;
-                print(data[0].id.runtimeType);
+                print(data.toString());
                 return ListView.builder(
                   primary: false, // <====  disable scrolling. 리스트뷰 내부는 스크롤 안할거임
                   shrinkWrap: true,
@@ -102,25 +102,27 @@ class _party_listState extends State<party_list> {
                   itemBuilder: (BuildContext context, int index) =>
                       Column(children: [
                     card_partylist(
-                      data[index].date_time,
-                      data[index].party_type,
+                        data[index].date_time,
+                        data[index].party_type,
 
-                      // data[index].party_member_id,
-                      data[index].departure,
-                      data[index].id,
-                      data[index].destination,
-                      data[index].cur_recruitment.toString() +
-                          '/' +
-                          data[index].max_recruitment.toString(),
-                      'user',
-                      'phone',
-                      'user',
-                      'phone',
-                      'user',
-                      'phone',
-                      'user',
-                      'phone',
-                    ),
+                        // data[index].party_member_id,
+                        data[index].departure,
+                        data[index].id,
+                        data[index].destination,
+                        data[index].cur_recruitment.toString() +
+                            '/' +
+                            data[index].max_recruitment.toString(),
+                        data[index].party_recruiter_id,
+                        // 'phone',
+                        data[index].party_member_id.toList(),
+                        data[index].max_recruitment
+                        // 'user',
+                        // 'phone',
+                        // 'user',
+                        // 'phone',
+                        // 'user',
+                        // 'phone'
+                        ),
                     SizedBox(
                       height: 7,
                     )

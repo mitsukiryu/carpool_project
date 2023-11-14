@@ -1,18 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/HomeScreen.dart';
+import 'package:flutter_application_1/provider/party_create_provider.dart';
 import 'package:get/get.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
+import 'package:provider/provider.dart';
 
 class sub_party_list extends StatelessWidget {
   final String subLeaderName;
-  final String subLeaderPhone;
-  final String subMemberName1;
-  final String subMemberPhone1;
-  final String subMemberName2;
-  final String subMemberPhone2;
-  final String subMemberName3;
-  final String subMemberPhone3;
+  // final String subLeaderPhone;
+  // final String subMemberName1;
+  // final String subMemberPhone1;
+  // final String subMemberName2;
+  // final String subMemberPhone2;
+  // final String subMemberName3;
+  // final String subMemberPhone3;
   final String inputId;
   final String inputdate;
   final String inputType;
@@ -20,23 +22,27 @@ class sub_party_list extends StatelessWidget {
   final String inputStart;
   final String inputEnd;
   final String inputStatus;
+  final List<dynamic> inputMemberList;
+  final int inputMaxNum;
   static final storage = FlutterSecureStorage();
 
   sub_party_list(
       this.subLeaderName,
-      this.subLeaderPhone,
-      this.subMemberName1,
-      this.subMemberPhone1,
-      this.subMemberName2,
-      this.subMemberPhone2,
-      this.subMemberName3,
-      this.subMemberPhone3,
+      // this.subLeaderPhone,
+      // this.subMemberName1,
+      // this.subMemberPhone1,
+      // this.subMemberName2,
+      // this.subMemberPhone2,
+      // this.subMemberName3,
+      // this.subMemberPhone3,
       this.inputId,
       this.inputdate,
       this.inputType,
       this.inputStart,
       this.inputEnd,
-      this.inputStatus);
+      this.inputStatus,
+      this.inputMemberList,
+      this.inputMaxNum);
 
   @override
   Future save() async {
@@ -50,6 +56,9 @@ class sub_party_list extends StatelessWidget {
         'Authorization': 'Bearer $dataToken',
       },
     );
+    if (response.statusCode == 200) {
+      return true;
+    }
   }
 
   @override
@@ -205,7 +214,7 @@ class sub_party_list extends StatelessWidget {
                   child: SizedBox(),
                 ),
                 Expanded(
-                  flex: 7,
+                  flex: 14,
                   child: Text(
                     this.subLeaderName,
                     style: TextStyle(fontSize: subInfo),
@@ -215,150 +224,71 @@ class sub_party_list extends StatelessWidget {
                   flex: 2,
                   child: SizedBox(),
                 ),
-                Expanded(
-                  flex: 14,
-                  child: Text(
-                    this.subLeaderPhone,
-                    style: TextStyle(fontSize: subInfo),
-                  ),
-                ),
-                Expanded(
-                  flex: 2,
-                  child: SizedBox(),
-                ),
+                // Expanded(
+                //   flex: 14,
+                //   child: Text(
+                //     this.subLeaderPhone,
+                //     style: TextStyle(fontSize: subInfo),
+                //   ),
+                // ),
+                // Expanded(
+                //   flex: 2,
+                //   child: SizedBox(),
+                // ),
               ],
             ),
             SizedBox(
               height: 10,
             ),
-            Row(
-              children: [
-                Expanded(
-                  flex: 2,
-                  child: SizedBox(),
-                ),
-                Expanded(
-                  flex: 7,
-                  child: Text(
-                    '파티원1',
-                    style: TextStyle(fontSize: subInfo),
-                  ),
-                ),
-                Expanded(
-                  flex: 2,
-                  child: SizedBox(),
-                ),
-                Expanded(
-                  flex: 7,
-                  child: Text(
-                    this.subMemberName1,
-                    style: TextStyle(fontSize: subInfo),
-                  ),
-                ),
-                Expanded(
-                  flex: 2,
-                  child: SizedBox(),
-                ),
-                Expanded(
-                  flex: 14,
-                  child: Text(
-                    this.subMemberPhone1,
-                    style: TextStyle(fontSize: subInfo),
-                  ),
-                ),
-                Expanded(
-                  flex: 2,
-                  child: SizedBox(),
-                ),
-              ],
-            ),
-            SizedBox(
-              height: 10,
-            ),
-            Row(
-              children: [
-                Expanded(
-                  flex: 2,
-                  child: SizedBox(),
-                ),
-                Expanded(
-                  flex: 7,
-                  child: Text(
-                    '파티원2',
-                    style: TextStyle(fontSize: subInfo),
-                  ),
-                ),
-                Expanded(
-                  flex: 2,
-                  child: SizedBox(),
-                ),
-                Expanded(
-                  flex: 7,
-                  child: Text(
-                    this.subMemberName2,
-                    style: TextStyle(fontSize: subInfo),
-                  ),
-                ),
-                Expanded(
-                  flex: 2,
-                  child: SizedBox(),
-                ),
-                Expanded(
-                  flex: 14,
-                  child: Text(
-                    this.subMemberPhone2,
-                    style: TextStyle(fontSize: subInfo),
-                  ),
-                ),
-                Expanded(
-                  flex: 2,
-                  child: SizedBox(),
-                ),
-              ],
-            ),
-            SizedBox(
-              height: 10,
-            ),
-            Row(
-              children: [
-                Expanded(
-                  flex: 2,
-                  child: SizedBox(),
-                ),
-                Expanded(
-                  flex: 7,
-                  child: Text(
-                    '파티원3',
-                    style: TextStyle(fontSize: subInfo),
-                  ),
-                ),
-                Expanded(
-                  flex: 2,
-                  child: SizedBox(),
-                ),
-                Expanded(
-                  flex: 7,
-                  child: Text(
-                    this.subMemberName3,
-                    style: TextStyle(fontSize: subInfo),
-                  ),
-                ),
-                Expanded(
-                  flex: 2,
-                  child: SizedBox(),
-                ),
-                Expanded(
-                  flex: 14,
-                  child: Text(
-                    this.subMemberPhone3,
-                    style: TextStyle(fontSize: subInfo),
-                  ),
-                ),
-                Expanded(
-                  flex: 2,
-                  child: SizedBox(),
-                ),
-              ],
+            ListView.builder(
+              primary: false, // <====  disable scrolling. 리스트뷰 내부는 스크롤 안할거임
+              shrinkWrap: true,
+              itemCount: inputMemberList.length,
+              itemBuilder: (BuildContext context, int index) {
+                int dataindex = index + 1;
+
+                return Row(
+                  children: [
+                    Expanded(
+                      flex: 2,
+                      child: SizedBox(),
+                    ),
+                    Expanded(
+                      flex: 7,
+                      child: Text(
+                        '파티원$dataindex',
+                        style: TextStyle(fontSize: subInfo),
+                      ),
+                    ),
+                    Expanded(
+                      flex: 2,
+                      child: SizedBox(),
+                    ),
+                    Expanded(
+                      flex: 14,
+                      child: Text(
+                        inputMemberList[index].toString(),
+                        style: TextStyle(fontSize: subInfo),
+                      ),
+                    ),
+                    Expanded(
+                      flex: 2,
+                      child: SizedBox(),
+                    ),
+                    // Expanded(
+                    //   flex: 14,
+                    //   child: Text(
+                    //     this.subMemberPhone1,
+                    //     style: TextStyle(fontSize: subInfo),
+                    //   ),
+                    // ),
+                    // Expanded(
+                    //   flex: 2,
+                    //   child: SizedBox(),
+                    // ),
+                  ],
+                );
+              },
             ),
             SizedBox(
               height: 30,
@@ -374,9 +304,34 @@ class sub_party_list extends StatelessWidget {
                   ),
                   // borderRadius: BorderRadius.circular(20)),
                   child: TextButton(
-                    onPressed: () {
-                      save();
-                      Get.to(() => Homescreen());
+                    onPressed: () async {
+                      if (await save()) {
+                        Provider.of<PartyCreateProvider>(context, listen: false)
+                            .changeAll(
+                                inputStatus,
+                                inputdate[0] +
+                                    inputdate[1] +
+                                    inputdate[2] +
+                                    inputdate[3] +
+                                    '.' +
+                                    inputdate[5] +
+                                    inputdate[6] +
+                                    '.' +
+                                    inputdate[8] +
+                                    inputdate[9],
+                                inputdate[11] +
+                                    inputdate[12] +
+                                    inputdate[13] +
+                                    inputdate[14] +
+                                    inputdate[15],
+                                inputStart,
+                                inputEnd,
+                                inputMaxNum);
+
+                        Get.to(() => Homescreen());
+                      }
+
+                      // Get.to(() => Homescreen());
                     },
                     child: Text(
                       '참여하기',

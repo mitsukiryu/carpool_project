@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 
 class UserInformationProvider extends ChangeNotifier {
-  String _name = "류황희";
-  String _id = "myidis3939";
-  String _pw = "mypwis8989";
-  String _phoneNumber = "01063004833";
-  String _email = "his1234@his.sc.kr";
-  String _status = "Passenger";
-  int _carNumber = 3;
-  String _carColor = "Blue";
-  String _carType = "Sonata";
-  String _homeroom = "12-B";
+  String _name = "";
+  String _id = "";
+  String _pw = "";
+  String _phoneNumber = "";
+  String _email = "";
+  String _status = "";
+  int _carNumber = 0;
+  String _carColor = "";
+  String _carType = "";
+  String _homeroom = "";
   int _penealty = 0;
   List _warnings = [];
 
