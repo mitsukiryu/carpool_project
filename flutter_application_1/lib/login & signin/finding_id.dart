@@ -21,7 +21,7 @@ class finding_id extends StatelessWidget {
 
     var response = await http.post(
       // Uri.parse('http://10.0.2.1:8000/user/login'),
-      Uri.parse('http://127.0.0.1:8000/user/find'),
+      Uri.parse('http://3.27.196.5/user/find'),
       headers: <String, String>{
         // 'Content-Type': 'application/x-www-form-urlencoded'
 

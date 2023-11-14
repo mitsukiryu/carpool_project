@@ -58,7 +58,7 @@ class sub_party_list extends StatelessWidget {
     String? dataToken = await storage.read(key: "token");
 
     final response = await http.put(
-      Uri.parse('http://127.0.0.1:8000/party/join/$inputId/$dataId'),
+      Uri.parse('http://3.27.196.5/party/join/$inputId/$dataId'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
         'Authorization': 'Bearer $dataToken',
