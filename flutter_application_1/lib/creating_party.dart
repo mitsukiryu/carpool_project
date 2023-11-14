@@ -76,8 +76,8 @@ class _creating_partyState extends State<creating_party> {
   }
 
   @override
-  Future save(String inputDate, String inputName, String inputStart,
-      String inputEnd, int inputNum, String inputStatus) async {
+  Future save(String inputStatus, String inputDate, String inputName,
+      String inputStart, String inputEnd, int inputNum) async {
     final Map<String, dynamic> userData = {
       'date_time': inputDate,
       'departure': inputStart,
@@ -86,7 +86,7 @@ class _creating_partyState extends State<creating_party> {
       'cur_recruitment': 0,
       'party_type': inputStatus,
       'party_recruiter_id': inputName,
-      'party_member_id': [inputName],
+      'party_member_id': [],
       'departure_party_Lat': 0.0,
       'departure_party_Lng': 0.0,
       'destination_party_Lat': 0.0,
@@ -129,7 +129,14 @@ class _creating_partyState extends State<creating_party> {
               inputDate[14],
           inputStart,
           inputEnd,
-          inputNum);
+          inputNum,
+          0,
+          inputName,
+          [],
+          0.0,
+          0.0,
+          0.0,
+          0.0);
       print('success');
     } else {
       // Handle other status codes
@@ -480,30 +487,31 @@ class _creating_partyState extends State<creating_party> {
                         // borderRadius: BorderRadius.circular(20)),
                       ),
                       child: TextButton(
-                        onPressed: () {
+                        onPressed: () async {
                           if (checking()) {
                             // save(inputDate, inputName, inputStart, inputEnd, inputNum, inputStatus, inputId)
 
-                            save(
-                                dateController.text + ' ' + timeinput.text,
-                                Provider.of<UserInformationProvider>(context,
-                                        listen: false)
-                                    .name
-                                    .toString(),
-                                //이거 로그인 하면 프로하이더에 저장되지 않아서 값들
-                                startinput.text,
-                                endinput.text,
-                                int.parse(numinput.text),
-                                choice);
-                            Provider.of<PartyCreateProvider>(context,
-                                    listen: false)
-                                .changeAll(
-                                    choice,
-                                    dateController.text,
-                                    timeinput.text,
-                                    startinput.text,
-                                    endinput.text,
-                                    int.parse(numinput.text));
+                            await save(
+                              choice,
+                              dateController.text + ' ' + timeinput.text,
+                              Provider.of<UserInformationProvider>(context,
+                                      listen: false)
+                                  .name
+                                  .toString(),
+                              //이거 로그인 하면 프로하이더에 저장되지 않아서 값들
+                              startinput.text,
+                              endinput.text,
+                              int.parse(numinput.text),
+                            );
+                            // Provider.of<PartyCreateProvider>(context,
+                            //         listen: false)
+                            //     .changeAll(
+                            //         choice,
+                            //         dateController.text,
+                            //         timeinput.text,
+                            //         startinput.text,
+                            //         endinput.text,
+                            //         int.parse(numinput.text));
 
                             Get.offAll(() => Homescreen());
                           } else {

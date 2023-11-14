@@ -1,10 +1,15 @@
+// import 'dart:js';
+import 'package:path/path.dart' as Path;
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/HomeScreen.dart';
+import 'package:flutter_application_1/current_party.dart';
 import 'package:flutter_application_1/provider/party_create_provider.dart';
 import 'package:get/get.dart';
+import 'dart:convert';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
+import 'package:intl/intl.dart';
 
 class sub_party_list extends StatelessWidget {
   final String subLeaderName;
@@ -22,8 +27,10 @@ class sub_party_list extends StatelessWidget {
   final String inputStart;
   final String inputEnd;
   final String inputStatus;
-  final List<dynamic> inputMemberList;
+  final List<String> inputMemberList;
   final int inputMaxNum;
+  final int inputCurNum;
+
   static final storage = FlutterSecureStorage();
 
   sub_party_list(
@@ -42,10 +49,11 @@ class sub_party_list extends StatelessWidget {
       this.inputEnd,
       this.inputStatus,
       this.inputMemberList,
-      this.inputMaxNum);
+      this.inputMaxNum,
+      this.inputCurNum);
 
   @override
-  Future save() async {
+  Future save(BuildContext context) async {
     String? dataId = await storage.read(key: "loginId");
     String? dataToken = await storage.read(key: "token");
 
@@ -57,8 +65,34 @@ class sub_party_list extends StatelessWidget {
       },
     );
     if (response.statusCode == 200) {
+      Provider.of<PartyCreateProvider>(context, listen: false).changeAll(
+          inputStatus,
+          inputdate[0] +
+              inputdate[1] +
+              inputdate[2] +
+              inputdate[3] +
+              inputdate[4] +
+              inputdate[5] +
+              inputdate[6] +
+              inputdate[7] +
+              inputdate[8],
+          inputdate[10] +
+              inputdate[11] +
+              inputdate[12] +
+              inputdate[13] +
+              inputdate[14],
+          inputStart,
+          inputEnd,
+          inputMaxNum,
+          inputCurNum,
+          subLeaderName,
+          inputMemberList,
+          0.0,
+          0.0,
+          0.0,
+          0.0);
       return true;
-    }
+    } else {}
   }
 
   @override
@@ -305,29 +339,7 @@ class sub_party_list extends StatelessWidget {
                   // borderRadius: BorderRadius.circular(20)),
                   child: TextButton(
                     onPressed: () async {
-                      if (await save()) {
-                        Provider.of<PartyCreateProvider>(context, listen: false)
-                            .changeAll(
-                                inputStatus,
-                                inputdate[0] +
-                                    inputdate[1] +
-                                    inputdate[2] +
-                                    inputdate[3] +
-                                    '.' +
-                                    inputdate[5] +
-                                    inputdate[6] +
-                                    '.' +
-                                    inputdate[8] +
-                                    inputdate[9],
-                                inputdate[11] +
-                                    inputdate[12] +
-                                    inputdate[13] +
-                                    inputdate[14] +
-                                    inputdate[15],
-                                inputStart,
-                                inputEnd,
-                                inputMaxNum);
-
+                      if (await save(context)) {
                         Get.to(() => Homescreen());
                       }
 

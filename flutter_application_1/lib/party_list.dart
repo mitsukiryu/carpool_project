@@ -114,8 +114,12 @@ class _party_listState extends State<party_list> {
                             data[index].max_recruitment.toString(),
                         data[index].party_recruiter_id,
                         // 'phone',
-                        data[index].party_member_id.toList(),
-                        data[index].max_recruitment
+                        (data[index]
+                            .party_member_id
+                            .map((e) => e.toString())
+                            .toList()),
+                        data[index].max_recruitment,
+                        data[index].cur_recruitment
                         // 'user',
                         // 'phone',
                         // 'user',

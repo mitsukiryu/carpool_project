@@ -12,8 +12,9 @@ Widget card_partylist(
     String inputStatus,
     String inputsubLeaderName,
     // String inputsubLeaderPhone,
-    List<dynamic> inputMemberList,
-    int inputMaxNum
+    List<String> inputMemberList,
+    int inputMaxNum,
+    int inputCurNum
     // String inputsubMemberName1,
     // String inputsubMemberPhone1,
     // String inputsubMemberName2,
@@ -42,7 +43,8 @@ Widget card_partylist(
           inputEnd,
           inputStatus,
           inputMemberList,
-          inputMaxNum));
+          inputMaxNum,
+          inputCurNum));
     },
     child: Container(
       height: 90,

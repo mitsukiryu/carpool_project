@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/autocomplete_prediction.dart';
+import 'package:flutter_application_1/current_party.dart';
 import 'package:flutter_application_1/party_list.dart';
 import 'package:get/get.dart';
 import 'dart:async';
@@ -11,6 +12,8 @@ import 'autocomplete.dart';
 import 'complete_response.dart';
 import 'location_list_tile.dart';
 import 'creating_party.dart';
+import 'package:provider/provider.dart';
+import 'provider/party_create_provider.dart';
 
 class Homescreen extends StatefulWidget {
   const Homescreen({super.key});
@@ -76,19 +79,26 @@ class _HomescreenState extends State<Homescreen> {
 
   @override
   Widget build(BuildContext context) {
+    bool hasStatus =
+        Provider.of<PartyCreateProvider>(context, listen: false).status == "";
+
     return Scaffold(
       floatingActionButtonLocation: FloatingActionButtonLocation.startFloat,
-      floatingActionButton: FloatingActionButton(
-        tooltip: 'Add', // used by assistive technologies
-        onPressed: () {
-          Get.to(() => creating_party());
-        },
-        backgroundColor: Colors.grey,
-        child: Icon(
-          Icons.add,
-          color: Colors.black,
-        ),
-      ),
+      floatingActionButton:
+          (Provider.of<PartyCreateProvider>(context, listen: false).status ==
+                  "")
+              ? FloatingActionButton(
+                  tooltip: 'Add', // used by assistive technologies
+                  onPressed: () {
+                    Get.to(() => creating_party());
+                  },
+                  backgroundColor: Colors.grey,
+                  child: Icon(
+                    Icons.add,
+                    color: Colors.black,
+                  ),
+                )
+              : null,
       body: SafeArea(
         child: Column(
           children: [
@@ -162,7 +172,11 @@ class _HomescreenState extends State<Homescreen> {
                     child: Text('파티 리스트',
                         style: TextStyle(color: Colors.black, fontSize: 20)),
                     onPressed: () {
-                      Get.to(() => party_list());
+                      if (hasStatus) {
+                        Get.to(() => party_list());
+                      } else {
+                        Get.to(() => current_party_list());
+                      }
                     })),
             VerticalDivider(
               color: Colors.white,
