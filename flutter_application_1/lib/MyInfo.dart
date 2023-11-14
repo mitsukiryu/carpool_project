@@ -67,7 +67,15 @@ class _MyInfoState extends State<MyInfo> {
                 child: Text('내 정보 수정'),
               ),
             ),
-            SizedBox(height: 8),
+            SizedBox(height: 50),
+            SizedBox(
+              height: 300,
+              child: Text(
+                "SAFE RIDE는 안전하고 편리한 학부모 차량 자동 매칭 서비스를 제공합니다. \n이를 통해 한동글로벌학교의 한정적인 등하교 수단 문제, \n등하교 시 교통 혼잡문제, 안전 사고 문제에 대안을 제시하고자 합니다. \n한동글로벌학교에서 시범 운영 후 대한민국 전 학교의 \n등하교 문제를 해결하고자 합니다. ",
+                style: TextStyle(fontStyle: FontStyle.italic, fontSize: 14),
+                textAlign: TextAlign.center,
+              ),
+            )
             // SizedBox(
             //   width: 200,
             //   child: ElevatedButton(

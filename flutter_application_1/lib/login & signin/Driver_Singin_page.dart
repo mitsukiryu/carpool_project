@@ -84,7 +84,7 @@ class Driver_Signin_page extends StatelessWidget {
       // Uri.parse('http://10.0.2.2:8000/user/create'),
       // Uri.parse('http://3.27.196.5/user/login'),
 
-      Uri.parse('http://3.27.196.5/user/create'),
+      Uri.parse('https://3.27.196.5/user/create'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
