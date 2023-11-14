@@ -97,7 +97,7 @@ class _creating_partyState extends State<creating_party> {
     String? dataId = await storage.read(key: "loginId");
 
     final response = await http.post(
-      Uri.parse('http://127.0.0.1:8000/party/create/$dataId'),
+      Uri.parse('http://3.27.196.5/party/create/$dataId'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
         'Authorization': 'Bearer $dataToken',
@@ -106,7 +106,7 @@ class _creating_partyState extends State<creating_party> {
     );
 
     // final response =
-    //     await Dio().post('http://127.0.0.1:8000/users/create', data: userData);
+    //     await Dio().post('http://3.27.196.5/users/create', data: userData);
 
     if (response.statusCode == 422) {
       print('Response body for 422 error: ${response.body}');

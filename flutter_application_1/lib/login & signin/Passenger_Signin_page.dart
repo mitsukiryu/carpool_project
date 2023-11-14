@@ -44,7 +44,7 @@ class _Signin_pageState extends State<Signin_page> {
     };
 
     final response = await http.post(
-      Uri.parse('http://127.0.0.1:8000/user/create'),
+      Uri.parse('http://3.27.196.5/user/create'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
@@ -52,7 +52,7 @@ class _Signin_pageState extends State<Signin_page> {
     );
 
     // final response =
-    //     await Dio().post('http://127.0.0.1:8000/users/create', data: userData);
+    //     await Dio().post('http://3.27.196.5/users/create', data: userData);
 
     if (response.statusCode == 422) {
       print('Response body for 422 error: ${response.body}');
