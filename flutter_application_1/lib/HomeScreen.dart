@@ -107,7 +107,6 @@ class _HomescreenState extends State<Homescreen> {
                         controller: _searchCon,
                         decoration: const InputDecoration(
                           hintText: "Search",
-                          border: OutlineInputBorder(),
                         ),
                       ),
                     ),
