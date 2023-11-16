@@ -42,7 +42,7 @@ class _Login_PageState extends State<LoginPage> {
 
     var response = await http.post(
       // Uri.parse('http://10.0.2.1:8000/user/login'),
-      Uri.parse('https://3.27.196.5/user/login'),
+      Uri.parse('3.27.196.5/user/login'),
       headers: <String, String>{
         'Content-Type': 'application/x-www-form-urlencoded'
       },
@@ -79,12 +79,11 @@ class _Login_PageState extends State<LoginPage> {
   Future getData() async {
     String? dataToken = await storage.read(key: "token");
 
-    final response = await http.get(
-        Uri.parse('https://3.27.196.5/user/user_info'),
-        headers: <String, String>{
-          'Content-Type': 'application/json; charset=UTF-8',
-          'Authorization': 'Bearer $dataToken',
-        });
+    final response = await http
+        .get(Uri.parse('3.27.196.5/user/user_info'), headers: <String, String>{
+      'Content-Type': 'application/json; charset=UTF-8',
+      'Authorization': 'Bearer $dataToken',
+    });
     if (response.statusCode == 200) {
       // Here i declare the jsonDecode typ as
       // List<dynamic> to give it the right type
