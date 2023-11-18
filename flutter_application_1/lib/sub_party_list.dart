@@ -1,15 +1,11 @@
 // import 'dart:js';
-import 'package:path/path.dart' as Path;
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/HomeScreen.dart';
-import 'package:flutter_application_1/current_party.dart';
 import 'package:flutter_application_1/provider/party_create_provider.dart';
 import 'package:get/get.dart';
-import 'dart:convert';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
-import 'package:intl/intl.dart';
 
 class sub_party_list extends StatelessWidget {
   final String subLeaderName;
@@ -58,7 +54,7 @@ class sub_party_list extends StatelessWidget {
     String? dataToken = await storage.read(key: "token");
 
     final response = await http.put(
-      Uri.parse('https://3.27.196.5/party/join/$inputId/$dataId'),
+      Uri.parse('https://127.0.0.1:8000/party/join/$inputId/$dataId'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
         'Authorization': 'Bearer $dataToken',

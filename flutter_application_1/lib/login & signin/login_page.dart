@@ -1,16 +1,12 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/class/user_Info.dart';
 import 'package:flutter_application_1/login%20&%20signin/finding_id.dart';
-import 'package:flutter_application_1/models/user.dart';
 import 'package:flutter_application_1/provider/user_information.dart';
 import '../HomeScreen.dart';
 import 'package:get/get.dart';
 import 'Signin_choose.dart';
-import 'choosing_finding_id_pw.dart';
 import 'package:provider/provider.dart';
 import 'package:http/http.dart' as http;
-import 'package:dio/dio.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class LoginPage extends StatefulWidget {
@@ -42,7 +38,7 @@ class _Login_PageState extends State<LoginPage> {
 
     var response = await http.post(
       // Uri.parse('http://10.0.2.1:8000/user/login'),
-      Uri.parse('3.27.196.5/user/login'),
+      Uri.parse('http://127.0.0.1:8000/user/login'),
       headers: <String, String>{
         'Content-Type': 'application/x-www-form-urlencoded'
       },
@@ -79,11 +75,12 @@ class _Login_PageState extends State<LoginPage> {
   Future getData() async {
     String? dataToken = await storage.read(key: "token");
 
-    final response = await http
-        .get(Uri.parse('3.27.196.5/user/user_info'), headers: <String, String>{
-      'Content-Type': 'application/json; charset=UTF-8',
-      'Authorization': 'Bearer $dataToken',
-    });
+    final response = await http.get(
+        Uri.parse('http://127.0.0.1:8000/user/user_info'),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+          'Authorization': 'Bearer $dataToken',
+        });
     if (response.statusCode == 200) {
       // Here i declare the jsonDecode typ as
       // List<dynamic> to give it the right type
@@ -267,7 +264,7 @@ class _Login_PageState extends State<LoginPage> {
                 flex: 2,
                 child: TextButton(
                   onPressed: () {
-                    // final response = await Dio().post('http://3.27.196.5/user/login', data: jsonEncode(Map loginInfo))
+                    // final response = await Dio().post('http://127.0.0.1:8000/user/login', data: jsonEncode(Map loginInfo))
 
                     Get.to(() => Signin_choose());
                   },

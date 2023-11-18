@@ -44,7 +44,7 @@ class _Signin_pageState extends State<Signin_page> {
     };
 
     final response = await http.post(
-      Uri.parse('https://3.27.196.5/user/create'),
+      Uri.parse('https://127.0.0.1:8000/user/create'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
@@ -52,7 +52,7 @@ class _Signin_pageState extends State<Signin_page> {
     );
 
     // final response =
-    //     await Dio().post('http://3.27.196.5/users/create', data: userData);
+    //     await Dio().post('http://127.0.0.1:8000/users/create', data: userData);
 
     if (response.statusCode == 422) {
       print('Response body for 422 error: ${response.body}');
@@ -64,10 +64,11 @@ class _Signin_pageState extends State<Signin_page> {
   }
 
   @override
-  bool checking() {
+  bool filled() {
     if (nameController.text.isNotEmpty &&
         idController.text.isNotEmpty &&
         pwController.text.isNotEmpty &&
+        pwCheckController.text.isNotEmpty &&
         phoneController.text.isNotEmpty &&
         emailController.text.isNotEmpty &&
         homeroomController.text.isNotEmpty) {
@@ -84,15 +85,38 @@ class _Signin_pageState extends State<Signin_page> {
     return false;
   }
 
+  bool ID_format_check() {
+    if (idController.text.length >= 6) {
+      return true;
+    }
+    return false;
+  }
+
+  bool phone_check() {
+    if (phoneController.text.length == 11) {
+      return true;
+    }
+    return false;
+  }
+
+  bool checking() {
+    if (PW_format_check() & filled() & ID_format_check()) {
+      return true;
+    }
+    return false;
+  }
+
   String error_text() {
-    if (checking() && !PW_format_check()) {
+    if (!PW_format_check()) {
       return '비밀번호 형식은 숫자와 문자 조합입니다 숫자를 포함해주세요.';
-    } else if (checking() &&
-        PW_format_check() &&
-        pwController.text != pwCheckController.text) {
-      return '비밀번호 확인이 되지 않았습니다.';
-    } else {
+    } else if (!ID_format_check()) {
+      return '아이디는 6자 이상 입력해주세요.';
+    } else if (!filled()) {
       return '모든 필드를 확인해주세요.';
+    } else if (!phone_check()) {
+      return '전화번호를 정확히 입력해주세요.';
+    } else {
+      return 'error';
     }
   }
 
@@ -228,9 +252,8 @@ class _Signin_pageState extends State<Signin_page> {
                   child: TextButton(
                     child: Text("회원가입", style: TextStyle(color: Colors.white)),
                     onPressed: () {
-                      if (checking() &&
-                          PW_format_check() &&
-                          pwCheckController.text == pwController.text) {
+                      String e_text = error_text();
+                      if (checking()) {
                         save(
                             idController.text,
                             nameController.text,
@@ -253,7 +276,7 @@ class _Signin_pageState extends State<Signin_page> {
                           context: context,
                           builder: (BuildContext context) => AlertDialog(
                             title: const Text('입력 오류'),
-                            content: Text(error_text()),
+                            content: Text(e_text),
                             actions: <Widget>[
                               TextButton(
                                 onPressed: () => Navigator.pop(context, 'OK'),

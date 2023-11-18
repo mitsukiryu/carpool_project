@@ -20,7 +20,7 @@ class Driver_Signin_page extends StatelessWidget {
   static String ErrorText = '';
 
   @override
-  bool checking() {
+  bool filled() {
     if (nameController.text.isNotEmpty &&
         idController.text.isNotEmpty &&
         pwController.text.isNotEmpty &&
@@ -43,15 +43,38 @@ class Driver_Signin_page extends StatelessWidget {
     return false;
   }
 
+  bool ID_format_check() {
+    if (idController.text.length >= 6) {
+      return true;
+    }
+    return false;
+  }
+
+  bool phone_check() {
+    if (phoneController.text.length == 11) {
+      return true;
+    }
+    return false;
+  }
+
+  bool checking() {
+    if (PW_format_check() & filled() & ID_format_check()) {
+      return true;
+    }
+    return false;
+  }
+
   String error_text() {
-    if (checking() && !PW_format_check()) {
+    if (!PW_format_check()) {
       return '비밀번호 형식은 숫자와 문자 조합입니다 숫자를 포함해주세요.';
-    } else if (checking() &&
-        PW_format_check() &&
-        pwController.text != pwCheckController.text) {
-      return '비밀번호 확인이 되지 않았습니다.';
-    } else {
+    } else if (!ID_format_check()) {
+      return '아이디는 6자 이상 입력해주세요.';
+    } else if (!filled()) {
       return '모든 필드를 확인해주세요.';
+    } else if (!phone_check()) {
+      return '전화번호를 정확히 입력해주세요.';
+    } else {
+      return 'error';
     }
   }
 
@@ -82,9 +105,9 @@ class Driver_Signin_page extends StatelessWidget {
 
     final response = await http.post(
       // Uri.parse('http://10.0.2.2:8000/user/create'),
-      // Uri.parse('http://3.27.196.5/user/login'),
+      // Uri.parse('http://127.0.0.1:8000/user/login'),
 
-      Uri.parse('3.27.196.5/user/create'),
+      Uri.parse('127.0.0.1:8000/user/create'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },

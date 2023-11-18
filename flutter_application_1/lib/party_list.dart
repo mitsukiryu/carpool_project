@@ -4,7 +4,6 @@ import 'package:flutter_application_1/widget/card_partylist.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/class/party.dart';
 import 'package:get/get.dart';
-import 'sub_party_list.dart';
 import 'package:http/http.dart' as http;
 
 class name extends StatefulWidget {
@@ -44,7 +43,7 @@ class _party_listState extends State<party_list> {
   @override
   Future<List<Party>> getData() async {
     final response = await http.get(
-      Uri.parse('https://3.27.196.5/party/find'),
+      Uri.parse('https://127.0.0.1:8000/party/find'),
       headers: <String, String>{
         'Content-Type': 'application/x-www-form-urlencoded'
         // 'Content-Type': 'application/json; charset=UTF-8',

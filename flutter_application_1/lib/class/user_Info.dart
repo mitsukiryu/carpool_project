@@ -1,5 +1,3 @@
-import 'package:flutter_application_1/models/user.dart';
-import 'package:json_annotation/json_annotation.dart';
 
 class User_Info {
   final String user_name;

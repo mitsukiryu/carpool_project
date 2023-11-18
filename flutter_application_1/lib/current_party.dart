@@ -1,11 +1,8 @@
-import 'dart:js';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/HomeScreen.dart';
 import 'package:flutter_application_1/provider/party_create_provider.dart';
 import 'package:get/get.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
 
 //여기서 프로파이더로 하기
