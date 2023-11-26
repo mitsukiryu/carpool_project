@@ -4,7 +4,6 @@ import 'package:flutter_application_1/provider/user_information.dart';
 import 'package:provider/provider.dart';
 import 'changepw.dart';
 import 'package:get/get.dart';
-import 'package:http/http.dart' as http;
 
 class EditProfile extends StatefulWidget {
   const EditProfile({super.key});
