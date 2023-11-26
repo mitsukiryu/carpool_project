@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_1/autocomplete_prediction.dart';
 import 'package:flutter_application_1/current_party.dart';
 import 'package:flutter_application_1/party_list.dart';
+import 'package:flutter_application_1/provider/user_information.dart';
 import 'package:get/get.dart';
 import 'dart:async';
 import 'MyInfo.dart';
@@ -82,116 +83,214 @@ class _HomescreenState extends State<Homescreen> {
     bool hasStatus =
         Provider.of<PartyCreateProvider>(context, listen: false).status == "";
 
-    return Scaffold(
-      floatingActionButtonLocation: FloatingActionButtonLocation.startFloat,
-      floatingActionButton:
-          (Provider.of<PartyCreateProvider>(context, listen: false).status ==
-                  "")
-              ? FloatingActionButton(
-                  tooltip: 'Add', // used by assistive technologies
-                  onPressed: () {
-                    Get.to(() => creating_party());
-                  },
-                  backgroundColor: Colors.grey,
-                  child: Icon(
-                    Icons.add,
-                    color: Colors.black,
-                  ),
-                )
-              : null,
-      body: SafeArea(
-        child: Column(
-          children: [
-            SizedBox(
-              height: 40,
-              child: Row(
-                children: [
-                  Flexible(
-                    child: Padding(
-                      padding: EdgeInsets.all(10),
-                      child: TextFormField(
-                        onChanged: (value) {
-                          placeAutocomplete(value);
-                          _isWriting = value.length > 0;
-                        },
-                        controller: _searchCon,
-                        decoration: const InputDecoration(
-                          hintText: "Search",
-                          border: OutlineInputBorder(),
+    if (hasStatus) {
+      return Scaffold(
+        floatingActionButtonLocation: FloatingActionButtonLocation.startFloat,
+        floatingActionButton: FloatingActionButton(
+          tooltip: 'Add', // used by assistive technologies
+          onPressed: () {
+            Get.to(() => creating_party());
+          },
+          backgroundColor: Colors.grey,
+          child: Icon(
+            Icons.add,
+            color: Colors.black,
+          ),
+        ),
+        body: SafeArea(
+          child: Column(
+            children: [
+              SizedBox(
+                height: 40,
+                child: Row(
+                  children: [
+                    Flexible(
+                      child: Padding(
+                        padding: EdgeInsets.all(10),
+                        child: TextFormField(
+                          onChanged: (value) {
+                            placeAutocomplete(value);
+                            _isWriting = value.length > 0;
+                          },
+                          controller: _searchCon,
+                          decoration: const InputDecoration(
+                            hintText: "Search",
+                            border: OutlineInputBorder(),
+                          ),
                         ),
                       ),
                     ),
-                  ),
-                  IconButton(
-                      onPressed: () async {
-                        var place =
-                            await places_api().get_place_id(_searchCon.text);
-                        goToPlace(LatLng(
-                            place['places'][0]['location']['latitude'],
-                            place['places'][0]['location']['longitude']));
-                      },
-                      icon: Icon(Icons.search)),
-                ],
+                    IconButton(
+                        onPressed: () async {
+                          var place =
+                              await places_api().get_place_id(_searchCon.text);
+                          goToPlace(LatLng(
+                              place['places'][0]['location']['latitude'],
+                              place['places'][0]['location']['longitude']));
+                        },
+                        icon: Icon(Icons.search)),
+                  ],
+                ),
               ),
-            ),
-            Expanded(
-                child: GoogleMap(
-              mapType: MapType.normal,
-              initialCameraPosition: _kGooglePlex,
-              onMapCreated: (GoogleMapController controller) {
-                _controller.complete(controller);
-              },
-              markers: _markers,
-            )),
-            if (_isWriting)
               Expanded(
-                  child: ListView.builder(
-                      itemCount: placePrediction.length,
-                      itemBuilder: (context, index) => LocationListTile(
-                            press: () async {
-                              var IndexLoc = await places_api().get_place_id(
-                                  placePrediction[index].description);
-                              goToPlace(LatLng(
-                                  IndexLoc['places'][0]['location']['latitude'],
-                                  IndexLoc['places'][0]['location']
-                                      ['longitude']));
-                            },
-                            location: placePrediction[index].description!,
-                          ))),
-          ],
+                  child: GoogleMap(
+                mapType: MapType.normal,
+                initialCameraPosition: _kGooglePlex,
+                onMapCreated: (GoogleMapController controller) {
+                  _controller.complete(controller);
+                },
+                markers: _markers,
+              )),
+              if (_isWriting)
+                Expanded(
+                    child: ListView.builder(
+                        itemCount: placePrediction.length,
+                        itemBuilder: (context, index) => LocationListTile(
+                              press: () async {
+                                var IndexLoc = await places_api().get_place_id(
+                                    placePrediction[index].description);
+                                goToPlace(LatLng(
+                                    IndexLoc['places'][0]['location']
+                                        ['latitude'],
+                                    IndexLoc['places'][0]['location']
+                                        ['longitude']));
+                              },
+                              location: placePrediction[index].description!,
+                            ))),
+            ],
+          ),
         ),
-      ),
-      bottomNavigationBar: Container(
-        color: const Color.fromARGB(255, 212, 212, 212),
-        height: 60,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Expanded(
-                child: TextButton(
-                    child: Text('파티 리스트',
-                        style: TextStyle(color: Colors.black, fontSize: 20)),
-                    onPressed: () {
-                      if (hasStatus) {
-                        Get.to(() => party_list());
-                      } else {
-                        Get.to(() => current_party_list());
-                      }
-                    })),
-            VerticalDivider(
-              color: Colors.white,
-              thickness: 3,
-            ),
-            Expanded(
-                child: TextButton(
-                    child: Text('내 정보',
-                        style: TextStyle(color: Colors.black, fontSize: 20)),
-                    onPressed: () {
-                      Get.to(() => MyInfo());
-                    }))
-          ],
+        bottomNavigationBar: Container(
+          color: const Color.fromARGB(255, 212, 212, 212),
+          height: 60,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Expanded(
+                  child: TextButton(
+                      child: Text('파티 리스트',
+                          style: TextStyle(color: Colors.black, fontSize: 20)),
+                      onPressed: () {
+                        if (hasStatus) {
+                          Get.to(() => party_list());
+                        } else {
+                          Get.to(() => current_party_list());
+                        }
+                      })),
+              VerticalDivider(
+                color: Colors.white,
+                thickness: 3,
+              ),
+              Expanded(
+                  child: TextButton(
+                      child: Text('내 정보',
+                          style: TextStyle(color: Colors.black, fontSize: 20)),
+                      onPressed: () {
+                        Get.to(() => MyInfo());
+                      }))
+            ],
+          ),
         ),
-      ),
-    );
+      );
+    } else {
+      return Scaffold(
+        floatingActionButtonLocation: FloatingActionButtonLocation.startFloat,
+        floatingActionButton: null,
+        body: SafeArea(
+          child: Column(
+            children: [
+              SizedBox(
+                height: 40,
+                child: Row(
+                  children: [
+                    Flexible(
+                      child: Padding(
+                        padding: EdgeInsets.all(10),
+                        child: TextFormField(
+                          onChanged: (value) {
+                            placeAutocomplete(value);
+                            _isWriting = value.length > 0;
+                          },
+                          controller: _searchCon,
+                          decoration: const InputDecoration(
+                            hintText: "Search",
+                            border: OutlineInputBorder(),
+                          ),
+                        ),
+                      ),
+                    ),
+                    IconButton(
+                        onPressed: () async {
+                          var place =
+                              await places_api().get_place_id(_searchCon.text);
+                          goToPlace(LatLng(
+                              place['places'][0]['location']['latitude'],
+                              place['places'][0]['location']['longitude']));
+                        },
+                        icon: Icon(Icons.search)),
+                  ],
+                ),
+              ),
+              Expanded(
+                  child: GoogleMap(
+                mapType: MapType.normal,
+                initialCameraPosition: _kGooglePlex,
+                onMapCreated: (GoogleMapController controller) {
+                  _controller.complete(controller);
+                },
+                markers: _markers,
+              )),
+              if (_isWriting)
+                Expanded(
+                    child: ListView.builder(
+                        itemCount: placePrediction.length,
+                        itemBuilder: (context, index) => LocationListTile(
+                              press: () async {
+                                var IndexLoc = await places_api().get_place_id(
+                                    placePrediction[index].description);
+                                goToPlace(LatLng(
+                                    IndexLoc['places'][0]['location']
+                                        ['latitude'],
+                                    IndexLoc['places'][0]['location']
+                                        ['longitude']));
+                              },
+                              location: placePrediction[index].description!,
+                            ))),
+            ],
+          ),
+        ),
+        bottomNavigationBar: Container(
+          color: const Color.fromARGB(255, 212, 212, 212),
+          height: 60,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Expanded(
+                  child: TextButton(
+                      child: Text('파티 보기',
+                          style: TextStyle(color: Colors.black, fontSize: 20)),
+                      onPressed: () {
+                        if (hasStatus) {
+                          Get.to(() => party_list());
+                        } else {
+                          Get.to(() => current_party_list());
+                        }
+                      })),
+              VerticalDivider(
+                color: Colors.white,
+                thickness: 3,
+              ),
+              Expanded(
+                  child: TextButton(
+                      child: Text('내 정보',
+                          style: TextStyle(color: Colors.black, fontSize: 20)),
+                      onPressed: () {
+                        Get.to(() => MyInfo());
+                      }))
+            ],
+          ),
+        ),
+      );
+    }
   }
 }

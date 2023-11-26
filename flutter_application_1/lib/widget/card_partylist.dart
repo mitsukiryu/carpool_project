@@ -27,15 +27,9 @@ Widget card_partylist(
 
   return GestureDetector(
     onTap: () {
+      print("card 변환과정" + inputMemberList.toString());
       Get.to(() => sub_party_list(
           inputsubLeaderName,
-          // inputsubLeaderPhone,
-          // inputsubMemberName1,
-          // inputsubMemberPhone1,
-          // inputsubMemberName2,
-          // inputsubMemberPhone2,
-          // inputsubMemberName3,
-          // inputsubMemberPhone3,
           inputId,
           inputdate,
           inputType,

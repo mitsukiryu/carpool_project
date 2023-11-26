@@ -344,7 +344,7 @@ class sub_party_list extends StatelessWidget {
                             Expanded(
                               flex: 7,
                               child: Text(
-                                memberNameList[index],
+                                memberNameList[dataindex],
                                 style: TextStyle(fontSize: subInfo),
                               ),
                             ),
@@ -355,7 +355,7 @@ class sub_party_list extends StatelessWidget {
                             Expanded(
                               flex: 14,
                               child: Text(
-                                memberPhoneList[index],
+                                memberPhoneList[dataindex],
                                 style: TextStyle(fontSize: subInfo),
                               ),
                             ),

@@ -34,8 +34,6 @@ class MyApp extends StatelessWidget {
       getPages: [
         GetPage(
           name: '/',
-          // page: () => party_list(),
-
           page: () => SplashScreen(),
         ),
         GetPage(

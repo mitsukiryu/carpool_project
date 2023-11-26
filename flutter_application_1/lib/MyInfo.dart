@@ -119,6 +119,8 @@ class _MyInfoState extends State<MyInfo> {
                   await storage.delete(key: "loginPw");
                   Provider.of<PartyCreateProvider>(context, listen: false)
                       .resetAll();
+                  String? datadata = await storage.read(key: "loginId");
+                  print("삭제됬나 체크" + datadata.toString());
                   Get.offAll(() => LoginPage());
                 },
                 // print(Provider.of<UserInformationProvider>(context).name.);
