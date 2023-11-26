@@ -498,7 +498,7 @@ class _creating_partyState extends State<creating_party> {
                               dateController.text + ' ' + timeinput.text,
                               Provider.of<UserInformationProvider>(context,
                                       listen: false)
-                                  .name
+                                  .id
                                   .toString(),
                               //이거 로그인 하면 프로하이더에 저장되지 않아서 값들
                               startinput.text,
