@@ -42,7 +42,8 @@ class _Login_PageState extends State<LoginPage> {
 
     var response = await http.post(
       // Uri.parse('http://10.0.2.1:8000/user/login'),
-      Uri.parse('http://3.27.196.5/user/login'),
+      // Uri.parse('http://3.27.196.5/user/login'),
+      Uri.parse('http://127.0.0.1:8000/user/login'),
       headers: <String, String>{
         'Content-Type': 'application/x-www-form-urlencoded'
       },
@@ -80,7 +81,8 @@ class _Login_PageState extends State<LoginPage> {
     String? dataToken = await storage.read(key: "token");
 
     final response = await http.get(
-        Uri.parse('http://3.27.196.5/user/user_info'),
+        // Uri.parse('http://3.27.196.5/user/user_info'),
+        Uri.parse('http://127.0.0.1:8000/user/user_info'),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
           'Authorization': 'Bearer $dataToken',

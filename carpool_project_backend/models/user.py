@@ -22,6 +22,9 @@ class User_login(BaseModel):
 class email(BaseModel):
     email:str
 
+class user_name(BaseModel):
+    user_name:str
+
 class EP(BaseModel):
     email: str
     password: str

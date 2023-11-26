@@ -21,7 +21,9 @@ class finding_id extends StatelessWidget {
 
     var response = await http.post(
       // Uri.parse('http://10.0.2.1:8000/user/login'),
-      Uri.parse('http://3.27.196.5/user/find'),
+      // Uri.parse('http://3.27.196.5/user/find'),
+      Uri.parse('http://127.0.0.1:8000/user/find'),
+
       headers: <String, String>{
         // 'Content-Type': 'application/x-www-form-urlencoded'
 
@@ -105,28 +107,27 @@ class finding_id extends StatelessWidget {
                 onPressed: () async {
                   String data = await save(EmailInputController.text);
                   if (!data.isEmpty) {
-                    print(data);
-                    showDialog(
+                    await showDialog(
                       context: context,
                       builder: (BuildContext context) => AlertDialog(
                         title: const Text('아이디 찾기'),
                         content: Text(data),
                         actions: <Widget>[
                           TextButton(
+                            onPressed: () => Navigator.pop(context, 'OK'),
+                            child: const Text('취소'),
+                          ),
+                          TextButton(
                             onPressed: () {
                               Get.to(() => LoginPage());
                             },
-                            child: const Text('Go to Login Page'),
-                          ),
-                          TextButton(
-                            onPressed: () => Navigator.pop(context, 'OK'),
-                            child: const Text('OK'),
+                            child: const Text('로그인 하기'),
                           ),
                         ],
                       ),
                     );
                   } else {
-                    showDialog(
+                    await showDialog(
                       context: context,
                       builder: (BuildContext context) => AlertDialog(
                         title: const Text('아이디 찾기 실패'),
@@ -134,14 +135,14 @@ class finding_id extends StatelessWidget {
                         actions: <Widget>[
                           TextButton(
                             onPressed: () => Navigator.pop(context, 'OK'),
-                            child: const Text('OK'),
+                            child: const Text('취소'),
                           ),
-                          TextButton(
-                            onPressed: () {
-                              Get.to(() => LoginPage());
-                            },
-                            child: const Text('Go to Home'),
-                          ),
+                          // TextButton(
+                          //   onPressed: () {
+                          //     Get.to(() => LoginPage());
+                          //   },
+                          //   child: const Text('),
+                          // ),
                         ],
                       ),
                     );

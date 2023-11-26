@@ -8,6 +8,7 @@ import certifi
 import datetime as dt
 from models.user import User
 from models.user import User_login
+from models.user import user_name
 from models.user import email
 from models.user import EP
 from datetime import datetime, timedelta
@@ -163,6 +164,17 @@ async def find_user(request: email):
  
     username = user["user_name"]   
     return{"message":"Your username is " + username}
+
+@router.post("/getNamePhone")
+async def find_user(request: user_name):
+    user = router.database.user.find_one({"user_name": request.user_name})
+    
+    if user == None:
+        return {"message": "There is no user with such Id"}
+ 
+    realname = user["real_name"]  
+    phone = user["phone_number"] 
+    return{"real_name": realname, "phone_number":phone}
 
  # change password
 @router.put("/login/edit_password")

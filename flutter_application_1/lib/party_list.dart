@@ -44,7 +44,9 @@ class _party_listState extends State<party_list> {
   @override
   Future<List<Party>> getData() async {
     final response = await http.get(
-      Uri.parse('http://3.27.196.5/party/find'),
+      // Uri.parse('http://3.27.196.5/party/find'),
+      Uri.parse('http://127.0.0.1:8000/party/find'),
+
       headers: <String, String>{
         'Content-Type': 'application/x-www-form-urlencoded'
         // 'Content-Type': 'application/json; charset=UTF-8',

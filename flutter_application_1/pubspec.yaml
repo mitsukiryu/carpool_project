@@ -70,6 +70,8 @@ flutter:
   - assets/images/saferide.png
   - assets/images/car_icon.jpg
   - assets/images/taxi_icon.jpg
+  - assets/images/driver.jpg
+  - assets/images/passenger.jpg 
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the material Icons class.

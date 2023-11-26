@@ -44,7 +44,9 @@ class _Signin_pageState extends State<Signin_page> {
     };
 
     final response = await http.post(
-      Uri.parse('http://3.27.196.5/user/create'),
+      // Uri.parse('http://3.27.196.5/user/create'),
+      Uri.parse('http://127.0.0.1:8000/user/create'),
+
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
@@ -238,16 +240,16 @@ class _Signin_pageState extends State<Signin_page> {
                             phoneController.text,
                             emailController.text,
                             homeroomController.text);
-                        Provider.of<UserInformationProvider>(context,
-                                listen: false)
-                            .changeAllPassenger(
-                                idController.text,
-                                nameController.text,
-                                pwController.text,
-                                phoneController.text,
-                                emailController.text,
-                                homeroomController.text);
-                        Get.offAll(() => LoginPage());
+                        // Provider.of<UserInformationProvider>(context,
+                        //         listen: false)
+                        //     .changeAllPassenger(
+                        //         idController.text,
+                        //         nameController.text,
+                        //         pwController.text,
+                        //         phoneController.text,
+                        //         emailController.text,
+                        //         homeroomController.text);
+                        // Get.offAll(() => LoginPage());
                       } else {
                         showDialog(
                           context: context,

@@ -1,5 +1,5 @@
 import 'dart:js';
-
+import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/HomeScreen.dart';
 import 'package:flutter_application_1/provider/party_create_provider.dart';
@@ -12,26 +12,26 @@ import 'package:provider/provider.dart';
 //파티 나가기 + 경고 문자 띄우기
 
 class current_party_list extends StatelessWidget {
-  String subLeaderName = "";
-  String inputId = "";
+  String inputStatus = "";
   String inputdate = "";
   String inputTime = "";
-  String inputType = "";
-  // final List<dynamic> type;
   String inputStart = "";
   String inputEnd = "";
-  String inputStatus = "";
-  List<dynamic> inputMemberList = [];
   int inputMaxNum = 0;
   int inputCurNum = 0;
+  String subLeaderName = "";
+  List<String> inputMemberList = [];
+  // String inputType = "";
   static final storage = FlutterSecureStorage();
+  List<String> memberNameList = [];
+  List<String> memberPhoneList = [];
 
   @override
-  Future save(context) async {
+  save(context) {
     subLeaderName = Provider.of<PartyCreateProvider>(context, listen: false)
         .partyRecruiterId;
-    inputType = Provider.of<PartyCreateProvider>(context, listen: false).status;
-    inputId = Provider.of<PartyCreateProvider>(context, listen: false).partyId;
+    // inputType = Provider.of<PartyCreateProvider>(context, listen: false).status;
+    // inputId = Provider.of<PartyCreateProvider>(context, listen: false).partyId;
     inputdate = Provider.of<PartyCreateProvider>(context, listen: false).date;
     inputTime = Provider.of<PartyCreateProvider>(context, listen: false).time;
     inputStart = Provider.of<PartyCreateProvider>(context, listen: false).start;
@@ -47,24 +47,98 @@ class current_party_list extends StatelessWidget {
     print("Subleadername: " + subLeaderName);
   }
 
-  // @override
-  // void initState() {
-  //   save(context);
-  //   super.initState();
-  // }
+  @override
+  Future saveTwo(BuildContext context) async {
+    String? dataId = await storage.read(key: "loginId");
+    String? dataToken = await storage.read(key: "token");
+    String? inputId = await storage.read(key: "partyId");
+
+    final response = await http.put(
+      // Uri.parse('http://3.27.196.5/party/join/$inputId/$dataId'),
+      Uri.parse('http://127.0.0.1:8000/party/join/$inputId/$dataId'),
+
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        'Authorization': 'Bearer $dataToken',
+      },
+    );
+    if (response.statusCode == 200) {
+      Provider.of<PartyCreateProvider>(context, listen: false).changeAll(
+          inputStatus,
+          inputdate[0] +
+              inputdate[1] +
+              inputdate[2] +
+              inputdate[3] +
+              inputdate[4] +
+              inputdate[5] +
+              inputdate[6] +
+              inputdate[7] +
+              inputdate[8],
+          inputdate[10] +
+              inputdate[11] +
+              inputdate[12] +
+              inputdate[13] +
+              inputdate[14],
+          inputStart,
+          inputEnd,
+          inputMaxNum,
+          inputCurNum,
+          subLeaderName,
+          inputMemberList,
+          0.0,
+          0.0,
+          0.0,
+          0.0);
+      return true;
+    } else {}
+  }
+
+  @override
+  Future total() async {
+    await getNameEmail(subLeaderName);
+    for (String i in inputMemberList) {
+      await getNameEmail(i);
+    }
+    return true;
+  }
+
+  @override
+  Future getNameEmail(String inputUserId) async {
+    var response = await http.post(
+      // Uri.parse('http://10.0.2.1:8000/user/login'),
+      // Uri.parse('http://3.27.196.5/user/find'),
+      Uri.parse('http://127.0.0.1:8000/user/getNamePhone'),
+
+      headers: <String, String>{
+        // 'Content-Type': 'application/x-www-form-urlencoded'
+
+        'Content-Type': 'application/json; charset=UTF-8',
+        // 'Authorization': 'Bearer $dataToken',
+      },
+      body: jsonEncode(<String, String>{
+        'user_name': inputUserId,
+      }),
+    );
+    var data = jsonDecode(utf8.decode(response.bodyBytes));
+    // var data = json.decode(response.body);
+    print("사람이름은" + data['real_name']);
+    print("전화번호이름은" + data['phone_number']);
+
+    if (response.statusCode == 200 ||
+        data['message'] != "There is no user with such Id") {
+      memberNameList.add(data['real_name'].toString());
+      memberPhoneList.add(data['phone_number'].toString());
+      print("add 완료");
+      return true;
+    } else {
+      return false;
+    }
+  }
 
   @override
   int contextFont = 3;
   int contextSpace = 1;
   double subInfo = 22;
-  // String subLeaderName = "김강희";
-  // String subLeaderPhone = "010-5555-5555";
-  // String subMemberName1 = "류황희";
-  // String subMemberPhone1 = "010-6666-6666";
-  // String subMemberName2 = "박경태";
-  // String subMemberPhone2 = "010-7777-7777";
-  // String subMemberName3 = "안현빈";
-  // String subMemberPhone3 = "010-8888-8888";
 
   @override
   Widget build(BuildContext context) {
@@ -107,7 +181,7 @@ class current_party_list extends StatelessWidget {
                           flex: 1,
                           child: SizedBox(),
                         ),
-                        Expanded(flex: 3, child: Text(inputType)),
+                        Expanded(flex: 3, child: Text(inputStatus)),
                         Expanded(
                             flex: 6,
                             child: Container(
@@ -117,14 +191,12 @@ class current_party_list extends StatelessWidget {
                                 shape: BoxShape.circle,
                                 color: Colors.grey, // 동그란 모양의 틀의 배경색
                                 image: DecorationImage(
-                                  image: inputType == '택시'
+                                  image: inputStatus == '택시'
                                       ? AssetImage(
                                           'images/taxi_icon.jpg') // 택시 이미지의 경로
-                                      : inputType == '카풀'
-                                          ? AssetImage(
-                                              'images/car_icon.jpg') // 카풀 이미지의 경로
-                                          : AssetImage(
-                                              'assets/default_image.png'), // 기본 이미지 경로
+                                      : AssetImage(
+                                          'images/car_icon.jpg'), // 카풀 이미지의 경로
+                                  // 기본 이미지 경로
                                   fit: BoxFit.cover, // 이미지를 동그란 틀에 맞춰서 보여주도록 설정
                                 ),
                               ),

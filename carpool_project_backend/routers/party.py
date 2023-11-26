@@ -105,6 +105,19 @@ async def get_past_party(user_id):
         if party["date_time"] < crt_time:
             return party
 
+@router.get("/find/currentMine/{user_id}")
+async def get_current_party(user_id):   
+    docs = router.database.party.find({'party_member_id': 
+                                       
+                                        {'$elemMatch': {'$eq': user_id}}})
+    crt_time = str(dt.datetime.now())
+
+    for party in docs:
+        party["_id"] = str(party["_id"]) 
+
+        if party["date_time"] > crt_time:
+            return party
+
 #one_party
 @router.get("/find/one/{party_id}")
 async def get_one_party(party_id: str):
@@ -118,10 +131,13 @@ async def join_party(party_id: str, user_id: str, current_user: User = Depends(g
     docs =  router.database.party.find_one({'_id': ObjectId(party_id)})
     if docs["cur_recruitment"] >= docs["max_recruitment"]:
         print("Party is full")
+        return {"message":"Party is full"}
     else:
         docs["party_member_id"].append(user_id)
         docs["cur_recruitment"] += 1
     result = router.database.party.update_one({"_id": ObjectId(party_id)}, {"$set": docs})
+
+    return {"message":"joined succesfully"}
 
 # withdraw party
 @router.put("/drop/{party_id}/{user_id}")

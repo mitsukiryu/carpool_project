@@ -97,7 +97,9 @@ class _creating_partyState extends State<creating_party> {
     String? dataId = await storage.read(key: "loginId");
 
     final response = await http.post(
-      Uri.parse('http://3.27.196.5/party/create/$dataId'),
+      // Uri.parse('http://3.27.196.5/party/create/$dataId'),
+      Uri.parse('http://127.0.0.1:8000/party/create/$dataId'),
+
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
         'Authorization': 'Bearer $dataToken',

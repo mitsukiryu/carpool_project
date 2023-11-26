@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'login_page.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:dio/dio.dart';
 import 'package:http/http.dart' as http;
@@ -84,7 +85,7 @@ class Driver_Signin_page extends StatelessWidget {
       // Uri.parse('http://10.0.2.2:8000/user/create'),
       // Uri.parse('http://3.27.196.5/user/login'),
 
-      Uri.parse('http://3.27.196.5/user/create'),
+      Uri.parse('http://127.0.0.1:8000/user/create'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
@@ -183,6 +184,11 @@ class Driver_Signin_page extends StatelessWidget {
                 padding: EdgeInsets.all(10),
                 child: TextField(
                   controller: phoneController,
+                  maxLength: 11,
+                  keyboardType: TextInputType.number,
+                  inputFormatters: <TextInputFormatter>[
+                    FilteringTextInputFormatter.digitsOnly,
+                  ],
                   decoration: InputDecoration(
                       border: OutlineInputBorder(),
                       labelText: '전화번호',
@@ -235,16 +241,6 @@ class Driver_Signin_page extends StatelessWidget {
               Container(
                 height: 50,
                 width: 250,
-                decoration: BoxDecoration(color: Colors.blue),
-                child: TextButton(
-                    onPressed: () {
-                      print(PW_format_check());
-                    },
-                    child: Text("check")),
-              ),
-              Container(
-                height: 50,
-                width: 250,
                 decoration: BoxDecoration(
                   color: Colors.blue,
                   borderRadius: BorderRadius.circular(20),
@@ -253,7 +249,9 @@ class Driver_Signin_page extends StatelessWidget {
                   child: Text("회원가입", style: TextStyle(color: Colors.white)),
                   onPressed: () {
                     ErrorText = error_text();
-                    if (checking() && PW_format_check()) {
+                    if (checking() &&
+                        PW_format_check() &&
+                        pwCheckController.text == pwCheckController.text) {
                       save(
                         idController.text,
                         nameController.text,
